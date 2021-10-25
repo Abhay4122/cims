@@ -1,0 +1,189 @@
+{% extends 'user/base.html' %} {% block title %}
+<title>About Us</title>
+{% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/4.jpg); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>About Us</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<!-- Team Section Start -->
+<section id="team">
+  <div class="container">
+    <div class="section-title">
+      <h4>Who We Are</h4>
+      <hr />
+      <h5>We are smart, dedicated, and focused on giving unbeatable Education</h5>
+    </div>
+    <div class="team_top_meta_desc text-center">
+      <p>
+        CIMS Computer Education is named for carring a Heavy load of responsibility, i.e. We care The Students with Responsibility like a Mother The
+        institute was established in year 2014 by Mr. Sachin Mishra, Director of CIMS is Post Graduate having vast knowledge in the field of computer
+        education.
+      </p>
+    </div>
+    <!-- Team Row Start -->
+    <div class="row">
+      <!-- Accordion Start -->
+      <div class="col-md-6 team-accordion">
+        <h4 class="classic-title">Why Choose Us</h4>
+
+        <div class="panel-group" id="accordion">
+          <!-- Accordion Panel 01 -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-one">
+                  <i class="fa fa-angle-up control-icon"></i>Better Facility then Others.
+                  <i class="fa fa-desktop"></i>
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-one" class="panel-collapse collapse in">
+              <div class="panel-body">
+                1. Minimum Fees For Poor Students.<br />
+                2. WiFi Campus<br />
+                3. 3 Days Trial<br />
+                4. Practice on Work Books/Industry Case scenarios<br />
+                5. Courses Designed as per the suggestions/recommendations by Industry – Academic Panel
+              </div>
+            </div>
+          </div>
+          <!-- Accordion Panel 02 -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-two" class="collapsed">
+                  <i class="fa fa-angle-up control-icon"></i>
+                  <i class="fa fa-gift"></i>Focused on Student Education.
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-two" class="panel-collapse collapse">
+              <div class="panel-body">
+                We offer 3 day free trial in all courses and anybody is welcome to avail this facility free of cost. We pay personal attention to each
+                and every student.
+              </div>
+            </div>
+          </div>
+          <!-- Accordion Panel 03 -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse-three" class="collapsed">
+                  <i class="fa fa-angle-up control-icon"></i>
+                  <i class="fa fa-tasks"></i>We Cover Wide range of Courses
+                </a>
+              </h4>
+            </div>
+            <div id="collapse-three" class="panel-collapse collapse">
+              <div class="panel-body">
+                CIMS offers a variety of career programs for students who want to join IT sector as well professionals who want to enhance their
+                skills. There are also basic IT programs for school students, housewives/senior citizens etc.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- //Accordion End -->
+
+      <!-- Skills Start -->
+      <div class="col-md-6 our-skills">
+        <h4 class="classic-title">Our Philosophy</h4>
+        <br /><br /><br />
+        <div class="col-md-10 col-md-push-1">
+          <p>
+            We believe that training in the latest computer technologies combined with life-long learning are the essential ingredients for building a
+            successful career in the IT Industry.
+          </p>
+          <p>
+            Students are trained in a multi-cultural atmosphere providing student-centered interactive learning which is centered on today’s
+            computerized business environment.
+          </p>
+          <p>
+            CIMS emphasis is given to the maximum extent on the projects by maximum practical learning through simulated projects designed to the
+            needs of the industry. “Practice makes a man perfect”.
+          </p>
+        </div>
+      </div>
+      <!-- //Skills End -->
+    </div>
+    <!-- //Team Row End -->
+
+    <div class="section-title">
+      <h4>Our Awsome Team</h4>
+      <hr />
+      <h5>We are smart, dedicated, and focused on giving unbeatable Education</h5>
+    </div>
+    <div class="row">
+      <div class="col-md-12 facility_sec_2" style="background-color: transparent">
+        <div class="col-md-3">
+          <div class="facility_img">
+            <img src="{{images}}/director.png" />
+          </div>
+        </div>
+        <div class="col-md-9 tim_director">
+          <div class="col-md-4">
+            <span class="txt_as_hed1">Director</span><br /><br />
+            <h4>Mr. Sachin Mishra</h4>
+            <h5>MBA, PHD(appearing)</h5>
+          </div>
+          <div class="col-md-4">
+            <span class="txt_as_hed1">Co-Ordinator</span><br /><br />
+            <h4>Mr. Abhay singh</h4>
+            <h5>MCA, Software Engineer</h5>
+          </div>
+          <div class="col-md-4">
+            <span class="txt_as_hed1">Manager</span><br /><br />
+            <h4>Mr. Nitesh Pal</h4>
+            <h5>MA, Diploma</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div style="text-align: center; margin-bottom: 50px"><span class="txt_as_hed1">Our Teaching Staff</span><br /><br /></div>
+        <div class="col-md-3">
+          <h4>Mr. Manoj Singh</h4>
+          <h5>English Speaking</h5>
+        </div>
+        <div class="col-md-3">
+          <h4>Mr. Rajbahadur Prajapati</h4>
+          <h5>Computer Department</h5>
+        </div>
+        <div class="col-md-3">
+          <h4>Mr. Ritesh Vishwakarma</h4>
+          <h5>Computer Department (Language Specialist)</h5>
+        </div>
+        <div class="col-md-3">
+          <h4>Ms. Pratibha Mishra</h4>
+          <h5>Computer Department</h5>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="col-md-3">
+          <h4>Mr. Sachin Mishra</h4>
+          <h5>Computer Department, Personality Development</h5>
+        </div>
+        <div class="col-md-3">
+          <h4>Mr. Gautam Patel</h4>
+          <h5>Grammer and English Speaking</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //Team Section End -->
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'user/base.html' %} {% block title %}
+
+<title>Contact Us</title>
+
+{% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image:url({{images}}/7.jpg); background-attachment:fixed;"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Contact Us</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<!-- Contact Us Section Start -->
+<section id="contact-us-details">
+  <div class="container">
+    <div class="section-title">
+      <h4>Contact Us</h4>
+      <hr />
+      <h5>If you are looking for a solid Computer Institute then, send us an email. We'd love to talk to you!</h5>
+    </div>
+    <div class="row-fluid">
+      <div class="contact-content">
+        <div class="col-md-4 col-sm-4">
+          <h4 class="classic-title">Location</h4>
+          <ul class="item_feature general">
+            <li>Basani Bazar Babutpur Road</li>
+            <li>Varanasi Uttar Pradesh</li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <h4 class="classic-title">Contact</h4>
+          <ul class="item_feature touch">
+            <li>
+              <span class="title"><i class="fa fa-mobile"></i></span> +91-9936333436
+            </li>
+            <li>
+              <span class="title"><i class="fa fa-phone"></i></span> +91-9936918590
+            </li>
+            <li>
+              <span class="title"><i class="fa fa-envelope"></i></span> caliberinstitutes@gmail.com
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <h4 class="classic-title">Social</h4>
+          <ul class="item_feature social_links">
+            <li>
+              <a class="facebook"><i class="fa fa-facebook"></i></a>
+            </li>
+            <li>
+              <a class="twitter"><i class="fa fa-twitter"></i></a>
+            </li>
+            <li>
+              <a class="googleplus"><i class="fa fa-google-plus"></i></a>
+            </li>
+            <li>
+              <a class="linkedin"><i class="fa fa-linkedin"></i></a>
+            </li>
+            <li>
+              <a class="dribbble"><i class="fa fa-dribbble"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //Contact Us Section End -->
+
+<!-- Map & Contact Form Section Start -->
+<section id="map_container" class="nopadbottom nopadtop">
+  <div class="container" style="margin-bottom: 50px">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3602.7718284033517!2d82.82787687204309!3d25.44806722467307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398fd5f7676ed66d%3A0xd4da48cc5cfb142e!2sCaliber+Institute+of+Management+Science!5e0!3m2!1sen!2sin!4v1536145693200"
+      width="100%"
+      height="600"
+      frameborder="0"
+      style="border: 0"
+      allowfullscreen
+    ></iframe>
+  </div>
+</section>
+<!-- //Map & Contact Form Section End -->
+
+{% endblock %}

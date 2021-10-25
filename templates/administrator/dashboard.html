@@ -1,0 +1,84 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Dashboard</title> {% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image:url({{images}}/5.jpg); background-attachment:fixed;"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Dashboard</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="col-md-12" style="margin: 50px auto">
+      <div class="col-md-3">
+        <a href="#" style="color: #000; text-decoration: none">
+          <div class="dash_hed1" style="border: 1px solid #ff6464">
+            <span>Total Student</span><br /><br />
+            <asp:Label ID="Label1" runat="server" Text="" Style="color: #FF6464;"></asp:Label>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <div class="dash_hed1" style="border: 1px solid #f9b96a">
+          <span>Cretified Student</span><br /><br />
+          <asp:Label ID="Label2" runat="server" Text="" Style="color: #F9B96A;"></asp:Label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="dash_hed1" style="border: 1px solid #67c9fc">
+          <span>Regular Student</span><br /><br />
+          <asp:Label ID="Label3" runat="server" Text="" Style="color: #67C9FC;"></asp:Label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <a href="#?not=enroll" style="color: #000; text-decoration: none">
+          <div class="dash_hed1" style="border: 1px solid #a5dc86">
+            <span>Total Examinee</span><br /><br />
+            <asp:Label ID="Label4" runat="server" Text="" Style="color: #A5DC86;"></asp:Label>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-12" style="margin: 50px auto">
+      <div class="col-md-6">
+        <a href="#" style="color: #000; text-decoration: none">
+          <div class="dash_hed1" style="border: 1px solid #a5dc86">
+            <div class="col-md-6">
+              <span>Today's Enquiry</span><br /><br />
+              <asp:Label ID="Label5" runat="server" Text="" Style="color: #A5DC86;"></asp:Label>
+            </div>
+            <div class="col-md-6">
+              <span>Total Enquiry</span><br /><br />
+              <asp:Label ID="Label6" runat="server" Text="" Style="color: #A5DC86;"></asp:Label>
+            </div>
+          </div>
+        </a>
+      </div>
+      <!-- <div class="col-md-3">
+                    <div class="dash_hed1" style="border: 1px solid #F9B96A;">
+                        <span>Heding</span><br /><br />
+                        <span style="color: #F9B96A;">23</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dash_hed1" style="border: 1px solid #FF6464;">
+                        <span>Heding</span><br /><br />
+                        <span style="color: #FF6464;">23</span>
+                    </div>
+                </div> -->
+    </div>
+  </div>
+</section>
+
+{% endblock %}
