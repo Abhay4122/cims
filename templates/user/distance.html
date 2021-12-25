@@ -1,0 +1,56 @@
+{% extends 'user/base.html' %} {% block title %}
+
+<title>Distance Courses</title>
+
+{% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image:url({{images}}/1.jpg); background-attachment:fixed;"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Distance Courses</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<section id="services" class="nopadtop nopadbottom">
+  <div class="container">
+    <div class="section-title">
+      <br /><br />
+      <h5 style="font-size: 18px">Our Some Treditional Distance courses</h5>
+      <hr />
+    </div>
+    <div class="row" style="margin-bottom: 50px">
+      <div class="col-md-3 col-sm-6 text-center">
+        <figure>
+          <a href="#id_fig" data-gal="prettyPhoto[gal1]">
+            <span class="overlay">
+              <span class="icon">Temp</span>
+            </span>
+          </a>
+        </figure>
+        <div id="id_fig" class="inline-content clearfix popup">
+          <div class="col-md-8 col-md-push-2" style="padding: 50px 50px 5px 50px; text-align: center">
+            <h3 style="font-weight: bold">Diploma Course</h3>
+            <br /><br />
+            <p style="font-weight: bold"><strong>Name</strong>: Course name</p>
+            <p style="font-weight: bold"><strong>Full Form</strong>: Course name</p>
+            <p style="font-weight: bold"><strong>Duration</strong>: Course name</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- //Service Section End -->
+
+{% endblock %}

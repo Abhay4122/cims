@@ -1,0 +1,121 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Student Exam</title> {% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/13.jpg); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Exam Marks Detail</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<asp:Label ID="Label13" runat="server" Text=""></asp:Label>
+
+<section>
+  <div class="container">
+    <div class="col-md-10 col-md-push-1">
+      <div class="col-md-6">
+        <asp:Label ID="Label1" runat="server" Text="Student Name"></asp:Label>
+        <asp:DropDownList
+          ID="DropDownList1"
+          runat="server"
+          class="form-control"
+          style="margin: 10px auto"
+          AutoPostBack="True"
+          OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"
+        ></asp:DropDownList>
+      </div>
+      <div class="col-md-6">
+        <asp:Label ID="Label2" runat="server" Text="Father Name"></asp:Label>
+        <asp:DropDownList
+          ID="DropDownList2"
+          runat="server"
+          class="form-control"
+          style="margin: 10px auto"
+          AutoPostBack="True"
+          OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged"
+        ></asp:DropDownList>
+      </div>
+
+      <asp:Table ID="Table1" runat="server" style="width: 100%">
+        <asp:TableRow>
+          <asp:TableCell>
+            <div class="col-md-6">
+              <asp:Label ID="Label16" runat="server" Text="Course"></asp:Label>
+              <asp:TextBox ID="TextBox16" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label14" runat="server" Text="Address"></asp:Label>
+              <asp:TextBox ID="TextBox14" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label4" runat="server" Text="Registration Number"></asp:Label>
+              <asp:TextBox ID="TextBox2" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label10" runat="server" Text="Enrollment Number"></asp:Label>
+              <asp:TextBox ID="TextBox8" class="form-control" runat="server" ReadOnly="true" Required="true"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label5" runat="server" Text="Certificate Number"></asp:Label>
+              <asp:TextBox ID="TextBox3" class="form-control" runat="server"></asp:TextBox>
+            </div>
+            <%--
+            <div class="col-md-6" style="display: none">
+              <asp:Label ID="Label8" runat="server" Text="Exam Date"></asp:Label>
+              <asp:TextBox ID="TextBox6" class="form-control" runat="server" TextMode="date"></asp:TextBox>
+            </div>
+            --%>
+            <div class="col-md-6">
+              <asp:Label ID="Label9" runat="server" Text="Session"></asp:Label>
+              <asp:TextBox ID="TextBox7" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+            </div>
+
+            <div class="col-md-12 exam_hed">
+              <h3>Marks of Student</h3>
+            </div>
+
+            <div class="col-md-6">
+              <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox1" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label6" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox4" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label7" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox5" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label15" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox10" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label17" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox11" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <asp:Label ID="Label18" runat="server" Text=""></asp:Label>
+              <asp:TextBox ID="TextBox12" class="form-control" runat="server" TextMode="Number"></asp:TextBox>
+            </div>
+            <div class="col-md-6">
+              <br />
+              <asp:Button ID="Button1" runat="server" class="btn btn-danger" Text="Submit" OnClick="Button1_Click" />
+            </div>
+          </asp:TableCell>
+        </asp:TableRow>
+      </asp:Table>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

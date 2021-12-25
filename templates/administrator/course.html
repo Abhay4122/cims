@@ -1,0 +1,183 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Course</title> {% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/1.jpg); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Course Detail</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="col-md-12">
+      <div style="text-align: center">
+        <h3 style="color: #e74e3e">Course Detail</h3>
+        <hr style="width: 25%" />
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label16" runat="server" Text="Course Category"></asp:Label>
+        <asp:DropDownList ID="DropDownList1" class="form-control" runat="server" style="margin-top: 10px">
+          <asp:ListItem>Select</asp:ListItem>
+          <asp:ListItem>Diploma Courses</asp:ListItem>
+          <asp:ListItem>Tution Courses</asp:ListItem>
+          <asp:ListItem>Distance Courses</asp:ListItem>
+          <asp:ListItem>Regular Courses</asp:ListItem>
+        </asp:DropDownList>
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label1" runat="server" Text="Course Name"></asp:Label>
+        <asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label3" runat="server" Text="Course Full-form"></asp:Label>
+        <asp:TextBox ID="TextBox3" class="form-control" runat="server"></asp:TextBox>
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label2" runat="server" Text="Course Duration"></asp:Label>
+        <asp:TextBox ID="TextBox2" class="form-control" runat="server"></asp:TextBox>
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label14" runat="server" Text="Course Detail"></asp:Label>
+        <asp:TextBox ID="TextBox14" class="form-control" runat="server" TextMode="MultiLine" Rows="1"></asp:TextBox>
+      </div>
+      <div class="col-md-4">
+        <asp:Label ID="Label15" runat="server" Text="Course Package"></asp:Label>
+        <asp:TextBox ID="TextBox4" runat="server" class="form-control" TextMode="Number"></asp:TextBox>
+      </div>
+      <%--
+      <div class="col-md-4">
+        <asp:Label ID="Label4" runat="server" Text="Upload Syllabus"></asp:Label>
+        <asp:FileUpload ID="FileUpload2" class="form-control" runat="server" />
+      </div>
+      --%>
+      <div class="col-md-4">
+        <br />
+        <asp:Button ID="Button1" runat="server" class="btn btn-danger" Text="Submit" OnClick="Button1_Click" />
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div style="text-align: center">
+        <h3 style="color: #e74e3e">Course List</h3>
+        <hr style="width: 30%" />
+      </div>
+      <asp:GridView
+        ID="GridView1"
+        runat="server"
+        AlternatingRowStyle-BackColor="Beige"
+        AutoGenerateColumns="False"
+        Width="100%"
+        EmptyDataRowStyle-ForeColor="Red"
+        DataKeyNames="cors_id"
+        OnPageIndexChanging="GridView1_PageIndexChanging"
+        OnRowEditing="GridView1_RowEditing"
+        OnRowCancelingEdit="GridView1_RowCancelingEdit"
+        OnRowDeleting="GridView1_RowDeleting"
+        EmptyDataRowStyle-Font-Bold="true"
+        EmptyDataRowStyle-Font-Size="10px"
+        CssClass="table table-bordered table-striped"
+        HeaderStyle-Height="25"
+      >
+        <AlternatingRowStyle BackColor="Beige"></AlternatingRowStyle>
+        <Columns>
+          <asp:TemplateField HeaderText="Sr. No." ItemStyle-Width="70px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+            <ItemTemplate>
+              <%#Container .DataItemIndex +1 %>
+              <asp:Label ID="cors_id" Style="display: none;" runat="server" Text='<%#Eval("cors_id") %>'></asp:Label><br />
+            </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField
+            HeaderText="Category"
+            ItemStyle-Height="20"
+            ItemStyle-VerticalAlign="Middle"
+            ItemStyle-HorizontalAlign="Center"
+            HeaderStyle-CssClass="header-center"
+          >
+            <ItemTemplate> <%#Eval("cors_cat")%> </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField
+            HeaderText="Course"
+            ItemStyle-Height="20"
+            ItemStyle-VerticalAlign="Middle"
+            ItemStyle-HorizontalAlign="Center"
+            HeaderStyle-CssClass="header-center"
+          >
+            <ItemTemplate> <%#Eval("cors")%> </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField
+            HeaderText="Detail"
+            ItemStyle-Height="20"
+            ItemStyle-VerticalAlign="Middle"
+            ItemStyle-HorizontalAlign="Center"
+            HeaderStyle-CssClass="header-center"
+          >
+            <ItemTemplate> <%#Eval("cors_detail")%> </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField HeaderText="Duration" ItemStyle-Height="50" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+            <ItemTemplate> <%#Eval("cors_dur")%> </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField HeaderText="Package" ItemStyle-Height="50" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+            <ItemTemplate> <%#Eval("cors_pack")%> </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField
+            HeaderText="Edit"
+            ItemStyle-Width="50px"
+            ItemStyle-Height="20"
+            ItemStyle-VerticalAlign="Middle"
+            ItemStyle-HorizontalAlign="Center"
+            HeaderStyle-CssClass="header-center"
+          >
+            <ItemTemplate>
+              <asp:LinkButton ID="btnEdit" runat="server" CommandName="Edit"> <i class="fa fa-edit"></i> </asp:LinkButton>
+            </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+        <Columns>
+          <asp:TemplateField HeaderText="Del" ItemStyle-Width="70px" ItemStyle-VerticalAlign="Middle" ItemStyle-HorizontalAlign="Center">
+            <ItemTemplate>
+              <span onclick="return confirm('Are you sure you want to delete this record?')">
+                <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Delete"><i class="fa fa-trash"></i> </asp:LinkButton>
+              </span>
+            </ItemTemplate>
+          </asp:TemplateField>
+        </Columns>
+
+        <EmptyDataRowStyle Font-Bold="True" Font-Size="10px" ForeColor="Red"></EmptyDataRowStyle>
+
+        <FooterStyle BackColor="#99CCCC" ForeColor="#337AB7" />
+        <HeaderStyle BackColor="#337AB7" Font-Bold="True" ForeColor="#CCCCFF" />
+        <PagerStyle BackColor="#99CCCC" ForeColor="#337AB7" HorizontalAlign="Left" />
+        <RowStyle BackColor="White" ForeColor="#337AB7" />
+        <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+        <SortedAscendingCellStyle BackColor="#EDF6F6" />
+        <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
+        <SortedDescendingCellStyle BackColor="#D6DFDF" />
+        <SortedDescendingHeaderStyle BackColor="#002876" />
+      </asp:GridView>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
