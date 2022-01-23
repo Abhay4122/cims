@@ -30,29 +30,58 @@
 
 {% endblock %} {% block script %}
 <script>
-  $(document).ready(function (e) {
-    let student_form = {
-      //   select_reg_year: ['Select Start Session Year', ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030']],
-      //   select_reg_mon: ['Select Start Session Month', ['March', 'June', 'September', 'December']],
-      //   select_session_year: ['Select Complete Session Year', ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030']],
-      //   select_session_month: ['Select Complete Session Month', ['March', 'June', 'September', 'December']],
-      'text*name': 'Name',
-      'select*gender': ['Gender', ['Male', 'Female', 'Other']],
-      'text*father': "Father's name",
-      'text*mother': "Mother's name",
-      'date*dob': 'Date of birth',
-      'text*address': 'Address',
-      'tel*contact': 'Contact number',
-      'select*category': ['Category', ['Gen', 'OBC', 'SC', 'ST', 'Other']],
-      'select*course': ['Course', []],
-      'text*lpc': 'Last passed class',
-      'text*passing_year': 'Passing year',
-      'text*board': 'Board',
-      'text*gread': 'Gread / Precentage / Division',
-      'file*photo': 'Upload photo'
+  $(document).ready(function async(e) {
+    let course_data = async () => {
+      let data = await get_post('api/course-api')
+      let course_list = {}
+
+      for (i of data) {
+        course_list[i['cors_name']] = i['id']
+      }
+
+      await get_sutdent_form(course_list)
     }
 
-    $('#std_form').html(create_form(student_form, 'student_form', '{% csrf_token %}'))
+    // Function define to createthe form and then add form in html
+    let get_sutdent_form = async course_data => {
+      let [student_form, id] = [
+        {
+          'text#name': ['Name*'],
+          'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
+          'text#father': ["Father's name*"],
+          'text#mother': ["Mother's name*"],
+          'date#dob': ['Date of birth*'],
+          'text#address': ['Address*'],
+          'tel#contact': ['Contact number*'],
+          'select#category': ['Category*', { Gen: 'Gen', OBC: 'OBC', SC: 'SC', ST: 'ST', Other: 'Other' }],
+          'select#course': ['Course*', course_data],
+          'text#lpc': ['Last passed class*'],
+          'text#passing_year': ['Passing year*'],
+          'text#board': ['Board*'],
+          'text#gread': ['Gread / Precentage / Division*'],
+          'file#photo': ['Upload photo', { attr: 'accept="image/png, image/jpeg"' }],
+          row: 6
+        },
+        'student_form'
+      ]
+
+      $('#std_form').html(await create_form(student_form, id, '{% csrf_token %}'))
+
+      $('#' + id).on('submit', async e => {
+        e.preventDefault()
+
+        let form_data = new FormData(document.getElementById(id))
+
+        await get_post('api/student-api', form_data, true)
+
+        if (response.status == 201) {
+          $('#std_form').html(await create_form(student_form, id, '{% csrf_token %}'))
+        }
+      })
+    }
+
+    // Call function for first time
+    course_data()
   })
 </script>
 {% endblock %}

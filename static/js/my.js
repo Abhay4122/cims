@@ -1,100 +1,140 @@
+// Function for get or post data url
+// Function for get data from API
+let get_post = async (url, body = false, head = false) => {
+  let promise = new Promise((resolve, reject) => {
+    if (head) {
+      fetch(url, { method: 'post', headers: { Accept: 'application/json' }, body: body }).then(response =>
+        response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.'))
+      )
+    } else {
+      fetch(url).then(response => (response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.'))))
+    }
+  }).catch(alert)
+
+  let resp = await promise
+  try {
+    resp.msg ? Swal.fire({ icon: resp.alert_type, title: resp.title, text: resp.msg, html: resp.html }) : ''
+  } catch (err) {}
+  console.log(resp)
+  return resp
+}
+
+let sub_form = async (url, id) => {
+  let form_data = new FormData(document.getElementById(id))
+
+  //  ***************** OR ************************
+  // form_data.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+
+  // for (let i in data){
+  //   let input_type = i.split('*');
+
+  //   if(input_type[0] != 'file'){
+  //     form_data.append(input_type[1], $('#' + input_type[1] + '_id').val());
+  //   } else {
+  //     form_data.append(input_type[1], document.getElementById(input_type[1] + '_id').files[0]);
+  //   }
+  // }
+
+  // Learning curve
+  // console.log(form_data.get('photo'));
+  // console.log(form_data.has('dob'));
+  // console.log(form_data.delete('dob'));
+
+  // ************* Notice *************
+  // https://javascript.info/formdata
+
+  await get_post(url, form_data, true)
+
+  // let xhr = new XMLHttpRequest();
+
+  //   // Add any event handlers here...
+  //   xhr.open('POST', 'std-registration', true);
+  //   xhr.send(form_data);
+
+  //   function success() {
+  //     var data = JSON.parse(this.responseText);
+  //     console.log(data);
+  // }
+
+  // function error(err) {
+  //     console.log('Error Occurred :', err);
+  // }
+
+  // var xhr = new XMLHttpRequest();
+  // xhr.onload = success;
+  // xhr.onerror = error;
+  // xhr.open('GET', 'https://api.github.com/users/swapnilbangare');
+  // xhr.send();
+
+  // // ****************** VS ********************
+  // fetch('https://api.github.com/users/swapnilbangare')
+  //     .then(function (response) {
+  //         console.log(response);
+  //     })
+  //     .catch(function (err) {
+  //         console.log("Something went wrong!", err);
+  //     });
+}
+
 // Function for create options for select
 let select_option = data => {
   let options = ''
 
-  for (let i of data) {
-    options += `<option>${i}</option>`
+  for (let i in data) {
+    options += `<option value='${data[i]}'>${i}</option>`
   }
 
   return options
-}
-
-// Function for get or post data url
-get_post = async (url, body) => {
-  this.loa_der_show()
-  let promise = new Promise((resolve, reject) => {
-    fetch(url, { method: 'POST', body: body }).then(response =>
-      response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.'))
-    )
-  }).catch(alert)
-  let resp = await promise
-  resp.message
-    ? Swal.fire({ icon: resp.msg_typ, text: resp.message }).then(result =>
-        result.isConfirmed ? (resp.redirect ? this.get_tariff($('#select_sites').val()) : '') : ''
-      )
-    : ''
-  return resp
-}
-
-let sub_form = (data, form_id) => {
-  //   let submitable_data = {}
-  //   for (let i in data) {
-  //     console.log($(`#${i.split('*')[1]}`).val())
-  //   }
-  console.log('Hello')
-  $('#' + form_id).submit(function (e) {
-    e.preventDefault()
-  })
 }
 
 // Function define for create the form
 let create_form = (data, id, csrf) => {
   let form_html = `
     <form id='${id}'>
-    ${csrf}
+      ${csrf}
   `
 
   for (let i in data) {
-    let input_type = i.split('*')
+    let input_type = i.split('#')
 
     if (input_type[0] == 'select') {
       form_html += `
-            <div class='col-md-6'>
-                <label>${data[i][0]}</label>
-                <select id='${input_type[1]}' class='form-control' style='margin: 10px auto' required>
-                    <option>Select ${data[i][0]}</option>
-                    ${select_option(data[i][1])}
-                </select>
-            </div>
-        `
-    } else if (input_type[0] == 'text') {
+        <div class='col-md-${data['row']}'>
+          <label>${data[i][0]}</label>
+          <select id='${input_type[1]}_id' name='${input_type[1]}' class='form-control' style='margin: 10px auto' required>
+            <option>Select ${data[i][0]}</option>
+            ${select_option(data[i][1])}
+          </select>
+        </div>
+      `
+    } else if (input_type[0] == 'textarea') {
       form_html += `
-            <div class='col-md-6'>
-                <label>${data[i]}</label>
-                <input type='text' id='${input_type[1]}' class='form-control' required />
-            </div>
-        `
-    } else if (input_type[0] == 'tel') {
+        <div class='col-md-${data['row']}'>
+          <label>${data[i][0]}</label>
+          <textarea id='${input_type[1]}_id' name='${input_type[1]}' class='form-control' ${data[i][1]['attr']} ${
+        data[i][0].includes('*') ? 'required' : ''
+      }> </textarea>
+        </div>
+      `
+    } else if (input_type[0] != 'row') {
       form_html += `
-            <div class='col-md-6'>
-                <label>${data[i]}</label>
-                <input type='tel' id='${input_type[1]}' class='form-control' required />
-            </div>
-        `
-    } else if (input_type[0] == 'date') {
-      form_html += `
-            <div class='col-md-6'>
-                <label>${data[i]}</label>
-                <input type='date' id='${input_type[1]}' class='form-control' required />
-            </div>
-        `
-    } else if (input_type[0] == 'file') {
-      form_html += `
-            <div class='col-md-6'>
-                <label>${data[i]}</label>
-                <input type='file' id='${input_type[1]}' class='form-control' accept='image/png, image/jpeg' />
-            </div>
-        `
+        <div class='col-md-${data['row']}'>
+          <label>${data[i][0]}</label>
+          <input type='${input_type[0]}' id='${input_type[1]}_id' name='${input_type[1]}' class='form-control' ${
+        data[i][1] ? data[i][1]['attr'] : ''
+      } ${data[i][0].includes('*') ? 'required' : ''} />
+        </div>
+      `
     }
   }
 
   form_html += `
-            <div class='col-md-6'>
-                <br />
-                <button class='btn btn-danger' onclick='sub_form(${data}, "${id}"})'>Submit</button>
-            </div>
-        </form>
-    `
+      <div class='col-md-12'>
+        <br />
+        <button class='btn btn-danger'>Submit</button>
+      </div>
+    </form>
+  `
 
   return form_html
 }
