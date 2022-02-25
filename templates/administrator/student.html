@@ -1,0 +1,100 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Student list</title> {% endblock %} {% block body %}
+
+<section id="testimonials" class="parallax paralbackground"
+    style="background-image:url({{images}}/12.jpg); background-attachment:fixed;" data-img-width="600"
+    data-img-height="385" data-diff="100">
+    <div class="cover"></div>
+    <div class="container">
+        <div class="section-title hed">
+            <h4>Student details</h4>
+            <hr />
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="col-sm-12">
+            <button id="reg_std_popup_btn" class="btn btn-sm btn-danger float-right">Register student</button>
+        </div>
+        <div class="col-md-12" id="std_list"></div>
+    </div>
+</section>
+
+{% endblock %} {% block script %}
+<script>
+    $(document).ready(function async(e) {
+        class student extends form_handler {
+            constructor(url, id) {
+                super(url, id)
+                this.url = url
+                this.id = id
+            }
+            // Function define to create the list of student
+            std_data = async () => {
+                let tbl_conf = {
+                    columnDefs: [
+                        {
+                            targets: [0],
+                            visible: false,
+                            searchable: false
+                        }
+                    ]
+                }
+
+                // create_tbl(url, init element id, table configuration, options)
+                await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+            }
+
+            // Function defin to get Course data
+            get_sutdent_form = async () => {
+                let data = await this.get_post('api/course-api')
+                let course_list = {}
+
+                for (let i of data) {
+                    course_list[i['cors_name']] = i['id']
+                }
+
+                return await this.init_sutdent_form(course_list)
+            }
+
+            // Function define to createthe form and then add form in html
+            init_sutdent_form = async all_course => {
+                let student_form = {
+                    'text#name': ['Name*'],
+                    'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
+                    'text#father': ["Father's name*"],
+                    'text#mother': ["Mother's name*"],
+                    'date#dob': ['Date of birth*'],
+                    'text#address': ['Address*'],
+                    'tel#contact': ['Contact number*'],
+                    'select#category': ['Category*', { Gen: 'Gen', OBC: 'OBC', SC: 'SC', ST: 'ST', Other: 'Other' }],
+                    'select#course': ['Course*', all_course],
+                    'text#lpc': ['Last passed class*'],
+                    'text#passing_year': ['Passing year*'],
+                    'text#board': ['Board*'],
+                    'text#gread': ['Gread / Precentage / Division*'],
+                    'file#photo': ['Upload photo', { attr: 'accept="image/png, image/jpeg"' }],
+                    row: 6
+                }
+                return await this.create_form(student_form, '{% csrf_token %}')
+            }
+
+            // Function defin to call modal
+            add_edit_modal = async (header, value = false) => {
+                let std_form = await this.get_sutdent_form()
+                await this.init_modal('cims_modal', header, std_form, value)
+            }
+        }
+
+        let std = new student('api/student-api', 'student')
+
+        // Call function for first time
+        std.std_data()
+
+        $('#reg_std_popup_btn').on('click', async (e) => {
+            await std.add_edit_modal('Register student')
+        })
+    })
+</script>
+{% endblock %}

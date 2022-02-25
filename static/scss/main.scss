@@ -1,0 +1,49 @@
+// style for margin and Padding
+@for $i from 1 to 100 {
+  .m_#{$i} {
+    margin: $i + px;
+  }
+  .mt_#{$i} {
+    margin-top: $i + px;
+  }
+  .mb_#{$i} {
+    margin-bottom: $i + px;
+  }
+  .ml_#{$i} {
+    margin-left: $i + px;
+  }
+  .mr_#{$i} {
+    margin-right: $i + px;
+  }
+  .mx_#{$i} {
+    margin-top: $i + px;
+    margin-bottom: $i + px;
+  }
+  .my_#{$i} {
+    margin-left: $i + px;
+    margin-right: $i + px;
+  }
+  .p_#{$i} {
+    padding: $i + px;
+  }
+  .pt_#{$i} {
+    padding-top: $i + px;
+  }
+  .pb_#{$i} {
+    padding-bottom: $i + px;
+  }
+  .pl_#{$i} {
+    padding-left: $i + px;
+  }
+  .pr_#{$i} {
+    padding-right: $i + px;
+  }
+  .px_#{$i} {
+    padding-top: $i + px;
+    padding-bottom: $i + px;
+  }
+  .py_#{$i} {
+    padding-left: $i + px;
+    padding-right: $i + px;
+  }
+}

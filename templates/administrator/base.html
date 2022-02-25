@@ -1,150 +1,165 @@
 <!DOCTYPE html>
 
 <html>
-  <head runat="server">
-    {% load static %} {% block title %} {% endblock %}
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="mixturethemes" />
-    <meta name="keywords" content="" />
 
-    {% static 'css' as css %} {% static 'js' as js %} {% static 'images' as images %}
+<head runat="server">
+  {% load static %} {% block title %} {% endblock %}
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="description" content="" />
+  <meta name="author" content="mixturethemes" />
+  <meta name="keywords" content="" />
 
-    <link rel="shortcut icon" href="{{images}}/favicon.png" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="{{images}}/apple-touch-icon.html" />
-    <!-- Required Css Files -->
-    <link rel="stylesheet" type="text/css" href="{{css}}/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/font-awesome.css" />
-    <link rel="stylesheet" href="{{css}}/prettyPhoto.css" type="text/css" media="all" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/ionicons.min.css" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/material-icons.css" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/flexslider.css" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/style.css" />
-    <link rel="stylesheet" type="text/css" href="{{css}}/responsive.css" />
-    <link href="{{css}}/my.css" rel="stylesheet" />
-    <link href="{{css}}/sweetalert2.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <!-- Fonts -->
-    <link
-      href="http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic"
-      rel="stylesheet"
-      type="text/css"
-    />
-  </head>
-  <body>
-    <div>
-      <div class="preloader">
-        <img src="{{images}}/body-preloader.gif" alt="" />
-      </div>
-      <!-- Header Start -->
-      <header>
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-custom navbar-fixed-top">
-          <div class="container">
-            <!-- Navbar Header -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-              <div class="page-scroll">
-                <a class="navbar-brand" href="/dashboard">
-                  <img src="{{images}}/logo.jpg" />
-                  <!-- <span class="highlighted_company">C</span>IMS -->
-                </a>
-              </div>
+  {% static 'css' as css %} {% static 'js' as js %} {% static 'images' as images %}
+
+  <link rel="shortcut icon" href="{{images}}/favicon.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="{{images}}/apple-touch-icon.html" />
+  <!-- Required Css Files -->
+  <link rel="stylesheet" type="text/css" href="{{css}}/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/font-awesome.css" />
+  <link rel="stylesheet" href="{{css}}/prettyPhoto.css" type="text/css" media="all" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/ionicons.min.css" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/material-icons.css" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/flexslider.css" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/style.css" />
+  <link rel="stylesheet" type="text/css" href="{{css}}/responsive.css" />
+  <link href="{{css}}/my.css" rel="stylesheet" />
+  <link href="{{css}}/sweetalert2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <!-- Fonts -->
+  <link
+    href="http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic"
+    rel="stylesheet" type="text/css" />
+  <!-- Data table -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+</head>
+
+<body>
+  <div>
+    <div class="preloader">
+      <img src="{{images}}/body-preloader.gif" alt="" />
+    </div>
+    <!-- Header Start -->
+    <header>
+      <!-- Navbar Start -->
+      <nav class="navbar navbar-custom navbar-fixed-top">
+        <div class="container">
+          <!-- Navbar Header -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+            <div class="page-scroll">
+              <a class="navbar-brand" href="/dashboard">
+                <img src="{{images}}/logo.jpg" />
+                <!-- <span class="highlighted_company">C</span>IMS -->
+              </a>
             </div>
-            <!-- Navbar Menu -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu na_v_mobil">
-              <ul class="nav navbar-nav">
-                <li class="page-scroll">
-                  <a href="/dashboard" style="font-size: 20px"><i class="fa fa-home"></i></a>
-                </li>
-                <li class="page-scroll dropdown {{student}}">
-                  <a href="#">Student</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/std-registration" class="inverse">Registration</a></li>
-                    <li><a href="/std-list" class="inverse">Student List</a></li>
-                  </ul>
-                </li>
-                <li class="page-scroll"><a href="/course">Course</a></li>
-                <li class="page-scroll dropdown">
-                  <a href="#">Enroll</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/generate-enroll" class="inverse">Generate</a></li>
-                    <li><a href="/enroll-list" class="inverse">Enroll List</a></li>
-                  </ul>
-                </li>
-                <li class="page-scroll dropdown">
-                  <a href="#">Exam</a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/exam-marks" class="inverse">Exam Marks</a></li>
-                    <li><a href="/result-list" class="inverse">Result List</a></li>
-                  </ul>
-                </li>
-                <li class="page-scroll">
-                  <a href="#">Log Out</a>
-                </li>
+          </div>
+          <!-- Navbar Menu -->
+          <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu na_v_mobil">
+            <ul class="nav navbar-nav">
+              <li class="page-scroll">
+                <a href="/dashboard" style="font-size: 20px"><i class="fa fa-home"></i></a>
+              </li>
+              <li class="page-scroll dropdown {{student}}">
+                <a href="/student">Student</a>
+                <!-- <ul class="dropdown-menu">
+                  <li><a href="/std-registration" class="inverse">Registration</a></li>
+                  <li><a href="/std-list" class="inverse">Student List</a></li>
+                </ul> -->
+              </li>
+              <li class="page-scroll"><a href="/course">Course</a></li>
+              <li class="page-scroll dropdown">
+                <a href="#">Enroll</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/generate-enroll" class="inverse">Generate</a></li>
+                  <li><a href="/enroll-list" class="inverse">Enroll List</a></li>
+                </ul>
+              </li>
+              <li class="page-scroll dropdown">
+                <a href="#">Exam</a>
+                <ul class="dropdown-menu">
+                  <li><a href="/exam-marks" class="inverse">Exam Marks</a></li>
+                  <li><a href="/result-list" class="inverse">Result List</a></li>
+                </ul>
+              </li>
+              <li class="page-scroll">
+                <a href="#">Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- //Navbar End -->
+    </header>
+    <!-- //Header End -->
+
+    {% block body %} {% endblock %}
+
+    <!-- Footer Start -->
+    <footer id="footer">
+      <div class="container">
+        <!-- Copyright Section -->
+        <div class="copyright-section">
+          <div class="row">
+            <div class="col-md-6">
+              <p>&copy; All Rights Reserved - 2019 | Design By <a href="#">Abhay Singh</a></p>
+            </div>
+            <div class="col-md-6">
+              <ul class="footer-nav">
+                <li><a href="#">Sitemap</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact</a></li>
               </ul>
             </div>
           </div>
-        </nav>
-        <!-- //Navbar End -->
-      </header>
-      <!-- //Header End -->
-
-      {% block body %} {% endblock %}
-
-      <!-- Footer Start -->
-      <footer id="footer">
-        <div class="container">
-          <!-- Copyright Section -->
-          <div class="copyright-section">
-            <div class="row">
-              <div class="col-md-6">
-                <p>&copy; All Rights Reserved - 2019 | Design By <a href="#">Abhay Singh</a></p>
-              </div>
-              <div class="col-md-6">
-                <ul class="footer-nav">
-                  <li><a href="#">Sitemap</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
-      </footer>
-      <!-- Footer End -->
-
-      <!-- Back To Top -->
-      <div class="page-scroll">
-        <a href="#page-top" class="back-to-top"><i class="fa fa-angle-up"></i></a>
       </div>
+    </footer>
+    <!-- Footer End -->
 
-      <!-- load event -->
+    <!-- Back To Top -->
+    <div class="page-scroll">
+      <a href="#page-top" class="back-to-top"><i class="fa fa-angle-up"></i></a>
     </div>
 
-    <!-- Required Javascript Files -->
-    <script src="{{js}}/my.js"></script>
-    <script data-cfasync="false" src="{{js}}/email-decode.min.js"></script>
-    <script src="{{js}}/jquery.js"></script>
-    <script src="{{js}}/jquery-migrate-1.2.1.min.js"></script>
-    <script src="{{js}}/bootstrap.min.js"></script>
-    <script src="{{js}}/parallax.min.js"></script>
-    <script src="{{js}}/count-to.js"></script>
-    <script src="{{js}}/jquery.appear.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src="{{js}}/jquery.prettyPhoto.js"></script>
-    <script src="{{js}}/imagesloaded.pkgd.min.js"></script>
-    <script src="{{js}}/jquery.isotope.min.js"></script>
-    <script src="{{js}}/jquery.equalheights.js"></script>
-    <script src="{{js}}/jquery.flexslider.js"></script>
-    <script src="{{js}}/jquery.easing.min.js"></script>
-    <script src="{{js}}/main.js"></script>
-    <script src="{{js}}/sweetalert2.min.js"></script>
+    <!-- CIMS modal -->
+    <div class="modal fade" id="cims_modal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="modal_header"></h4>
+          </div>
+          <div class="row modal_body_padding" id="modal_body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    {% block script %} {% endblock %}
-  </body>
+  <!-- Required Javascript Files -->
+  <script src="{{js}}/my.js"></script>
+  <script data-cfasync="false" src="{{js}}/email-decode.min.js"></script>
+  <script src="{{js}}/jquery.js"></script>
+  <script src="{{js}}/jquery-migrate-1.2.1.min.js"></script>
+  <script src="{{js}}/bootstrap.min.js"></script>
+  <script src="{{js}}/parallax.min.js"></script>
+  <script src="{{js}}/count-to.js"></script>
+  <script src="{{js}}/jquery.appear.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="{{js}}/jquery.prettyPhoto.js"></script>
+  <script src="{{js}}/imagesloaded.pkgd.min.js"></script>
+  <script src="{{js}}/jquery.isotope.min.js"></script>
+  <script src="{{js}}/jquery.equalheights.js"></script>
+  <script src="{{js}}/jquery.flexslider.js"></script>
+  <script src="{{js}}/jquery.easing.min.js"></script>
+  <script src="{{js}}/main.js"></script>
+  <script src="{{js}}/sweetalert2.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+  {% block script %} {% endblock %}
+</body>
+
 </html>

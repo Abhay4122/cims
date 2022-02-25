@@ -1,12 +1,7 @@
 {% extends 'administrator/base.html' %} {% block title %} <title>Course</title> {% endblock %} {% block body %}
 
-<section
-  class="parallax paralbackground"
-  style="background-image: url({{images}}/1.jpg); background-attachment: fixed"
-  data-img-width="600"
-  data-img-height="385"
-  data-diff="100"
->
+<section class="parallax paralbackground" style="background-image: url({{images}}/1.jpg); background-attachment: fixed"
+  data-img-width="600" data-img-height="385" data-diff="100">
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
@@ -19,45 +14,10 @@
 <section>
   <div class="container">
     <div class="col-md-12">
-      <div style="text-align: center">
-        <h3 style="color: #e74e3e">Course Detail</h3>
-        <hr style="width: 25%" />
+      <div class="col-sm-12">
+        <button id="add_cors_popup_btn" class="btn btn-sm btn-danger float-right">Add course</button>
       </div>
-      <div id="cors_form"></div>
-      <!-- <div class="col-md-4">
-        <label>Course Category</label>
-        <select class="form-control" style="margin-top: 10px">
-          <option>Select</option>
-          <option>Diploma Courses</option>
-          <option>Tution Courses</option>
-          <option>Distance Courses</option>
-          <option>Regular Courses</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <label>Course Name</label>
-        <input type="text" class="form-control"></input>
-      </div>
-      <div class="col-md-4">
-        <label>Full-form</label>
-        <input type="text" class="form-control"></input>
-      </div>
-      <div class="col-md-4">
-        <label>Course Duration</label>
-        <input type="text" class="form-control"></input>
-      </div>
-      <div class="col-md-4">
-        <label>Course Detail</label>
-        <textarea class="form-control" rows="1"> </textarea>
-      </div>
-      <div class="col-md-4">
-        <label>Course Package</label>
-        <input type="number" class="form-control"></input>
-      </div>
-      <div class="col-md-4">
-        <br />
-        <button class="btn btn-danger"> Submit </button>
-      </div> -->
+      <div id="cors_list"></div>
     </div>
   </div>
 </section>
@@ -65,40 +25,98 @@
 {% endblock %} {% block script %}
 <script>
   $(document).ready(function (e) {
-    let [course_form, id] = [
-      {
-        'select#cors_cat': [
-          'Category*',
-          {
-            'Diploma Courses': 'Diploma Courses',
-            'Tution Courses': 'Tution Courses',
-            'Distance Courses': 'Distance Courses',
-            'Regular Courses': 'Regular Courses'
-          }
-        ],
-        'text#cors_name': ['Name*'],
-        'text#cors_full': ['Full form*'],
-        'text#cors_dur': ['Duration*'],
-        'textarea#cors_detail': ['Detail', { attr: "rows='1'" }],
-        'number#cors_pack': ['Package (INR)*'],
-        row: 4
-      },
-      'course_form'
-    ]
-
-    $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
-
-    $('#' + id).on('submit', async e => {
-      e.preventDefault()
-
-      let form_data = new FormData(document.getElementById(id))
-
-      let response = await get_post('api/course-api', form_data, true)
-
-      if (response.status == 201) {
-        $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
+    class course extends form_handler {
+      constructor(url, id) {
+        super(url, id)
+        this.url = url
+        this.id = id
+        this.form_field = {
+          'select#course_category': [
+            'Category*',
+            {
+              'Diploma Courses': 'Diploma Courses',
+              'Tution Courses': 'Tution Courses',
+              'Distance Courses': 'Distance Courses',
+              'Regular Courses': 'Regular Courses'
+            }
+          ],
+          'text#course_name': ['Name*'],
+          'text#course_full_form': ['Full form*'],
+          'text#course_duration': ['Duration*'],
+          'textarea#course_detail': ['Detail', { attr: "rows='1'" }],
+          'number#course_package': ['Package (INR)*'],
+          row: 4
+        }
       }
+
+      // Function define to create the list of student
+      std_data = async () => {
+        let tbl_conf = {
+          columnDefs: [
+            {
+              targets: [0],
+              visible: false,
+              searchable: false
+            }
+          ]
+        }
+
+        // create_tbl(url, init element id, table configuration, options)
+        await this.create_tbl(this.url, 'cors_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+      }
+
+      // Function defin to call modal
+      call_modal = async () => {
+        let cors_form = await this.create_form(this.form_field, '{% csrf_token %}')
+        await this.init_modal('cims_modal', 'Add course', cors_form)
+      }
+    }
+
+    let cors = new course('api/course-api', 'course')
+
+    // Call function for first time
+    cors.std_data()
+
+    $('#add_cors_popup_btn').on('click', async (e) => {
+      await cors.call_modal()
     })
+
+
+
+    // let [course_form, id] = [
+    //   {
+    //     'select#cors_cat': [
+    //       'Category*',
+    //       {
+    //         'Diploma Courses': 'Diploma Courses',
+    //         'Tution Courses': 'Tution Courses',
+    //         'Distance Courses': 'Distance Courses',
+    //         'Regular Courses': 'Regular Courses'
+    //       }
+    //     ],
+    //     'text#cors_name': ['Name*'],
+    //     'text#cors_full': ['Full form*'],
+    //     'text#cors_dur': ['Duration*'],
+    //     'textarea#cors_detail': ['Detail', { attr: "rows='1'" }],
+    //     'number#cors_pack': ['Package (INR)*'],
+    //     row: 4
+    //   },
+    //   'course_form'
+    // ]
+
+    // $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
+
+    // $('#' + id).on('submit', async e => {
+    //   e.preventDefault()
+
+    //   let form_data = new FormData(document.getElementById(id))
+
+    //   let response = await get_post('api/course-api', form_data, true)
+
+    //   if (response.status == 201) {
+    //     $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
+    //   }
+    // })
   })
 </script>
 

@@ -9,7 +9,7 @@ class Student(models.Model):
     mother = models.CharField(max_length=150)
     dob = models.DateField()
     address = models.CharField(max_length=250)
-    contact = models.CharField(max_length=15)
+    contact = models.CharField(max_length=20)
     category = models.CharField(max_length=25)
     course = models.ForeignKey('Course', on_delete=models.DO_NOTHING)
     lpc = models.CharField(max_length=50)
@@ -17,13 +17,14 @@ class Student(models.Model):
     board = models.CharField(max_length=100)
     gread = models.CharField(max_length=20)
     photo = models.ImageField(upload_to='edu/images', blank=True, null=True)
-    reg_year = models.CharField(max_length=10)
-    reg_mon = models.CharField(max_length=10)
-    session_year = models.CharField(max_length=10)
-    session_month = models.CharField(max_length=10)
+
+    reg_year = models.CharField(max_length=10, blank=True, null=True)
+    reg_mon = models.CharField(max_length=10, blank=True, null=True)
+    session_year = models.CharField(max_length=10, blank=True, null=True)
+    session_month = models.CharField(max_length=10, blank=True, null=True)
     dor = models.DateField(auto_now_add=True)
 
-    enroll_number = models.CharField(max_length=50)
+    enroll_number = models.CharField(max_length=50, blank=True, null=True)
     cretificate_no = models.CharField(max_length=100, blank=True, null=True)
 
     theory_s1 = models.CharField(max_length=100, blank=True, null=True)

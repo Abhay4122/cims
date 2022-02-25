@@ -43,7 +43,7 @@
     }
 
     // Function define to createthe form and then add form in html
-    let get_sutdent_form = async course_data => {
+    let get_sutdent_form = async all_course => {
       let [student_form, id] = [
         {
           'text#name': ['Name*'],
@@ -54,7 +54,7 @@
           'text#address': ['Address*'],
           'tel#contact': ['Contact number*'],
           'select#category': ['Category*', { Gen: 'Gen', OBC: 'OBC', SC: 'SC', ST: 'ST', Other: 'Other' }],
-          'select#course': ['Course*', course_data],
+          'select#course': ['Course*', all_course],
           'text#lpc': ['Last passed class*'],
           'text#passing_year': ['Passing year*'],
           'text#board': ['Board*'],
@@ -72,11 +72,7 @@
 
         let form_data = new FormData(document.getElementById(id))
 
-        await get_post('api/student-api', form_data, true)
-
-        if (response.status == 201) {
-          $('#std_form').html(await create_form(student_form, id, '{% csrf_token %}'))
-        }
+        let response = await get_post('api/student-api', form_data, true)
       })
     }
 

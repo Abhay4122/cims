@@ -1,23 +1,12 @@
-{% extends 'administrator/base.html' %} {% block title %} <title>Student list</title>
-<style>
-  .header-center {
-    text-align: center;
-  }
-</style>
-{% endblock %} {% block body %}
+{% extends 'administrator/base.html' %} {% block title %} <title>Student list</title> {% endblock %} {% block body %}
 
-<section
-  id="testimonials"
-  class="parallax paralbackground"
-  style="background-image: url({{images}}/12.jpg); background-attachment: fixed"
-  data-img-width="600"
-  data-img-height="385"
-  data-diff="100"
->
+<section id="testimonials" class="parallax paralbackground"
+  style="background-image:url({{images}}/12.jpg); background-attachment:fixed;" data-img-width="600"
+  data-img-height="385" data-diff="100">
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
-      <h4>Student List</h4>
+      <h4>Student list</h4>
       <hr />
     </div>
   </div>
@@ -25,292 +14,44 @@
 
 <section>
   <div class="container">
-    <div class="col-md-12" style="margin-bottom: 40px">
-      <div class="col-md-3">
-        <asp:Label ID="Label1" runat="server" Text="Search By"></asp:Label>
-        <asp:DropDownList
-          ID="DropDownList1"
-          class="form-control"
-          runat="server"
-          AutoPostBack="True"
-          OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged"
-        >
-          <asp:ListItem>Select</asp:ListItem>
-          <asp:ListItem>All</asp:ListItem>
-          <asp:ListItem>Course</asp:ListItem>
-          <asp:ListItem>Gender</asp:ListItem>
-          <asp:ListItem>Category</asp:ListItem>
-          <asp:ListItem>Name</asp:ListItem>
-          <asp:ListItem>Admission Date</asp:ListItem>
-          <asp:ListItem>Certified Student</asp:ListItem>
-        </asp:DropDownList>
-      </div>
-      <div class="col-md-3">
-        <asp:Label ID="Label2" runat="server" Text="Choose Course"></asp:Label>
-        <asp:DropDownList
-          ID="DropDownList2"
-          class="form-control"
-          runat="server"
-          AutoPostBack="True"
-          OnSelectedIndexChanged="DropDownList2_SelectedIndexChanged"
-        ></asp:DropDownList>
-
-        <asp:Label ID="Label3" runat="server" Text="Gender"></asp:Label>
-        <asp:DropDownList
-          ID="DropDownList3"
-          class="form-control"
-          runat="server"
-          AutoPostBack="True"
-          OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged"
-        >
-          <asp:ListItem>Select</asp:ListItem>
-          <asp:ListItem>Male</asp:ListItem>
-          <asp:ListItem>Female</asp:ListItem>
-          <asp:ListItem>Other</asp:ListItem>
-        </asp:DropDownList>
-
-        <asp:Label ID="Label4" runat="server" Text="Category"></asp:Label>
-        <asp:DropDownList
-          ID="DropDownList4"
-          class="form-control"
-          runat="server"
-          AutoPostBack="True"
-          OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged"
-        >
-          <asp:ListItem>Select</asp:ListItem>
-          <asp:ListItem>Gen</asp:ListItem>
-          <asp:ListItem>OBC</asp:ListItem>
-          <asp:ListItem>SC</asp:ListItem>
-          <asp:ListItem>ST</asp:ListItem>
-          <asp:ListItem>Other</asp:ListItem>
-        </asp:DropDownList>
-
-        <div style="margin-top: 20px">
-          <asp:TextBox ID="TextBox1" runat="server" class="form-control" placeholder="Enter Student Name"></asp:TextBox>
-        </div>
-
-        <div style="margin-top: -30px">
-          <asp:Label ID="Label5" runat="server" Text="From Date"></asp:Label>
-          <asp:TextBox ID="TextBox2" runat="server" class="form-control" TextMode="date"></asp:TextBox>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div style="margin-top: -10px">
-          <asp:Label ID="Label6" runat="server" Text="To Date"></asp:Label>
-          <asp:TextBox ID="TextBox3" runat="server" class="form-control" TextMode="date"></asp:TextBox>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div style="margin-top: 10px">
-          <asp:Button ID="Button1" runat="server" class="btn btn-danger" Text="Search" OnClick="Button1_Click" />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12">
-      <asp:GridView
-        ID="GridView1"
-        runat="server"
-        AlternatingRowStyle-BackColor="Beige"
-        AutoGenerateColumns="False"
-        Width="100%"
-        EmptyDataRowStyle-ForeColor="Red"
-        DataKeyNames="std_id"
-        OnPageIndexChanging="GridView1_PageIndexChanging"
-        OnRowEditing="GridView1_RowEditing"
-        OnRowUpdating="GridView1_RowUpdating"
-        OnRowCancelingEdit="GridView1_RowCancelingEdit"
-        OnRowDeleting="GridView1_RowDeleting"
-        EmptyDataRowStyle-Font-Bold="true"
-        EmptyDataRowStyle-Font-Size="10px"
-        CssClass="table table-bordered table-striped"
-        HeaderStyle-Height="25"
-        AllowPaging="True"
-        PageSize="30"
-      >
-        <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last" />
-        <PagerStyle CssClass="pagination-ys" />
-        <Columns>
-          <asp:TemplateField
-            HeaderText="S.No."
-            ItemStyle-Width="70px"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <%#Container .DataItemIndex +1 %>
-              <asp:Label ID="std_id" Style="display: none;" runat="server" Text='<%#Eval("std_id") %>'></asp:Label><br />
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="F Name"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="f_nam" runat="server" Text='<%#Eval("f_nam") %>'></asp:Label>
-            </ItemTemplate>
-            <EditItemTemplate>
-              <asp:TextBox ID="e_f_nam" runat="server" Text='<%#Eval("f_nam") %>'></asp:TextBox>
-            </EditItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="L Name"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="l_nam" runat="server" Text='<%#Eval("l_nam") %>'></asp:Label>
-            </ItemTemplate>
-            <EditItemTemplate>
-              <asp:TextBox ID="e_l_nam" runat="server" Text='<%#Eval("l_nam") %>'></asp:TextBox>
-            </EditItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Father"
-            ItemStyle-Width="150px"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="father" runat="server" Text='<%#Eval("father") %>'></asp:Label>
-            </ItemTemplate>
-            <EditItemTemplate>
-              <asp:TextBox ID="e_father" runat="server" Text='<%#Eval("father") %>'></asp:TextBox>
-            </EditItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Admission Session"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="reg_sess" runat="server" Text='<%#Eval("reg_session") %>'></asp:Label>-
-              <asp:Label ID="Label7" runat="server" Text='<%#Eval("reg_det") %>'></asp:Label> to
-              <asp:Label ID="Label8" runat="server" Text='<%#Eval("end_session") %>'></asp:Label>-
-              <asp:Label ID="Label9" runat="server" Text='<%#Eval("end_session_year") %>'></asp:Label>
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Course"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="course" runat="server" Text='<%#Eval("course") %>'></asp:Label>
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Address"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="location" runat="server" Text='<%#Eval("location") %>'></asp:Label>
-            </ItemTemplate>
-            <EditItemTemplate>
-              <asp:TextBox ID="e_location" runat="server" Text='<%#Eval("location") %>'></asp:TextBox>
-            </EditItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Contact"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:Label ID="mono" runat="server" Text='<%#Eval("mono") %>'></asp:Label>
-            </ItemTemplate>
-            <EditItemTemplate>
-              <asp:TextBox ID="e_mono" runat="server" Text='<%#Eval("mono") %>'></asp:TextBox>
-            </EditItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Photo"
-            ItemStyle-Height="50"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:LinkButton ID="btnView" runat="server" CommandName="Update"> <img src='../<%#Eval("img")%> ' width="50px" /> </asp:LinkButton>
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Edit"
-            ItemStyle-Width="50px"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <asp:LinkButton ID="btnEdit" runat="server" CommandName="Edit"> <i class="fa fa-edit"></i> </asp:LinkButton>
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-        <Columns>
-          <asp:TemplateField
-            HeaderText="Del"
-            ItemStyle-Width="50px"
-            ItemStyle-Height="20"
-            ItemStyle-VerticalAlign="Middle"
-            ItemStyle-HorizontalAlign="Center"
-            HeaderStyle-CssClass="header-center"
-          >
-            <ItemTemplate>
-              <span onclick="return confirm('Are you sure you want to delete this record?')">
-                <asp:LinkButton ID="btnDelete" runat="server" CommandName="Delete"> <i class="fa fa-trash"></i> </asp:LinkButton>
-              </span>
-            </ItemTemplate>
-          </asp:TemplateField>
-        </Columns>
-
-        <EmptyDataRowStyle Font-Bold="True" Font-Size="10px" ForeColor="Red"></EmptyDataRowStyle>
-
-        <FooterStyle BackColor="#99CCCC" ForeColor="#337AB7" />
-        <HeaderStyle BackColor="#337AB7" Font-Bold="True" ForeColor="#CCCCFF" />
-        <PagerStyle BackColor="#99CCCC" ForeColor="#337AB7" HorizontalAlign="Left" />
-        <RowStyle BackColor="White" ForeColor="#337AB7" />
-        <SelectedRowStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
-        <SortedAscendingCellStyle BackColor="#EDF6F6" />
-        <SortedAscendingHeaderStyle BackColor="#0D4AC4" />
-        <SortedDescendingCellStyle BackColor="#D6DFDF" />
-        <SortedDescendingHeaderStyle BackColor="#002876" />
-      </asp:GridView>
-    </div>
+    <div class="col-md-12" id="std_list"></div>
   </div>
 </section>
 
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function async(e) {
+    let std_data = async () => {
+      let data = await get_post('api/student-api')
+      let th = []
+
+      for (let i in data[0]) {
+        let heading = i.replaceAll('_', ' ')
+        th.push(heading.charAt(0).toUpperCase() + heading.slice(1))
+      }
+
+      let tbl_conf = {
+        columnDefs: [
+          {
+            targets: [0],
+            visible: false,
+            searchable: false
+          }
+        ],
+        fnRowCallback: function (nRow, aData, iDisplayIndex) {
+          // $('td:first', nRow).html(iDisplayIndex + 1)
+          // if (aData[6]) {
+          //   $('td:eq(5)', nRow).html(`<img src="${aData[6]}" style="height: 50px; cursor: pointer;" />`)
+          // }
+        }
+      }
+
+      // create_tbl(table heading, data, init element id, table configuration, options)
+      let get_tbl = await create_tbl(th, data, 'std_list', tbl_conf, { Edit: [-3, 'api/student-api'], View: [-2, 'api/student-api'], Delete: [-1, 'api/student-api'] })
+    }
+
+    // Call function for first time
+    std_data()
+  })
+</script>
 {% endblock %}

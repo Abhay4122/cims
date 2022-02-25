@@ -30,14 +30,14 @@ def regular(request):
 def dashboard(request):
     return render(request, 'administrator/dashboard.html')
 
-def std_registration(request):
+def student(request):
     if request.method == 'POST':
         print(f'\n\n\{request.POST}\n\n\n')
         response = {'response': 200, 'msg_type': 'success', 'msg': 'Student created succesfully', 'student': 'active'}
     else:
         response = {'student': 'active'}
 
-    return render(request, 'administrator/std_registration.html', response)
+    return render(request, 'administrator/student.html', response)
 
 def std_list(request):
     return render(request, 'administrator/std_list.html')

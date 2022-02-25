@@ -1,7 +1,13 @@
-## To delete the migration files
+### Convert sass/scss in css
 
-### `$ find . -path "*/migrations/*.py" -not -name "__init__.py" -delete`
+for this we can use many sass/scss compiler but here we gona use Vscode live sass compiler
+step 1: Download the live sass compiler extension in vscode
+step 2: pest the script billow in settings.json
 
-### `$ find . -path "*/migrations/*.pyc" -delete`
-
-### `$ rm -f db.sqlite3`
+"liveSassCompile.settings.formats": [
+{
+"format": "expanded",
+"extensionName": ".css",
+"savePath": "~/../css"
+}
+]

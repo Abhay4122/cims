@@ -47,3 +47,46 @@ GET {{baseUrl}}/student-api
 
 ### Get specific data of student
 GET {{baseUrl}}/student-api?id=1
+
+### Add new Course
+POST {{baseUrl}}/student-api
+content-type: {{contentType}}
+
+{
+    "name" : "Test",
+    "gender" : "Test",
+    "father" : "Test",
+    "mother" : "Test",
+    "dob" : "2021-01-23",
+    "address" : "Test",
+    "contact" : "Test",
+    "category" : "Test",
+    "course" : "3",
+    "lpc" : "Test",
+    "passing_year" : "2021",
+    "board" : "Test",
+    "gread" : "Test"
+}
+
+### Update Course
+PUT {{baseUrl}}/student-api?id=1
+content-type: {{contentType}}
+
+{
+    "name": "Rahul patel",
+    "gender": "Male",
+    "father": "Rohan patel",
+    "mother": "Radha patel",
+    "dob": "2022-01-21",
+    "address": "Rampur varanasi",
+    "contact": "8090607080",
+    "category": "OBC",
+    "course": 3,
+    "lpc": "BSc",
+    "passing_year": "2021",
+    "board": "MGKVP",
+    "gread": "First class"
+}
+
+### Delete the Student
+DELETE {{baseUrl}}/student-api?id=4
