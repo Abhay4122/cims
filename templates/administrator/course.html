@@ -26,10 +26,11 @@
 <script>
   $(document).ready(function (e) {
     class course extends form_handler {
-      constructor(url, id) {
-        super(url, id)
+      constructor(url, id, modal_id) {
+        super()
         this.url = url
         this.id = id
+        this.modal_id = modal_id
         this.form_field = {
           'select#course_category': [
             'Category*',
@@ -66,57 +67,20 @@
       }
 
       // Function defin to call modal
-      call_modal = async () => {
+      add_edit_modal = async (header) => {
         let cors_form = await this.create_form(this.form_field, '{% csrf_token %}')
-        await this.init_modal('cims_modal', 'Add course', cors_form)
+        await this.init_modal(header, cors_form)
       }
     }
 
-    let cors = new course('api/course-api', 'course')
+    let cors = new course('api/course-api', 'course', 'cims_modal')
 
     // Call function for first time
     cors.std_data()
 
     $('#add_cors_popup_btn').on('click', async (e) => {
-      await cors.call_modal()
+      await cors.add_edit_modal('Register course')
     })
-
-
-
-    // let [course_form, id] = [
-    //   {
-    //     'select#cors_cat': [
-    //       'Category*',
-    //       {
-    //         'Diploma Courses': 'Diploma Courses',
-    //         'Tution Courses': 'Tution Courses',
-    //         'Distance Courses': 'Distance Courses',
-    //         'Regular Courses': 'Regular Courses'
-    //       }
-    //     ],
-    //     'text#cors_name': ['Name*'],
-    //     'text#cors_full': ['Full form*'],
-    //     'text#cors_dur': ['Duration*'],
-    //     'textarea#cors_detail': ['Detail', { attr: "rows='1'" }],
-    //     'number#cors_pack': ['Package (INR)*'],
-    //     row: 4
-    //   },
-    //   'course_form'
-    // ]
-
-    // $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
-
-    // $('#' + id).on('submit', async e => {
-    //   e.preventDefault()
-
-    //   let form_data = new FormData(document.getElementById(id))
-
-    //   let response = await get_post('api/course-api', form_data, true)
-
-    //   if (response.status == 201) {
-    //     $('#cors_form').html(create_form(course_form, id, '{% csrf_token %}'))
-    //   }
-    // })
   })
 </script>
 

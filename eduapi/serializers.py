@@ -46,8 +46,13 @@ class StudentListSerializer(serializers.ModelSerializer):
         )
 
 
-# Student all fields
-class StudentAllFiedsSerializer(serializers.ModelSerializer):
+# Student serializer for detail view
+class StudentDetailSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = (
+            'id', 'name', 'gender', 'father', 'mother', 'dob', 'address', 'contact', 'category',
+            'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year', 'reg_mon',
+            'session_year', 'session_month', 'enroll_number', 'dor'
+        )

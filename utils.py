@@ -67,7 +67,6 @@ class ViewUtil(MainUtils):
 				**{'status': status.HTTP_201_CREATED},
 				**self.resp_fun(msg, load_link, 'success')
 			}
-			self.prin()
 		else:
 			resp = serialize.errors
 		
@@ -86,7 +85,12 @@ class ViewUtil(MainUtils):
 				serialize = serializer(get_data[0], request.data)
 				if serialize.is_valid():
 					serialize.save()
-					resp = serialize.data 
+					
+					msg = f'{msg_prifix} successfully !!'
+					resp = {
+						**{'status': status.HTTP_201_CREATED},
+						**self.resp_fun(msg, load_link, 'success')
+					}
 				else:
 					resp = serialize.errors
 			else:

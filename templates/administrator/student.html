@@ -25,10 +25,11 @@
 <script>
     $(document).ready(function async(e) {
         class student extends form_handler {
-            constructor(url, id) {
-                super(url, id)
+            constructor(url, id, modal_id) {
+                super()
                 this.url = url
                 this.id = id
+                this.modal_id = modal_id
             }
             // Function define to create the list of student
             std_data = async () => {
@@ -52,7 +53,7 @@
                 let course_list = {}
 
                 for (let i of data) {
-                    course_list[i['cors_name']] = i['id']
+                    course_list[i['course_name']] = i['id']
                 }
 
                 return await this.init_sutdent_form(course_list)
@@ -81,13 +82,13 @@
             }
 
             // Function defin to call modal
-            add_edit_modal = async (header, value = false) => {
+            add_edit_modal = async (header) => {
                 let std_form = await this.get_sutdent_form()
-                await this.init_modal('cims_modal', header, std_form, value)
+                await this.init_modal(header, std_form)
             }
         }
 
-        let std = new student('api/student-api', 'student')
+        let std = new student('api/student-api', 'student', 'cims_modal')
 
         // Call function for first time
         std.std_data()

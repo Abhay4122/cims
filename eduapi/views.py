@@ -24,10 +24,10 @@ class CourseApi(APIView):
         return self.obj.post(request, Course, CourseSerializer, 'Course created', '/course')
     
     def put(self, request):
-        return self.obj.put(request, Course, CourseSerializer, 'Course')
+        return self.obj.put(request, Course, CourseSerializer, 'Course updated', '/course')
     
     def delete(self, request):
-        return self.obj.delete(request, Course, 'Course')
+        return self.obj.delete(request, Course, 'Course', '/course')
 
 
 class StudentApi(APIView):
@@ -37,11 +37,11 @@ class StudentApi(APIView):
         self.obj = ViewUtil()
 
     def get(self, request):
-        return self.obj.get(request, Student, StudentListSerializer, StudentSerializer, 'Student')
+        return self.obj.get(request, Student, StudentListSerializer, StudentDetailSerializer, 'Student')
     
     def post(self, request):
         course = self.obj.get_model_data(Course, request.POST.get('course'))
-        data = self.get_course_detail(course[0].cors_dur)
+        data = self.get_course_detail(course[0].course_duration)
         try:
             request.data._mutable = True
         except Exception as e:
@@ -53,13 +53,18 @@ class StudentApi(APIView):
     
     def put(self, request):
         course = self.obj.get_model_data(Course, request.POST.get('course'))
-        data = self.get_course_detail(course[0].cors_dur)
+        data = self.get_course_detail(course[0].course_duration)
+        try:
+            request.data._mutable = True
+        except Exception as e:
+            self.obj.prin(e)
+
         request.data.update(data)
         
-        return self.obj.put(request, Student, StudentSerializer, 'Student')
+        return self.obj.put(request, Student, StudentSerializer, 'Student updated', '/student')
     
     def delete(self, request):
-        return self.obj.delete(request, Student, 'Student')
+        return self.obj.delete(request, Student, 'Student', '/student')
     
     def get_course_detail(self, course_dur):
         date = datetime.today().date()
