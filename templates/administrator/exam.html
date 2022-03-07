@@ -1,0 +1,151 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Course</title> {% endblock %} {% block body %}
+
+<section class="parallax paralbackground"
+  style="background-image: url({{images}}/certificate.png); background-attachment: fixed" data-img-width="600"
+  data-img-height="385" data-diff="100">
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Marks Detail</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="col-md-12">
+      <div class="col-sm-12">
+        <button id="add_marks_popup_btn" class="btn btn-sm btn-danger float-right">Add marks</button>
+      </div>
+      <div id="marks_list"></div>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function (e) {
+    class exam extends form_handler {
+      constructor(url, id, modal_id) {
+        super()
+        this.url = url
+        this.id = id
+        this.modal_id = modal_id
+        this.exam_form = {
+          'select#name': ['Student*'],
+          'text#father': ["Father's name#"],
+          'text#course': ["Course#"],
+          'text#admission_session': ['Admission session#'],
+          'text#registration_number': ['Registration number#'],
+          'text#enroll_number': ['Enroll number#'],
+          row: 6
+        }
+      }
+      // Function define to create the list of exam
+      exam_data = async () => {
+        let tbl_conf = {
+          columnDefs: [
+            {
+              targets: [0, 2, 4],
+              visible: false,
+              searchable: false
+            }
+          ]
+        }
+
+        // create_tbl(url, init element id, table configuration, options)
+        await this.create_tbl(this.url, 'marks_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+      }
+
+      // Function defin to get all student
+      get_exam_form = async () => {
+        let data = await this.get_post(this.url)
+        let std_list = {}
+
+        for (let i of data) {
+          std_list[i['name']] = `${i['id']}*${i['name']}*${i['father']}*${i['course']}*${i['admission_session']}*754/V-51176*${i['enroll_number']}`
+        }
+
+        return await this.init_exam_form(std_list)
+      }
+
+      // Function define to createthe form and then add form in html
+      init_exam_form = async all_student => {
+        this.exam_form['select#name'].push(all_student)
+
+        return await this.create_form(this.exam_form, '{% csrf_token %}')
+      }
+
+      // Function defin to call modal
+      add_edit_modal = async header => {
+        let std_form = await this.get_exam_form()
+        await this.init_modal(header, std_form)
+
+        // Onchange name field call the function
+        $('#name_id').on('change', async e => {
+          const val = e.target.value.split('*')
+          const values = {
+            'father': val[2],
+            'course': val[3],
+            'admission_session': val[4],
+            'registration_number': val[5],
+            'enroll_number': val[6]
+          }
+          let extend_form = {}
+
+          for (const i in this.exam_form) {
+            const id = i.split('#')[1]
+            if (id != 'name') {
+              $(`#${id}_id`).val(values[id])
+            }
+          }
+
+          if (val[3].toLowerCase() == 'adca') {
+            extend_form = {
+              'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
+              'text#os': ["Operating System(S1) / 30*"],
+              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+              'text#theory_s2': ["Theory(Accounting, C language)(S2) / 100"],
+              'text#pretical_s2': ["Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70"],
+              'text#oral_s2': ["Oral/Project(S2) / 30"],
+            }
+          } else if (val[3].toLowerCase() == 'dfa') {
+            extend_form = {
+              'text#theory_s1': ["Theory (Fundamental, Accounting) / 100*"],
+              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+              'text#oral_s1': ["Oral/Project / 30*"],
+            }
+          } else {
+            extend_form = {
+              'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
+              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+              'text#oral_s1': ["Oral/Project / 30*"],
+            }
+          }
+
+          extend_form['row'] = 6
+
+          const extended_fields = await this.field_generator(extend_form)
+
+          $('#extra_fields').html(extended_fields)
+        })
+      }
+
+
+
+    }
+
+    let std = new exam('api/exam-api', 'exam', 'cims_modal')
+
+    // Call function for first time
+    std.exam_data()
+
+    $('#add_marks_popup_btn').on('click', async (e) => {
+      std.value = false
+      await std.add_edit_modal('Add marks')
+    })
+  })
+</script>
+
+{% endblock %}

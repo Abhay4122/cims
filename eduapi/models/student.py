@@ -1,8 +1,10 @@
 from django.db import models
+import uuid
 
 # Create your models here.
 
 class Student(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True)
     name = models.CharField(max_length=150)
     gender = models.CharField(max_length=10)
     father = models.CharField(max_length=150)
@@ -22,14 +24,14 @@ class Student(models.Model):
     reg_mon = models.CharField(max_length=10, blank=True, null=True)
     session_year = models.CharField(max_length=10, blank=True, null=True)
     session_month = models.CharField(max_length=10, blank=True, null=True)
-    dor = models.DateField(auto_now_add=True)
 
-    enroll_number = models.CharField(max_length=50, blank=True, null=True)
+    enroll_number = models.IntegerField(max_length=4, blank=True, null=True)
     cretificate_no = models.CharField(max_length=100, blank=True, null=True)
 
     theory_s1 = models.CharField(max_length=100, blank=True, null=True)
-    os_s1 = models.CharField(max_length=100, blank=True, null=True)
+    os = models.CharField(max_length=100, blank=True, null=True)
     pretical_s1 = models.CharField(max_length=100, blank=True, null=True)
+    oral_s1 = models.CharField(max_length=100, blank=True, null=True)
     theory_s2 = models.CharField(max_length=100, blank=True, null=True)
     pretical_s2 = models.CharField(max_length=100, blank=True, null=True)
     oral_s2 = models.CharField(max_length=100, blank=True, null=True)

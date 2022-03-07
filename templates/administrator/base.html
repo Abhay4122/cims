@@ -13,6 +13,7 @@
 
   {% static 'css' as css %} {% static 'js' as js %} {% static 'images' as images %}
 
+  {% block css %} {% endblock %}
   <link rel="shortcut icon" href="{{images}}/favicon.png" type="image/x-icon" />
   <link rel="apple-touch-icon" href="{{images}}/apple-touch-icon.html" />
   <!-- Required Css Files -->
@@ -63,27 +64,14 @@
               <li class="page-scroll">
                 <a href="/dashboard" style="font-size: 20px"><i class="fa fa-home"></i></a>
               </li>
-              <li class="page-scroll dropdown {{student}}">
+              <li class="page-scroll {{student}}">
                 <a href="/student">Student</a>
-                <!-- <ul class="dropdown-menu">
-                  <li><a href="/std-registration" class="inverse">Registration</a></li>
-                  <li><a href="/std-list" class="inverse">Student List</a></li>
-                </ul> -->
               </li>
-              <li class="page-scroll"><a href="/course">Course</a></li>
-              <li class="page-scroll dropdown">
-                <a href="#">Enroll</a>
-                <ul class="dropdown-menu">
-                  <li><a href="/generate-enroll" class="inverse">Generate</a></li>
-                  <li><a href="/enroll-list" class="inverse">Enroll List</a></li>
-                </ul>
+              <li class="page-scroll {{course}}">
+                <a href="/course">Course</a>
               </li>
-              <li class="page-scroll dropdown">
-                <a href="#">Exam</a>
-                <ul class="dropdown-menu">
-                  <li><a href="/exam-marks" class="inverse">Exam Marks</a></li>
-                  <li><a href="/result-list" class="inverse">Result List</a></li>
-                </ul>
+              <li class="page-scroll {{exam}}">
+                <a href="/exam">Exam</a>
               </li>
               <li class="page-scroll">
                 <a href="#">Log Out</a>

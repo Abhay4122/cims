@@ -31,28 +31,10 @@ def dashboard(request):
     return render(request, 'administrator/dashboard.html')
 
 def student(request):
-    if request.method == 'POST':
-        print(f'\n\n\{request.POST}\n\n\n')
-        response = {'response': 200, 'msg_type': 'success', 'msg': 'Student created succesfully', 'student': 'active'}
-    else:
-        response = {'student': 'active'}
-
-    return render(request, 'administrator/student.html', response)
-
-def std_list(request):
-    return render(request, 'administrator/std_list.html')
+    return render(request, 'administrator/student.html', {'student': 'active'})
 
 def course(request):
-    return render(request, 'administrator/course.html')
+    return render(request, 'administrator/course.html', {'course': 'active'})
 
-def generate_enroll(request):
-    return render(request, 'administrator/generate_enroll.html')
-
-def enroll_list(request):
-    return render(request, 'administrator/enroll_list.html')
-
-def exam_marks(request):
-    return render(request, 'administrator/exam_marks.html')
-
-def result_list(request):
-    return render(request, 'administrator/result_list.html')
+def exam(request):
+    return render(request, 'administrator/exam.html', {'exam': 'active'})

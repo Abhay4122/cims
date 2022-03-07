@@ -11,4 +11,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('course-api', CourseApi.as_view()),
     path('student-api', StudentApi.as_view()),
+    path('enroll-api', EnrollApi.as_view()),
+    path('exam-api', ExamApi.as_view()),
 ]

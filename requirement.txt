@@ -4,3 +4,15 @@ Pillow==8.4.0
 python-decouple==3.4
 pytz==2021.1
 sqlparse==0.4.2
+
+
+
+
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/*.pyc" -delete
+rm -f db.sqlite3
+find . -path "*/__pycache__" -delete
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser

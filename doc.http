@@ -38,7 +38,7 @@ content-type: {{contentType}}
 }
 
 ### Delete the Course
-DELETE {{baseUrl}}/course-api?id=16
+DELETE {{baseUrl}}/course-api?id=709699aa-4c4a-43b4-8c04-44e2c9045251
 
 
 

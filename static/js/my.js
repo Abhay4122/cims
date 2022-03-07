@@ -52,22 +52,24 @@ class form_handler {
     return options
   }
 
-  // Function define for create the form
-  create_form = (data, csrf) => {
-    let form_html = `
-    <form id='${this.id}_form'>
-      ${csrf}
-  `
+  field_generator = async data => {
+    let form_html = ''
 
     for (const i in data) {
       const input_type = i.split('#')
+      let label = data[i][0]
+      try {
+        if (data[i][0].includes('#')) {
+          label = data[i][0].split('#')[0]
+        }
+      } catch (err) {}
 
       if (input_type[0] == 'select') {
         form_html += `
         <div class='col-md-${data['row']}'>
-          <label>${data[i][0]}</label>
-          <select name='${input_type[1]}' class='form-control' style='margin: 10px auto' required>
-            <option>Select ${data[i][0]}</option>
+          <label style='font-size: 10px; margin-bottom: 0; font-weight: 400;'>${label}</label>
+          <select name='${input_type[1]}' id='${input_type[1]}_id' class='form-control' style='margin: 10px auto' required>
+            <option>Select ${label}</option>
             ${this.select_option(data[i][1], input_type[1])}
           </select>
         </div>
@@ -75,25 +77,40 @@ class form_handler {
       } else if (input_type[0] == 'textarea') {
         form_html += `
         <div class='col-md-${data['row']}'>
-          <label>${data[i][0]}</label>
-          <textarea name='${input_type[1]}' class='form-control' ${data[i][1]['attr']} ${data[i][0].includes('*') ? 'required' : ''}> ${
-          this.value ? this.value[input_type[1]] : ''
-        } </textarea>
+          <label style='font-size: 10px; margin-bottom: 0; font-weight: 400;'>${label}</label>
+          <textarea name='${input_type[1]}' id='${input_type[1]}_id' class='form-control' ${data[i][1]['attr']} ${
+          data[i][0].includes('*') ? 'required' : data[i][0].includes('#') ? 'disabled' : ''
+        }> ${this.value ? this.value[input_type[1]] : ''} </textarea>
         </div>
       `
       } else if (input_type[0] != 'row') {
         form_html += `
         <div class='col-md-${data['row']}'>
-          <label>${data[i][0]}</label>
-          <input type='${input_type[0]}' name='${input_type[1]}' value='${this.value ? this.value[input_type[1]] : ''}' class='form-control' ${
-          data[i][1] ? data[i][1]['attr'] : ''
-        } ${data[i][0].includes('*') ? 'required' : ''} />
+          <label style='font-size: 10px; margin-bottom: 0; font-weight: 400;'>${label}</label>
+          <input type='${input_type[0]}' name='${input_type[1]}' id='${input_type[1]}_id' value='${
+          this.value ? this.value[input_type[1]] : ''
+        }' class='form-control' ${data[i][1] ? data[i][1]['attr'] : ''} ${
+          data[i][0].includes('*') ? 'required' : data[i][0].includes('#') ? 'disabled' : ''
+        } />
         </div>
       `
       }
     }
 
+    return form_html
+  }
+
+  // Function define for create the form
+  create_form = async (data, csrf) => {
+    let form_html = `
+    <form id='${this.id}_form'>
+      ${csrf}
+  `
+
+    form_html += await this.field_generator(data)
+
     form_html += `
+      <div id='extra_fields'></div>
       <div class='col-md-12'>
         <br />
         <button class='btn btn-danger'>Submit</button>
@@ -123,9 +140,9 @@ class form_handler {
 
         for (const i in action) {
           action_html += `
-            <i class="fa fa-${
+            <span class="fa fa-${
               i == 'Edit' ? 'pencil' : i == 'View' ? 'eye' : i == 'Delete' ? 'trash' : ''
-            } hover" style="margin-left: 7px; margin-right: 7px;" id="${i}"></i>
+            } hover" style="margin-left: 7px; margin-right: 7px;" id="${i}"></span>
           `
         }
         conf.columnDefs.push({
@@ -177,10 +194,14 @@ class form_handler {
         _tbl.row.add(col).draw(false)
       }
 
-      $(`#${tbl_id} tbody`).on('click', 'i', e => {
-        const cam_row = _tbl.row($(e.target).parents('tr')).data()
+      $(`#${tbl_id} tbody`).on('click', 'span', e => {
+        const row = _tbl.row($(e.target).parents('tr')).data()
         const btn_id = e.target.id
-        this.crud(`${action[btn_id][1]}?id=${cam_row[0]}`, btn_id)
+        try {
+          this.crud(`${action[btn_id][1]}?id=${row[0]}`, btn_id)
+        } catch (err) {
+          this.row_click(btn_id, row)
+        }
       })
     } catch (e) {
       $('#' + id).html(`
@@ -288,9 +309,9 @@ class form_handler {
       html +=
         i == 'photo'
           ? ''
-          : `<div class="col-sm-6 text-right" style="margin-bottom: 10px;">${
+          : `<div class="row"><div class="col-sm-6 text-right" style="margin-bottom: 10px;">${
               i.charAt(0).toUpperCase() + i.slice(1)
-            } : </div> <div class="col-sm-6" style="margin-bottom: 10px;">${data[i]}</div>`
+            } : </div> <div class="col-sm-6" style="margin-bottom: 10px;">${data[i]}</div></div>`
     }
 
     html += '</div>'

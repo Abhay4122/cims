@@ -40,11 +40,34 @@
                             visible: false,
                             searchable: false
                         }
-                    ]
+                    ],
+                    fnRowCallback: function (nRow, aData, iDisplayIndex) {
+                        if (aData[5]) {
+                            $('td:eq(4)', nRow).html(`<span>${aData[5]}</span>`)
+                        } else {
+                            $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
+                        }
+                    }
                 }
 
                 // create_tbl(url, init element id, table configuration, options)
                 await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+            }
+
+            // Function define to handle row click other then action
+            row_click = async (btn_id, row) => {
+                if (btn_id == 'gen_enroll') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Are you sure ?',
+                        text: `to generate the enroll for student ${row[1]} !!`,
+                        showCancelButton: true,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then(result => {
+                        result.isConfirmed ? this.get_post(`api/enroll-api?id=${row[0]}`, false) : ''
+                    })
+                }
             }
 
             // Function defin to get Course data
@@ -62,10 +85,14 @@
             // Function define to createthe form and then add form in html
             init_sutdent_form = async all_course => {
                 let student_form = {
+                    'select#reg_year': ['Registration year*', { 2015: 2015, 2016: 2016, 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }],
+                    'select#reg_mon': ['Registration month*', { Januery: 'Januery', April: 'April', July: 'July', October: 'October' }],
+                    'select#session_year': ['Session year*', { 2015: 2015, 2016: 2016, 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }],
+                    'select#session_month': ['Session month*', { March: 'March', June: 'June', September: 'September', December: 'December' }],
                     'text#name': ['Name*'],
-                    'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
                     'text#father': ["Father's name*"],
                     'text#mother': ["Mother's name*"],
+                    'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
                     'date#dob': ['Date of birth*'],
                     'text#address': ['Address*'],
                     'tel#contact': ['Contact number*'],
@@ -94,6 +121,7 @@
         std.std_data()
 
         $('#reg_std_popup_btn').on('click', async (e) => {
+            std.value = false
             await std.add_edit_modal('Register student')
         })
     })

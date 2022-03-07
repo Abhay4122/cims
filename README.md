@@ -11,3 +11,13 @@ step 2: pest the script billow in settings.json
 "savePath": "~/../css"
 }
 ]
+
+## To delete the migration files
+
+#### `find . -path "*/migrations/*.py" -not -name "__init__.py" -delete`
+
+#### `find . -path "*/*.pyc" -delete`
+
+#### `rm -f db.sqlite3`
+
+#### `find . -path "*/__pycache__" -delete`

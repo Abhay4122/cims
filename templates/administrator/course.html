@@ -79,6 +79,7 @@
     cors.std_data()
 
     $('#add_cors_popup_btn').on('click', async (e) => {
+      cors.value = false
       await cors.add_edit_modal('Register course')
     })
   })

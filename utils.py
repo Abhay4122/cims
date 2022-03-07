@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
+from django.db import connection
 
 class MainUtils:
 	def prin(self, *arg):
@@ -18,8 +19,8 @@ class MainUtils:
 
 
 class ViewUtil(MainUtils):
-	# def __int__(self, request):
-	# 	self.request = request
+	# def __int__(self):
+	# 	self.cursor = connection.cursor()
 		
 	def get_model_data(self, model, id=None):
 		if id:
@@ -27,7 +28,25 @@ class ViewUtil(MainUtils):
 		else:
 			return model.objects.all()
 
-	def get(self, request, model, listSerializer, detailSerializer, msg_prifix, load_link=''):
+
+	def get_query(self, query, msg_prifix, load_link=''):
+		cursor = connection.cursor()
+		cursor.execute(query)
+		data = cursor.fetchall()
+
+		if data:
+			resp = data
+		else:
+			msg = f'{msg_prifix} data not found.'
+			resp = {
+				**{'status': status.HTTP_404_NOT_FOUND},
+				**self.resp_fun(msg, load_link, 'error')
+			}
+
+		return Response(resp)
+
+
+	def get(self, request, model, listSerializer, detailSerializer, msg_prifix, load_link='', extra_query = '-'):
 		'''
 			Get is a method of the View util class which is used to
 			get all data of a table OR specific row
@@ -47,7 +66,7 @@ class ViewUtil(MainUtils):
 					**self.resp_fun(msg, load_link, 'error')
 				}
 		else:
-			resp = listSerializer(self.get_model_data(model), many=True).data
+			resp = listSerializer(extra_query if extra_query != '-' else self.get_model_data(model), many=True).data
 		
 		return Response(resp)
 	
