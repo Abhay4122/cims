@@ -13,4 +13,6 @@ urlpatterns = [
     path('student-api', StudentApi.as_view()),
     path('enroll-api', EnrollApi.as_view()),
     path('exam-api', ExamApi.as_view()),
+    path('non-examinee-api', NonExamineeAPI.as_view()),
+    path('generate-certificate-api', CertificateApi.as_view()),
 ]

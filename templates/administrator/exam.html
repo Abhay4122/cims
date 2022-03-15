@@ -1,4 +1,4 @@
-{% extends 'administrator/base.html' %} {% block title %} <title>Course</title> {% endblock %} {% block body %}
+{% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
 
 <section class="parallax paralbackground"
   style="background-image: url({{images}}/certificate.png); background-attachment: fixed" data-img-width="600"
@@ -39,6 +39,8 @@
           'text#admission_session': ['Admission session#'],
           'text#registration_number': ['Registration number#'],
           'text#enroll_number': ['Enroll number#'],
+          'select#exam_year': ['Exam year*', { 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }],
+          'select#exam_month': ['Exam month*', { March: 'March', June: 'June', September: 'September', December: 'December' }],
           row: 6
         }
       }
@@ -47,20 +49,59 @@
         let tbl_conf = {
           columnDefs: [
             {
-              targets: [0, 2, 4],
+              targets: [0],
               visible: false,
               searchable: false
             }
-          ]
+          ],
+          fnRowCallback: function (nRow, aData, iDisplayIndex) {
+            // if (aData[5]) {
+            //   $('td:eq(4)', nRow).html(`<a href='${aData[5]}' class='btn btn-sm btn-danger'>Certificate</a>`)
+            // } else {
+            //   $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_certi'>Generate</span>`)
+            // }
+
+            $('td:eq(4)', nRow).html(`<a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e;'>Certificate</a>`)
+
+            $('td:eq(-1)', nRow).html(`
+              <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
+              <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
+            `)
+          }
         }
 
         // create_tbl(url, init element id, table configuration, options)
-        await this.create_tbl(this.url, 'marks_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+        await this.create_tbl(this.url, 'marks_list', tbl_conf)
+      }
+
+      // Function define to handle row click other then action
+      row_click = async (btn_id, row) => {
+        if (btn_id == 'gen_certi') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure ?',
+            text: `to generate the certificate for student ${row[1]} !!`,
+            showCancelButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            result.isConfirmed ? this.get_post(`${this.url}?id=${row[0]}`, false) : ''
+          })
+        } else if (btn_id == 'View') {
+          const data = await this.get_post(`${this.url}?id=${row[0]}`)
+          await this.view_data_modal(`View ${this.id} detail`, data)
+        } else if (btn_id == 'edit_certi') {
+          this.value = await this.get_post(`${this.url}?id=${row[0]}`)
+
+          this.exam_form = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
+
+          await this.add_edit_modal(`Update ${this.id} detail`)
+        }
       }
 
       // Function defin to get all student
       get_exam_form = async () => {
-        let data = await this.get_post(this.url)
+        let data = await this.get_post('api/non-examinee-api')
         let std_list = {}
 
         for (let i of data) {
@@ -72,7 +113,15 @@
 
       // Function define to createthe form and then add form in html
       init_exam_form = async all_student => {
-        this.exam_form['select#name'].push(all_student)
+        if (this.value) {
+          const std = {}
+          std[this.value['name']] = `${this.value['id']}*${this.value['name']}*${this.value['father']}*${this.value['course']}*${this.value['admission_session']}*754/V-51176*${this.value['enroll_number']}`
+          this.value['name'] = std[this.value['name']]
+
+          this.exam_form['select#name'].push(std)
+        } else {
+          this.exam_form['select#name'].push(all_student)
+        }
 
         return await this.create_form(this.exam_form, '{% csrf_token %}')
       }
@@ -92,7 +141,6 @@
             'registration_number': val[5],
             'enroll_number': val[6]
           }
-          let extend_form = {}
 
           for (const i in this.exam_form) {
             const id = i.split('#')[1]
@@ -101,38 +149,44 @@
             }
           }
 
-          if (val[3].toLowerCase() == 'adca') {
-            extend_form = {
-              'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
-              'text#os': ["Operating System(S1) / 30*"],
-              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
-              'text#theory_s2': ["Theory(Accounting, C language)(S2) / 100"],
-              'text#pretical_s2': ["Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70"],
-              'text#oral_s2': ["Oral/Project(S2) / 30"],
-            }
-          } else if (val[3].toLowerCase() == 'dfa') {
-            extend_form = {
-              'text#theory_s1': ["Theory (Fundamental, Accounting) / 100*"],
-              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
-              'text#oral_s1': ["Oral/Project / 30*"],
-            }
-          } else {
-            extend_form = {
-              'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
-              'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
-              'text#oral_s1': ["Oral/Project / 30*"],
-            }
-          }
-
-          extend_form['row'] = 6
-
-          const extended_fields = await this.field_generator(extend_form)
+          const extended_fields = await this.field_generator(this.extend_form(val[3].toLowerCase()))
 
           $('#extra_fields').html(extended_fields)
         })
       }
 
+      // Function define to extend the form field
+      extend_form = (course) => {
+        let extend_form = {}
 
+        if (course == 'adca') {
+          extend_form = {
+            'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
+            'text#os': ["Operating System(S1) / 30*"],
+            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+            'text#theory_s2': ["Theory(Accounting, C language)(S2) / 100"],
+            'text#pretical_s2': ["Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70"],
+            'text#oral_s2': ["Oral/Project(S2) / 30"],
+            'row': 6
+          }
+        } else if (course == 'dfa') {
+          extend_form = {
+            'text#theory_s1': ["Theory (Fundamental, Accounting) / 100*"],
+            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+            'text#oral_s1': ["Oral/Project / 30*"],
+            'row': 6
+          }
+        } else {
+          extend_form = {
+            'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
+            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+            'text#oral_s1': ["Oral/Project / 30*"],
+            'row': 6
+          }
+        }
+
+        return extend_form
+      }
 
     }
 

@@ -106,7 +106,6 @@ class form_handler {
     <form id='${this.id}_form'>
       ${csrf}
   `
-
     form_html += await this.field_generator(data)
 
     form_html += `
@@ -117,7 +116,6 @@ class form_handler {
       </div>
     </form>
   `
-
     return form_html
   }
 

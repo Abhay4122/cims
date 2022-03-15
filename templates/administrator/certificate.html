@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <style>
+        .big_block {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 10px solid #DC5E00;
+            box-sizing: border-box;
+            padding: 20px;
+            z-index: 10;
+            overflow: hidden;
+            background-color: #FFE4B5;
+        }
+
+        .lo_go {
+            float: left;
+            position: relative;
+            z-index: 50;
+        }
+
+        .lo_go img {
+            width: 120px;
+        }
+
+        .logo_txt {
+            float: left;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 0;
+            left: 50px;
+            z-index: 50;
+        }
+
+        @font-face {
+            font-family: 'arial_rounded';
+            src: url('../../static/fonts/arial_rounded.ttf');
+        }
+
+        @font-face {
+            font-family: 'canterbur';
+            src: url('../../static/fonts/Canterbury.ttf');
+        }
+
+        .logo_txt h1 {
+            font-size: 45px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            font-family: arial_rounded;
+        }
+
+        .logo_txt h2 {
+            font-size: 30px;
+            margin: 0;
+            font-family: arial_rounded;
+        }
+
+        .logo_txt h3 {
+            font-size: 60px;
+            margin: 0;
+            color: #C00000;
+            font-family: canterbur;
+        }
+
+        .txt_number {
+            position: absolute;
+            z-index: 60;
+            width: 100%;
+            margin: 0;
+            top: 165px;
+            font-size: 17px;
+            font-weight: 600;
+            font-family: consolas;
+        }
+
+        .txt_number span {
+            float: right;
+            padding-right: 40px;
+        }
+
+        .main_content_dv {
+            position: absolute;
+            top: 220px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            z-index: 50;
+            font-family: Lucida Calligraphy;
+        }
+
+        .main_content {
+            position: relative;
+        }
+
+        .main_tbl {
+            position: relative;
+            width: 75%;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        .main_tbl2 {
+            position: relative;
+            width: 90%;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        .tbl_structure {
+            width: 100%;
+            border: .025em solid rgba(235, 99, 61, .3);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .tbl_structure th {
+            background-color: #FADAD2;
+            padding: 12px 0;
+            text-align: center;
+            color: #000;
+            font-size: 15px;
+        }
+
+        .tbl_structure th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        .tbl_structure th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        .tbl_structure tbody tr td {
+            text-align: center;
+            padding: 5px 0;
+            color: #000;
+            font-size: 15px;
+        }
+
+        .tbl_structure tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        .tbl_structure tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+        .txt_sign {
+            position: absolute;
+            z-index: 60;
+            width: 100%;
+            padding-left: 150px;
+            bottom: 60px;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: consolas;
+        }
+
+        .txt_sign span {
+            float: right;
+            padding-right: 350px;
+        }
+
+        .over_lay {
+            width: 1500px;
+            height: 220px;
+            position: absolute;
+            z-index: 20;
+            top: -70px;
+            left: -50px;
+            overflow: hidden;
+            transform: rotate(-5deg);
+            background: linear-gradient(to bottom, #EB633D 0%, #FEB686 100%);
+        }
+
+        .over_lay_bottom_dv {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-top: 1px solid #EC6F4D;
+            background-color: #fff;
+            z-index: 60;
+            overflow: hidden;
+        }
+
+        .over_lay_bottom1 {
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            bottom: -35px;
+            left: -20px;
+            overflow: hidden;
+            z-index: 70;
+            background-color: #EC6F4D;
+            transform: rotate(3deg);
+        }
+
+        .over_lay_bottom2 {
+            width: 100%;
+            height: 20px;
+            position: absolute;
+            bottom: -62px;
+            right: -20px;
+            overflow: hidden;
+            z-index: 80;
+            background-color: #EC6F4D;
+            transform: rotate(-5deg);
+        }
+
+        .over_lay_bottom3 {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            bottom: -45px;
+            right: -20px;
+            overflow: hidden;
+            z-index: 70;
+            background-color: #F6CABE;
+            transform: rotate(-3deg);
+        }
+
+        .legend_gred_dv {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 90;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            font-family: consolas;
+        }
+
+        .lo_go_watrmark {
+            position: absolute;
+            top: 200px;
+            width: 100%;
+            z-index: 0;
+            opacity: .1;
+            text-align: center;
+        }
+
+        .lo_go_watrmark img {
+            width: 500px;
+        }
+
+        .swachh_bharat {
+            position: absolute;
+            z-index: 60;
+            width: 100%;
+            bottom: 50px;
+            text-align: center;
+        }
+
+        .swachh_bharat img {
+            width: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="big_block">
+        <div class="lo_go">
+            <img src="../../static/images/logo.jpeg" alt="">
+        </div>
+        <div class="txt_number">
+            <p>Regd. No.: 754/V-51176 <span>Certificate. No.: <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                </span></p>
+        </div>
+        <div class="logo_txt">
+            <h1>Caliber Institute of Management Sciences</h1>
+            <h2>(Basani Babatpur Road Varanasi)</h2>
+            <h3>Certificate</h3>
+        </div>
+        <div class="legend_gred_dv">
+            Legend of Grades: &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp; A+: 85%-Above
+        </div>
+        <div class="main_content_dv">
+            <div class="main_content">
+                In honor of outstanding performance present this certificate to <br>
+                <span style="color: #EB633D; font-weight: 600;"> {{student.name}} </span>
+                <span>{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
+                <span style="color: #EB633D;"> {{student.father}} </span> <br>
+                Enroll. No. {{student.enroll_number}} <br>
+                For the successful completion of the Diploma Course. <br>
+                <span style="color: #EB633D;">
+                    {{student.course.course_full_form}}
+                </span> <br>
+                Duration: {{student.course.course_duration}} Months <br>
+                Session: {{student.reg_mon}}-{{student.reg_year}} to {{student.session_month}}-{{student.session_year}}
+            </div>
+
+            {% if student.course.course_name|lower == 'adca' %}
+            <div class="main_tbl2">
+                <table class="tbl_structure">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Semester 1</th>
+                            <th colspan="2">Semester 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Subject</td>
+                            <td>Marks</td>
+                            <td>Subject</td>
+                            <td>Marks</td>
+                        </tr>
+                        <tr>
+                            <td> Theory (Fundamental, Internet) </td>
+                            <td> {{student.theory_s1}} </td>
+                            <td> Theory(Accounting, C language) </td>
+                            <td> {{student.theory_s2}} </td>
+                        </tr>
+                        <tr>
+                            <td> Practical(MS Office, Windows) </td>
+                            <td> {{student.pretical_s1}} </td>
+                            <td> Practical(Photoshop, Coral Draw, C Lab, HTML) </td>
+                            <td> {{student.pretical_s2}} </td>
+                        </tr>
+                        <tr>
+                            <td> Operating System </td>
+                            <td> {{student.os}} </td>
+                            <td> Oral/Project </td>
+                            <td> {{student.oral_s2}} </td>
+                        </tr>
+                        <tr>
+                            <td> Grade Awarded : &nbsp; {{gred}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="main_tbl">
+                <table class="tbl_structure">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Obtain Marks</th>
+                            <th>Grade Awarded</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {% if student.course.course_name|lower == 'dfa' %}
+                                Theory (Fundamental, Accounting)
+                                {%else%}
+                                Theory (Fundamental, Internet)
+                                {% endif %}
+                            </td>
+                            <td> {{student.theory_s1}} </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td> Practical (Ms Office, Windows) </td>
+                            <td> {{student.pretical_s1}} </td>
+                            <td> {{gred}} </td>
+                        </tr>
+                        <tr>
+                            <td> Oral/Project </td>
+                            <td> {{student.oral_s1}} </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+        <div class="txt_sign">
+            <p>Check By <span>Director</span></p>
+        </div>
+        <div class="over_lay"> </div>
+        <div class="over_lay_bottom_dv"> </div>
+        <div class="over_lay_bottom1"> </div>
+        <div class="over_lay_bottom2"> </div>
+        <div class="over_lay_bottom3"> </div>
+        <div class="lo_go_watrmark"> <img src="../../static/images/water_mark.png" alt=""> </div>
+        <div class="swachh_bharat"> <img src="../../static/images/swachh_bharat.png" alt=""> </div>
+    </div>
+</body>
+
+</html>

@@ -29,6 +29,18 @@ class StudentSerializer(serializers.ModelSerializer):
         )
 
 
+# Student serializer for add update
+class StudentWithoutPhotoSerializer(serializers.ModelSerializer):
+    # course = serializers.RelatedField(many=False, read_only=True)
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'gender', 'father', 'mother', 'dob', 'address', 'contact', 'category',
+            'course', 'lpc', 'passing_year', 'board', 'gread', 'reg_year', 'reg_mon',
+            'session_year', 'session_month'
+        )
+
+
 # Student serializer for list view
 class StudentListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)
@@ -36,12 +48,6 @@ class StudentListSerializer(serializers.ModelSerializer):
 
     def get_admission_session(self, obj):
         return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
-    
-    enroll_number = serializers.SerializerMethodField()
-
-    def get_enroll_number(self, obj):
-        if obj.enroll_number:
-            return f"CIMS-{obj.reg_year}/{'%04d' % (int(obj.enroll_number),)}"
     
     class Meta:
         model = Student
@@ -52,12 +58,6 @@ class StudentListSerializer(serializers.ModelSerializer):
 
 # Student serializer for detail view
 class StudentDetailSerializer(serializers.ModelSerializer):
-    # course = serializers.StringRelatedField(read_only=True, many=False)
-    enroll_number = serializers.SerializerMethodField()
-
-    def get_enroll_number(self, obj):
-        if obj.enroll_number:
-            return f"CIMS-{obj.reg_year}/{'%04d' % (int(obj.enroll_number),)}"
             
     class Meta:
         model = Student
@@ -82,4 +82,47 @@ class EnrollDetailSerializer(serializers.ModelSerializer):
         model = Student
         fields = (
              'id', 'name', 'father', 'course', 'contact', 'admission_session', 'enroll_number'
+        )
+
+
+# Examinee Student serializer for list view
+class StudentExamineeListSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'course', 'enroll_number', 'cretificate_no', 'cretificate_file'
+        )
+
+
+# Examinee Student detail serializer for list view
+class StudentADCAExamineeDetailSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    admission_session = serializers.SerializerMethodField()
+
+    def get_admission_session(self, obj):
+        return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number', 'cretificate_no',
+            'theory_s1', 'os', 'pretical_s1', 'theory_s2', 'pretical_s2', 'oral_s2', 'exam_year', 'exam_month'
+        )
+
+
+# Examinee Student detail serializer for list view
+class StudentDCAExamineeDetailSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    admission_session = serializers.SerializerMethodField()
+
+    def get_admission_session(self, obj):
+        return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number', 'cretificate_no',
+            'theory_s1', 'pretical_s1', 'oral_s1', 'exam_year', 'exam_month'
         )

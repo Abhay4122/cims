@@ -24,9 +24,12 @@ class Student(models.Model):
     reg_mon = models.CharField(max_length=10, blank=True, null=True)
     session_year = models.CharField(max_length=10, blank=True, null=True)
     session_month = models.CharField(max_length=10, blank=True, null=True)
+    exam_year = models.CharField(max_length=10, blank=True, null=True)
+    exam_month = models.CharField(max_length=10, blank=True, null=True)
 
-    enroll_number = models.IntegerField(max_length=4, blank=True, null=True)
-    cretificate_no = models.CharField(max_length=100, blank=True, null=True)
+    enroll_number = models.CharField(max_length=15, blank=True, null=True)
+    cretificate_no = models.CharField(max_length=10, blank=True, null=True)
+    cretificate_file = models.CharField(max_length=100, blank=True, null=True)
 
     theory_s1 = models.CharField(max_length=100, blank=True, null=True)
     os = models.CharField(max_length=100, blank=True, null=True)
