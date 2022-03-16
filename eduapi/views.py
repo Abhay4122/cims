@@ -222,3 +222,24 @@ class CertificateApi(APIView):
         }
         
         return Response(resp)
+
+
+class ResultApi(APIView):
+    # permission_classes = (IsAuthenticated, )
+
+    def __init__(self):
+        self.obj = ViewUtil()
+
+    def post(self, request):
+        student = Student.objects.filter(course=request.POST.get('course'), enroll_number=request.POST.get('enroll_number'))
+
+        if student.exists():
+            resp = StudentSerializer(student[0], many=False).data
+        else:
+            msg = f'Student data not found.'
+            resp = {
+                **{'status': status.HTTP_404_NOT_FOUND},
+                **self.obj.resp_fun(msg, '/result', 'error')
+            }
+            
+        return Response(resp)

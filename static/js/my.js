@@ -36,7 +36,9 @@ class form_handler {
             result.isConfirmed && resp.lod_link ? (window.location.href = resp.lod_link) : ''
           })
         : ''
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
     console.log(resp)
     return resp
   }
@@ -83,6 +85,8 @@ class form_handler {
         }> ${this.value ? this.value[input_type[1]] : ''} </textarea>
         </div>
       `
+      } else if (input_type[0] == 'hidden') {
+        form_html += `<input type='${input_type[0]}' name='${input_type[1]}' id='${input_type[1]}_id' />`
       } else if (input_type[0] != 'row') {
         form_html += `
         <div class='col-md-${data['row']}'>

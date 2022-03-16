@@ -1,6 +1,6 @@
 {% extends 'user/base.html' %} {% block title %}
 
-<title>Diploma</title>
+<title>Courses</title>
 
 {% endblock %} {% block body %}
 
@@ -10,7 +10,7 @@
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
-      <h4>Diploma Cources</h4>
+      <h4 id="course_hed"></h4>
       <hr />
     </div>
   </div>
@@ -50,4 +50,12 @@
 </section>
 <!-- //Service Section End -->
 
+{% endblock %}
+
+{% block script %}
+<script>
+  $(document).ready(e => {
+    $('#course_hed').text(`${document.URL.split('=')[1]} Courses`)
+  })
+</script>
 {% endblock %}

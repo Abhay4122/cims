@@ -25,6 +25,7 @@
   <link rel="stylesheet" type="text/css" href="{{css}}/style.css" />
   <link rel="stylesheet" type="text/css" href="{{css}}/responsive.css" />
   <link href="{{css}}/my.css" rel="stylesheet" />
+  <link href="{{css}}/sweetalert2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <!-- Fonts -->
   <link
@@ -33,230 +34,232 @@
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
-  <form id="form1" runat="server">
-    <div>
-      <div class="preloader"><img src="{{images}}/body-preloader.gif" alt="" /></div>
+  <div>
+    <div class="preloader"><img src="{{images}}/body-preloader.gif" alt="" /></div>
 
-      <!-- Header Start -->
-      <header>
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-custom navbar-fixed-top">
-          <div class="container">
-            <!-- Navbar Header -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-              <div class="page-scroll">
-                <a class="navbar-brand" href="/">
-                  <img src="{{images}}/logo.jpg" />
-                </a>
-              </div>
-            </div>
-            <!-- Navbar Menu -->
-            <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu na_v_mobil">
-              <ul class="nav navbar-nav">
-                <li class="page-scroll {{home}}">
-                  <a href="/">Home</a>
-                </li>
-                <li class="page-scroll {{about}}">
-                  <a href="/about">About</a>
-                </li>
-                <li class="page-scroll dropdown {{cources}}">
-                  <a href="">Courses</a>
-                  <ul class="dropdown-menu" style="min-width: 210px">
-                    <li>
-                      <a href="/diploma" class="inverse">Diploma Courses</a>
-                    </li>
-                    <li>
-                      <a href="/tution" class="inverse">Institution Courses</a>
-                    </li>
-                    <li>
-                      <a href="/distance" class="inverse">Distance Courses</a>
-                    </li>
-                    <li>
-                      <a href="/regular" class="inverse">Regular Courses</a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="page-scroll {{facility}}">
-                  <a href="/facility">Facility</a>
-                </li>
-                <li class="page-scroll dropdown">
-                  <a href="#">Student Portal</a>
-                  <ul class="dropdown-menu" style="min-width: 210px">
-                    <li>
-                      <a href="#" class="inverse">Result</a>
-                    </li>
-                    <li>
-                      <a href="#" class="inverse">Certificate</a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="page-scroll {{contact}}">
-                  <a href="/contact">Contact</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-        <!-- //Navbar End -->
-      </header>
-      <!-- //Header End -->
-
-      {% block body %} {% endblock %}
-      <!-- Footer Start -->
-      <footer id="footer" style="padding-top: 60px">
+    <!-- Header Start -->
+    <header>
+      <!-- Navbar Start -->
+      <nav class="navbar navbar-custom navbar-fixed-top">
         <div class="container">
-          <div class="row">
-            <div class="col-md-3 col-sm-6">
-              <div class="footer-widget contact-widget">
-                <h4>Quick Links<span class="head-line"></span></h4>
-                <div class="footer-content">
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-caret-right"></i></span> <a href="/about"> About </a>
-                    </li>
-                    <li>
-                      <span><i class="fa fa-caret-right" style="color: #fff"></i></span> <a href="#"> Cources </a>
-                    </li>
-                    <li>
-                      <span><i class="fa fa-caret-right"></i></span> <a href="/facility"> Facility </a>
-                    </li>
-                    <li>
-                      <span><i class="fa fa-caret-right"></i></span> <a href="#"> Student Portal </a>
-                    </li>
-                    <li>
-                      <span><i class="fa fa-caret-right"></i></span> <a href="/contact"> Counact Us </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <!-- Navbar Header -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+              <i class="fa fa-bars"></i>
+            </button>
+            <div class="page-scroll">
+              <a class="navbar-brand" href="/">
+                <img src="{{images}}/logo.jpg" />
+              </a>
             </div>
+          </div>
+          <!-- Navbar Menu -->
+          <div class="collapse navbar-collapse navbar-right navbar-main-collapse top-menu na_v_mobil">
+            <ul class="nav navbar-nav">
+              <li class="page-scroll {{home}}">
+                <a href="/">Home</a>
+              </li>
+              <li class="page-scroll {{about}}">
+                <a href="/about">About</a>
+              </li>
+              <li class="page-scroll dropdown {{courses}}">
+                <a href="">Courses</a>
+                <ul class="dropdown-menu" style="min-width: 210px">
+                  <li>
+                    <a href="/courses?type=Diploma" class="inverse">Diploma Courses</a>
+                  </li>
+                  <li>
+                    <a href="/courses?type=Tution" class="inverse">Tution Courses</a>
+                  </li>
+                  <li>
+                    <a href="/courses?type=Distance" class="inverse">Distance Courses</a>
+                  </li>
+                  <li>
+                    <a href="/courses?type=Regular" class="inverse">Regular Courses</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="page-scroll {{facility}}">
+                <a href="/facility">Facility</a>
+              </li>
+              <li class="page-scroll dropdown {{student}}">
+                <a href="#">Student Portal</a>
+                <ul class="dropdown-menu" style="min-width: 210px">
+                  <li>
+                    <a href="/student-portal?purpose=result" class="inverse">Result</a>
+                  </li>
+                  <li>
+                    <a href="/student-portal?purpose=certificate" class="inverse">Certificate</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="page-scroll {{contact}}">
+                <a href="/contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- //Navbar End -->
+    </header>
+    <!-- //Header End -->
 
-            <!-- Footer Contact Details -->
-            <div class="col-md-5 col-sm-6">
-              <div class="footer-widget contact-widget">
-                <h4>About <span class="highlighted-title">C</span>IMS<span class="head-line"></span></h4>
-                <div class="footer-content">
-                  <span>Caliber Institute of Management Science (CIMS) is a premier education institute. CIMS is a
-                    pioneer in providing
-                    career-orientated courses to aspiring professionals since 2015.</span>
-                  <ul>
-                    <li>
-                      <span><i class="fa fa-phone"></i></span> +91-9936333436
-                    </li>
-                    <li>
-                      <span><i class="fa fa-envelope"></i></span> caliberinstitutes@gmail.com
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Footer Flicker Feed -->
-            <div class="col-md-4 col-sm-6">
-              <div class="footer-widget flicker-feed">
-                <h4>Gallery<span class="head-line"></span></h4>
-                <div class="footer-content">
-                  <ul>
-                    <li>
-                      <a href="{{images}}/big/big1.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small1.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big2.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small2.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big3.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small3.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big4.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small4.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big5.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small5.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big6.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small6.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big7.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small7.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big8.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small8.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big9.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small9.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big10.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small10.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big11.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small11.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                    <li>
-                      <a href="{{images}}/big/big12.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small12.jpg"
-                          alt="" style="width: 72px; height: 65px" /></a>
-                    </li>
-                  </ul>
-                </div>
+    {% block body %} {% endblock %}
+    <!-- Footer Start -->
+    <footer id="footer" style="padding-top: 60px">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <div class="footer-widget contact-widget">
+              <h4>Quick Links<span class="head-line"></span></h4>
+              <div class="footer-content">
+                <ul>
+                  <li>
+                    <span><i class="fa fa-caret-right"></i></span> <a href="/about"> About </a>
+                  </li>
+                  <li>
+                    <span><i class="fa fa-caret-right" style="color: #fff"></i></span> <a href="#"> Cources </a>
+                  </li>
+                  <li>
+                    <span><i class="fa fa-caret-right"></i></span> <a href="/facility"> Facility </a>
+                  </li>
+                  <li>
+                    <span><i class="fa fa-caret-right"></i></span> <a href="#"> Student Portal </a>
+                  </li>
+                  <li>
+                    <span><i class="fa fa-caret-right"></i></span> <a href="/contact"> Counact Us </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
 
-          <!-- Copyright Section -->
-          <div class="copyright-section">
-            <div class="row">
-              <div class="col-md-6">
-                <p>&copy; All Rights Reserved - 2022 | Design By <a
-                    href="https://abhay4122.github.io/portfolio.github.io/" target="_blank">Abhay Singh</a></p>
+          <!-- Footer Contact Details -->
+          <div class="col-md-5 col-sm-6">
+            <div class="footer-widget contact-widget">
+              <h4>About <span class="highlighted-title">C</span>IMS<span class="head-line"></span></h4>
+              <div class="footer-content">
+                <span>Caliber Institute of Management Science (CIMS) is a premier education institute. CIMS is a
+                  pioneer in providing
+                  career-orientated courses to aspiring professionals since 2015.</span>
+                <ul>
+                  <li>
+                    <span><i class="fa fa-phone"></i></span> +91-9936333436
+                  </li>
+                  <li>
+                    <span><i class="fa fa-envelope"></i></span> caliberinstitutes@gmail.com
+                  </li>
+                </ul>
               </div>
-              <div class="col-md-6">
-                <ul class="footer-nav">
-                  <li><a href="#">Login</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">Contact</a></li>
+            </div>
+          </div>
+
+          <!-- Footer Flicker Feed -->
+          <div class="col-md-4 col-sm-6">
+            <div class="footer-widget flicker-feed">
+              <h4>Gallery<span class="head-line"></span></h4>
+              <div class="footer-content">
+                <ul>
+                  <li>
+                    <a href="{{images}}/big/big1.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small1.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big2.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small2.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big3.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small3.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big4.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small4.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big5.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small5.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big6.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small6.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big7.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small7.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big8.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small8.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big9.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small9.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big10.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small10.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big11.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small11.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
+                  <li>
+                    <a href="{{images}}/big/big12.jpg" data-gal="prettyPhoto[gal2]"><img src="{{images}}/small12.jpg"
+                        alt="" style="width: 72px; height: 65px" /></a>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-      </footer>
-      <!-- Footer End -->
 
-      <!-- Back To Top -->
-      <div class="page-scroll">
-        <a href="#page-top" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+        <!-- Copyright Section -->
+        <div class="copyright-section">
+          <div class="row">
+            <div class="col-md-6">
+              <p>&copy; All Rights Reserved - 2022 | Design By <a
+                  href="https://abhay4122.github.io/portfolio.github.io/" target="_blank">Abhay Singh</a></p>
+            </div>
+            <div class="col-md-6">
+              <ul class="footer-nav">
+                <li><a href="#">Login</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
+    </footer>
+    <!-- Footer End -->
 
-      <!-- Required Javascript Files -->
-      <script data-cfasync="false" src="{{js}}/email-decode.min.js"></script>
-      <script src="{{js}}/jquery.js"></script>
-      <script src="{{js}}/jquery-migrate-1.2.1.min.js"></script>
-      <script src="{{js}}/bootstrap.min.js"></script>
-      <script src="{{js}}/parallax.min.js"></script>
-      <script src="{{js}}/count-to.js"></script>
-      <script src="{{js}}/jquery.appear.js"></script>
-      <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-      <script type="text/javascript" src="{{js}}/jquery.prettyPhoto.js"></script>
-      <script src="{{js}}/imagesloaded.pkgd.min.js"></script>
-      <script src="{{js}}/jquery.isotope.min.js"></script>
-      <script src="{{js}}/jquery.equalheights.js"></script>
-      <script src="{{js}}/jquery.flexslider.js"></script>
-      <script src="{{js}}/jquery.easing.min.js"></script>
-      <script src="{{js}}/main.js"></script>
+    <!-- Back To Top -->
+    <div class="page-scroll">
+      <a href="#page-top" class="back-to-top"><i class="fa fa-angle-up"></i></a>
     </div>
-  </form>
+
+    <!-- Required Javascript Files -->
+    <script src="{{js}}/my.js"></script>
+    <script data-cfasync="false" src="{{js}}/email-decode.min.js"></script>
+    <script src="{{js}}/jquery.js"></script>
+    <script src="{{js}}/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{js}}/bootstrap.min.js"></script>
+    <script src="{{js}}/parallax.min.js"></script>
+    <script src="{{js}}/count-to.js"></script>
+    <script src="{{js}}/jquery.appear.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="{{js}}/jquery.prettyPhoto.js"></script>
+    <script src="{{js}}/imagesloaded.pkgd.min.js"></script>
+    <script src="{{js}}/jquery.isotope.min.js"></script>
+    <script src="{{js}}/jquery.equalheights.js"></script>
+    <script src="{{js}}/jquery.flexslider.js"></script>
+    <script src="{{js}}/jquery.easing.min.js"></script>
+    <script src="{{js}}/main.js"></script>
+    <script src="{{js}}/sweetalert2.min.js"></script>
+  </div>
+
+  {% block script %} {% endblock %}
 </body>
 
 </html>

@@ -6,13 +6,12 @@ urlpatterns = [
     path('about', about),
     path('facility', facility),
     path('contact', contact),
-    path('diploma', diploma),
-    path('tution', tution),
-    path('distance', distance),
-    path('regular', regular),
+    path('courses', courses),
     path('dashboard', dashboard),
     path('student', student),
     path('course', course),
     path('exam', exam),
-    path('certificate', certificate)
+    path('certificate', certificate),
+    path('student-portal', student_portal),
+    path('certification', certification)
 ]

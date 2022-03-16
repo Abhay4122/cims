@@ -1,0 +1,78 @@
+{% extends 'user/base.html' %} {% block title %}
+
+<title>Result</title>
+
+{% endblock %} {% block body %}
+
+<section id="testimonials" class="parallax paralbackground"
+    style="background-image:url({{images}}/12.jpg); background-attachment:fixed;" data-img-width="600"
+    data-img-height="385" data-diff="100">
+    <div class="cover"></div>
+    <div class="container">
+        <div class="section-title hed">
+            <h4 id="std_portal_hed"></h4>
+            <hr />
+        </div>
+    </div>
+</section>
+
+<!-- Contact Us Section Start -->
+<section id="contact-us-details">
+    <div class="row col-md-offset-3">
+        <div class="col-md-8" id="result_dv"></div>
+    </div>
+</section>
+<!-- //Contact Us Section End -->
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (e) {
+        class result extends form_handler {
+            constructor(url, id) {
+                super()
+                this.url = url
+                this.id = id
+            }
+
+            // Function defin to call modal
+            get_form = async () => {
+                const form_field = {
+                    'date#dob': ['Date of birth*'],
+                    'text#enroll_number': ['Enroll number*'],
+                    'hidden#purpose': [''],
+                    row: 6
+                }
+
+                const cors_form = await this.create_form(form_field, '{% csrf_token %}')
+
+                $('#result_dv').html(cors_form)
+
+                $(`#${this.id}_form`).on('submit', async e => {
+                    e.preventDefault()
+                    let form_data = new FormData(document.getElementById(`${this.id}_form`))
+                    // Set the purpose
+                    await form_data.set('purpose', document.URL.split('=')[1])
+
+                    const data = await this.get_post(this.url, form_data, 'post')
+
+                    this.show_result(data)
+                })
+            }
+
+            // Function define to show the result
+            show_result = async data => {
+                // console.log(data)
+            }
+        }
+
+        let cors = new result('/student-portal', 'result')
+
+        // Call function for first time
+        cors.get_form()
+
+        $('#std_portal_hed').text(`View ${document.URL.split('=')[1]}`)
+    })
+</script>
+{% endblock %}
