@@ -46,7 +46,7 @@ DELETE {{baseUrl}}/course-api?id=709699aa-4c4a-43b4-8c04-44e2c9045251
 GET {{baseUrl}}/student-api
 
 ### Get specific data of student
-GET {{baseUrl}}/student-api?id=1
+GET {{baseUrl}}/student-api?id=425d5165-01f9-4354-ad05-12c1ada8c7f0
 
 ### Add new Course
 POST {{baseUrl}}/student-api

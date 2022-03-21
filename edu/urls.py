@@ -13,5 +13,6 @@ urlpatterns = [
     path('exam', exam),
     path('certificate', certificate),
     path('student-portal', student_portal),
+    path('result', result),
     path('certification', certification)
 ]

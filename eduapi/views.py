@@ -23,7 +23,7 @@ class CourseApi(APIView):
         return self.obj.get(request, Course, CourseListSerializer, CourseSerializer, 'Course')
     
     def post(self, request):
-        return self.obj.post(request, Course, CourseSerializer, 'Course created', '/course')
+        return self.obj.post(request, CourseSerializer, 'Course created', '/course')
     
     def put(self, request):
         return self.obj.put(request, Course, CourseSerializer, 'Course updated', '/course')
@@ -42,12 +42,30 @@ class StudentApi(APIView):
         return self.obj.get(request, Student, StudentListSerializer, StudentDetailSerializer, 'Student')
     
     def post(self, request):
-        return self.obj.post(request, Student, StudentSerializer, 'Student registerd', '/student')
+        try:
+            request.data._mutable = True
+        except Exception as e:
+            self.obj.prin(e)
+
+        request.data.update({'is_registerd': True})
+        return self.obj.post(request, StudentSerializer, 'Student registerd', '/student')
     
     def put(self, request):
         if request.FILES:
+            try:
+                request.data._mutable = True
+            except Exception as e:
+                self.obj.prin(e)
+
+            request.data.update({'is_registerd': True})
             return self.obj.put(request, Student, StudentSerializer, 'Student updated', '/student')
         else:
+            try:
+                request.data._mutable = True
+            except Exception as e:
+                self.obj.prin(e)
+
+            request.data.update({'is_registerd': True})
             return self.obj.put(request, Student, StudentWithoutPhotoSerializer, 'Student updated', '/student')
     
     def delete(self, request):
@@ -67,7 +85,7 @@ class EnrollApi(APIView):
 
             generated_number = self.create_enroll(get_data[0]['reg_year'])
 
-            get_data.update(enroll_number=generated_number)
+            get_data.update(enroll_number=generated_number, is_enrolled=True)
             msg = f'{return_str}\'s enroll has been generated successfully.'
             resp = {
                 **{'status': status.HTTP_200_OK},
@@ -171,13 +189,13 @@ class ExamApi(APIView):
                     Student.objects.filter(id=std[0]).update(
                         theory_s1=req.get('theory_s1'), os=req.get('os'), pretical_s1=req.get('pretical_s1'),
                         theory_s2=req.get('theory_s2'), pretical_s2=req.get('pretical_s2'), oral_s2=req.get('oral_s2'),
-                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=1,
+                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=True,
                         cretificate_no=certi_no
                     )
                 else:
                     Student.objects.filter(id=std[0]).update(
                         theory_s1=req.get('theory_s1'), pretical_s1=req.get('pretical_s1'), oral_s1=req.get('oral_s1'),
-                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=1,
+                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=True,
                         cretificate_no=certi_no
                     )
             else:
@@ -185,12 +203,12 @@ class ExamApi(APIView):
                     Student.objects.filter(id=std[0]).update(
                         theory_s1=req.get('theory_s1'), os=req.get('os'), pretical_s1=req.get('pretical_s1'),
                         theory_s2=req.get('theory_s2'), pretical_s2=req.get('pretical_s2'), oral_s2=req.get('oral_s2'),
-                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=1
+                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=True
                     )
                 else:
                     Student.objects.filter(id=std[0]).update(
                         theory_s1=req.get('theory_s1'), pretical_s1=req.get('pretical_s1'), oral_s1=req.get('oral_s1'),
-                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=1
+                        exam_year=req.get('exam_year'), exam_month=req.get('exam_month'), is_examinee=True
                     )
             
             return True
@@ -208,38 +226,21 @@ class ExamApi(APIView):
             return f"C{year_numbering[year]}{'%03d' % (1,)}"
 
 
-class CertificateApi(APIView):
+class EnableDisableCertiApi(APIView):
     # permission_classes = (IsAuthenticated, )
 
     def __init__(self):
         self.obj = ViewUtil()
 
     def get(self, request):
-        msg = f'Certificate has been Generated successfully.'
+        toggle = True if request.GET.get('is_certi') == 'false' else False
+        Student.objects.filter(id=request.GET.get('id')).update(is_certified=toggle)
+        
+        msg = f'Certificate has been {"Enabled" if toggle else "Disabled"} successfully.'
         resp = {
             **{'status': status.HTTP_200_OK},
-            **self.obj.resp_fun(msg, '', 'success')
+            **self.obj.resp_fun(msg, '/exam', 'success'),
+            **{'status': toggle}
         }
         
-        return Response(resp)
-
-
-class ResultApi(APIView):
-    # permission_classes = (IsAuthenticated, )
-
-    def __init__(self):
-        self.obj = ViewUtil()
-
-    def post(self, request):
-        student = Student.objects.filter(course=request.POST.get('course'), enroll_number=request.POST.get('enroll_number'))
-
-        if student.exists():
-            resp = StudentSerializer(student[0], many=False).data
-        else:
-            msg = f'Student data not found.'
-            resp = {
-                **{'status': status.HTTP_404_NOT_FOUND},
-                **self.obj.resp_fun(msg, '/result', 'error')
-            }
-            
         return Response(resp)

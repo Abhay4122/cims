@@ -70,7 +70,7 @@ class ViewUtil(MainUtils):
 		
 		return Response(resp)
 	
-	def post(self, request, model, serializer, msg_prifix, load_link=''):
+	def post(self, request, serializer, msg_prifix, load_link=''):
 		'''
 			post is a method of the View util class which is used to
 			Save the value in column

@@ -38,13 +38,7 @@ def certificate(request):
 
     if request.GET:
         resp = Student.objects.filter(id=request.GET.get('id'))[0]
-        
-        if resp.course.course_name.lower() == 'adca':
-            percent = ((int(resp.theory_s1) + int(resp.os) + int(resp.pretical_s1) + int(resp.theory_s2) + int(resp.pretical_s2) + int(resp.oral_s2)) * 100) / 400
-            gred = get_gred(percent)
-        else:
-            percent = ((int(resp.theory_s1) + int(resp.pretical_s1) + int(resp.oral_s1)) * 100) / 200
-            gred = get_gred(percent)
+        gred = get_gred(resp)
 
     return render(request, 'administrator/certificate.html', {'student': resp, 'gred': gred})
 
@@ -54,7 +48,7 @@ def student_portal(request):
             student = Student.objects.filter(dob=request.POST.get('dob'), enroll_number=request.POST.get('enroll_number'))
             
             if student.exists():
-                return render(request, 'user/result.html', {'data': student})
+                return JsonResponse({'id': student[0].id})
             else:
                 msg = f'Student record not found, Please contact to admin.'
                 resp = {
@@ -63,23 +57,12 @@ def student_portal(request):
                 }
                 return JsonResponse(resp)
         elif request.POST.get('purpose') == 'certificate':
-            student = Student.objects.filter(dob=request.POST.get('dob'), enroll_number=request.POST.get('enroll_number'))
+            student = Student.objects.filter(dob=request.POST.get('dob'), enroll_number=request.POST.get('enroll_number'), is_certified=1)
             
             if student.exists():
-                resp = None
-                gred = None
-                resp = student[0]
-                
-                if resp.course.course_name.lower() == 'adca':
-                    percent = ((int(resp.theory_s1) + int(resp.os) + int(resp.pretical_s1) + int(resp.theory_s2) + int(resp.pretical_s2) + int(resp.oral_s2)) * 100) / 400
-                    gred = get_gred(percent)
-                else:
-                    percent = ((int(resp.theory_s1) + int(resp.pretical_s1) + int(resp.oral_s1)) * 100) / 200
-                    gred = get_gred(percent)
-
-                return render(request, 'administrator/certificate.html', {'student': resp, 'gred': gred})
+                return JsonResponse({'id': student[0].id})
             else:
-                msg = f'Student record not found, Please contact to admin.'
+                msg = f'Student record not found OR not authorize, Please contact to admin.'
                 resp = {
                     **{'status': '404'},
                     **{'title': 'Please notice !', 'msg': msg, 'lod_link': '/student-portal?purpose=certificate', 'alert_type': 'error'}
@@ -89,10 +72,33 @@ def student_portal(request):
         return render(request, 'user/student_portal.html', {'student': 'active'})
 
 def certification(request):
-    return render(request, 'user/certification.html', {'student': 'active'})
+    student = Student.objects.filter(id=request.GET.get('id'), is_certified=1)
+    if student.exists():
+        resp = None
+        gred = None
+        resp = student[0]
+
+        gred = get_gred(resp)
+
+        return render(request, 'administrator/certificate.html', {'student': resp, 'gred': gred})
+    else:
+        return render(request, 'user/student_portal.html', {'student': 'active'})
+
+def result(request):
+    student = Student.objects.filter(id=request.GET.get('id'))
+    
+    if student.exists():
+        gred = get_gred(student[0])
+
+        return render(request, 'user/result.html', {'data': student[0], 'gred': gred})
 
 
-def get_gred(percent):
+def get_gred(resp):
+    if resp.course.course_name.lower() == 'adca':
+        percent = ((int(resp.theory_s1) + int(resp.os) + int(resp.pretical_s1) + int(resp.theory_s2) + int(resp.pretical_s2) + int(resp.oral_s2)) * 100) / 400
+    else:
+        percent = ((int(resp.theory_s1) + int(resp.pretical_s1) + int(resp.oral_s1)) * 100) / 200
+    
     if percent >= 85:
         return 'A+'
     elif percent >= 74:

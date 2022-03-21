@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../static/images/favicon.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="../../static/images/apple-touch-icon.html" />
     <title>Certificate</title>
     <style>
         .big_block {
@@ -275,8 +277,7 @@
             <img src="../../static/images/logo.jpeg" alt="">
         </div>
         <div class="txt_number">
-            <p>Regd. No.: 754/V-51176 <span>Certificate. No.: <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                </span></p>
+            <p>Regd. No.: 754/V-51176 <span> Certificate. No.: {{student.cretificate_no}} </span></p>
         </div>
         <div class="logo_txt">
             <h1>Caliber Institute of Management Sciences</h1>
@@ -335,11 +336,11 @@
                             <td> Oral/Project </td>
                             <td> {{student.oral_s2}} </td>
                         </tr>
-                        <tr>
-                            <td> Grade Awarded : &nbsp; {{gred}} </td>
-                        </tr>
                     </tbody>
                 </table>
+                <p style="font-size: 17px;">
+                    Grade Awarded : &nbsp; <span style="font-weight: bold;">{{gred}}</span>
+                </p>
             </div>
             {% else %}
             <div class="main_tbl">
@@ -356,7 +357,7 @@
                             <td>
                                 {% if student.course.course_name|lower == 'dfa' %}
                                 Theory (Fundamental, Accounting)
-                                {%else%}
+                                {% else %}
                                 Theory (Fundamental, Internet)
                                 {% endif %}
                             </td>
@@ -364,7 +365,13 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td> Practical (Ms Office, Windows) </td>
+                            <td>
+                                {% if student.course.course_name|lower == 'dfa' %}
+                                Practical (MS Office, Tally)
+                                {% else %}
+                                Practical (Ms Office, Windows)
+                                {% endif %}
+                            </td>
                             <td> {{student.pretical_s1}} </td>
                             <td> {{gred}} </td>
                         </tr>

@@ -49,7 +49,7 @@
         let tbl_conf = {
           columnDefs: [
             {
-              targets: [0],
+              targets: [0, 6],
               visible: false,
               searchable: false
             }
@@ -64,6 +64,7 @@
             $('td:eq(4)', nRow).html(`<a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e;'>Certificate</a>`)
 
             $('td:eq(-1)', nRow).html(`
+              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'><input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[6] ? 'checked' : ''} /></span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
             `)
@@ -96,6 +97,9 @@
           this.exam_form = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
 
           await this.add_edit_modal(`Update ${this.id} detail`)
+        } else if (btn_id == 'is_certi') {
+          this.get_post(`api/enable-disable-certi-api?id=${row[0]}&is_certi=${row[6]}`, false)
+          // await this.exam_data()
         }
       }
 
@@ -172,7 +176,7 @@
         } else if (course == 'dfa') {
           extend_form = {
             'text#theory_s1': ["Theory (Fundamental, Accounting) / 100*"],
-            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
+            'text#pretical_s1': ["Practical (Ms Office, Tally) / 70*"],
             'text#oral_s1': ["Oral/Project / 30*"],
             'row': 6
           }

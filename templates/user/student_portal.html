@@ -1,6 +1,6 @@
 {% extends 'user/base.html' %} {% block title %}
 
-<title>Result</title>
+<title id="titl"></title>
 
 {% endblock %} {% block body %}
 
@@ -63,7 +63,13 @@
 
             // Function define to show the result
             show_result = async data => {
-                // console.log(data)
+                if (data['id']) {
+                    if (document.URL.split('=')[1] == 'result') {
+                        window.location.href = `/result?id=${data['id']}`
+                    } else {
+                        window.location.href = `/certification?id=${data['id']}`
+                    }
+                }
             }
         }
 
@@ -71,6 +77,8 @@
 
         // Call function for first time
         cors.get_form()
+
+        $('#titl').text(document.URL.split('=')[1])
 
         $('#std_portal_hed').text(`View ${document.URL.split('=')[1]}`)
     })
