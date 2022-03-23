@@ -67,28 +67,33 @@
             font-family: arial_rounded;
         }
 
-        .logo_txt h3 {
-            font-size: 60px;
+        .logo_txt h4 {
             margin: 0;
-            color: #C00000;
-            font-family: canterbur;
+            font-family: arial_rounded;
+        }
+
+        .logo_txt h5 {
+            margin: 0;
+            font-family: arial_rounded;
         }
 
         .txt_number {
-            position: absolute;
+            /* position: absolute;
             z-index: 60;
             width: 100%;
             margin: 0;
-            top: 165px;
+            top: 175px; */
+            margin-top: 5px;
             font-size: 17px;
             font-weight: 600;
             font-family: consolas;
+            text-align: center;
         }
 
-        .txt_number span {
+        /* .txt_number span {
             float: right;
             padding-right: 40px;
-        }
+        } */
 
         .main_content_dv {
             position: absolute;
@@ -109,14 +114,12 @@
             position: relative;
             width: 75%;
             margin: auto;
-            margin-top: 30px;
         }
 
         .main_tbl2 {
             position: relative;
             width: 90%;
             margin: auto;
-            margin-top: 30px;
         }
 
         .tbl_structure {
@@ -162,7 +165,7 @@
             z-index: 60;
             width: 100%;
             padding-left: 150px;
-            bottom: 60px;
+            bottom: 50px;
             font-size: 14px;
             font-weight: 600;
             font-family: consolas;
@@ -187,7 +190,7 @@
 
         .over_lay_bottom_dv {
             width: 100%;
-            height: 50px;
+            height: 35px;
             position: absolute;
             bottom: 0;
             left: 0;
@@ -240,8 +243,9 @@
             z-index: 90;
             width: 100%;
             text-align: center;
-            padding: 15px;
+            padding: 8px;
             font-family: consolas;
+            font-size: 15px;
         }
 
         .lo_go_watrmark {
@@ -261,12 +265,19 @@
             position: absolute;
             z-index: 60;
             width: 100%;
-            bottom: 50px;
+            bottom: 40px;
             text-align: center;
         }
 
         .swachh_bharat img {
             width: 80px;
+        }
+
+        .certi_ficate_txt {
+            position: relative;
+            left: 10%;
+            top: -17px;
+            font-size: 50px; color: #C00000; font-family: canterbur;
         }
     </style>
 </head>
@@ -276,16 +287,21 @@
         <div class="lo_go">
             <img src="../../static/images/logo.jpeg" alt="">
         </div>
-        <div class="txt_number">
-            <p>Regd. No.: 754/V-51176 <span> Certificate. No.: {{student.cretificate_no}} </span></p>
-        </div>
         <div class="logo_txt">
             <h1>Caliber Institute of Management Sciences</h1>
-            <h2>(Basani Babatpur Road Varanasi)</h2>
-            <h3>Certificate</h3>
+            <h4>(Basani Babatpur Road Varanasi)</h4>
+            <h5>( Established by UP state government format-8 rule 7(2), Under society registration act 1860 )</h5>
+            
+            <div class="txt_number">
+                <span>Regd. No.: 754/2016-17,V-51176 </span>
+                <span> - (Governed by PVEW Society, since 2017 ) </span>
+            </div>
+
+            <h3><span class="certi_ficate_txt">Certificate</span> 
+                <span style="float: right; margin-right: 80px; font-family: consolas;"> Certificate. No.: {{student.cretificate_no}} </span></h3>
         </div>
         <div class="legend_gred_dv">
-            Legend of Grades: &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp; A+: 85%-Above
+            Legend of Grades: &nbsp; F: Below 40% &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp; A+: 85%-Above
         </div>
         <div class="main_content_dv">
             <div class="main_content">
@@ -300,7 +316,10 @@
                 </span> <br>
                 Duration: {{student.course.course_duration}} Months <br>
                 Session: {{student.reg_mon}}-{{student.reg_year}} to {{student.session_month}}-{{student.session_year}}
+                (Examination : March 2022)
             </div>
+
+            <p class="text-center" style="margin-bottom: 5px; font-size: 14px;">Statement of msrks</p>
 
             {% if student.course.course_name|lower == 'adca' %}
             <div class="main_tbl2">

@@ -132,7 +132,7 @@ class ViewUtil(MainUtils):
 			get_data = self.get_model_data(model, request.GET.get('id'))
 			if get_data.exists():
 				return_str = get_data[0].__str__()
-				get_data[0].delete()
+				get_data.delete()
 				msg = f'{msg_prifix} {return_str} had been deleted successfully.'
 				resp = {
 					**{'status': status.HTTP_200_OK},
