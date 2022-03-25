@@ -277,7 +277,9 @@
             position: relative;
             left: 10%;
             top: -17px;
-            font-size: 50px; color: #C00000; font-family: canterbur;
+            font-size: 50px;
+            color: #C00000;
+            font-family: canterbur;
         }
     </style>
 </head>
@@ -291,17 +293,20 @@
             <h1>Caliber Institute of Management Sciences</h1>
             <h4>(Basani Babatpur Road Varanasi)</h4>
             <h5>( Established by UP state government format-8 rule 7(2), Under society registration act 1860 )</h5>
-            
+
             <div class="txt_number">
                 <span>Regd. No.: 754/2016-17,V-51176 </span>
                 <span> - (Governed by PVEW Society, since 2017 ) </span>
             </div>
 
-            <h3><span class="certi_ficate_txt">Certificate</span> 
-                <span style="float: right; margin-right: 80px; font-family: consolas;"> Certificate. No.: {{student.cretificate_no}} </span></h3>
+            <h3><span class="certi_ficate_txt">Certificate</span>
+                <span style="float: right; margin-right: 80px; font-family: consolas;"> Certificate. No.:
+                    {{student.cretificate_no}} </span>
+            </h3>
         </div>
         <div class="legend_gred_dv">
-            Legend of Grades: &nbsp; F: Below 40% &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp; A+: 85%-Above
+            Legend of Grades: &nbsp; F: Below 40% &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84%
+            &nbsp; A+: 85%-Above
         </div>
         <div class="main_content_dv">
             <div class="main_content">
@@ -316,7 +321,7 @@
                 </span> <br>
                 Duration: {{student.course.course_duration}} Months <br>
                 Session: {{student.reg_mon}}-{{student.reg_year}} to {{student.session_month}}-{{student.session_year}}
-                (Examination : March 2022)
+                (Examination : {{student.exam_month}} {{student.exam_year}})
             </div>
 
             <p class="text-center" style="margin-bottom: 5px; font-size: 14px;">Statement of msrks</p>

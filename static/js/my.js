@@ -244,7 +244,7 @@ class form_handler {
       //        columns: [1,2, 3, 4, 5]
       //    }
       //}],
-      iDisplayLength: 15,
+      iDisplayLength: 25,
       ...conf
     })
 

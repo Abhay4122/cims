@@ -1,11 +1,28 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from eduapi.models import Student, Course
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def index(request):
-    db_update()
+    # db_update()
+    return render(request, 'user/index.html', {'home': 'active'})
+
+def signin(request):
+    if request.POST:
+        user = authenticate(username=request.POST.get('user'), password=request.POST.get('password'))
+        if user:
+            login(request, user)
+            return render(request, 'user/login.html', {'logged_in' : True})
+        else:
+            redirect('dashboard')
+    else:
+        return render(request, 'user/login.html')
+
+def log_out(request):
+    logout(request)
     return render(request, 'user/index.html', {'home': 'active'})
 
 def about(request):
@@ -21,18 +38,23 @@ def courses(request):
     data = Course.objects.filter(course_category=request.GET.get('type'))
     return render(request, 'user/courses.html', {'courses': 'active', 'data': data})
 
+@login_required(login_url='/login')
 def dashboard(request):
     return render(request, 'administrator/dashboard.html')
 
+@login_required(login_url='/login')
 def student(request):
     return render(request, 'administrator/student.html', {'student': 'active'})
 
+@login_required(login_url='/login')
 def course(request):
     return render(request, 'administrator/course.html', {'course': 'active'})
 
+@login_required(login_url='/login')
 def exam(request):
     return render(request, 'administrator/exam.html', {'exam': 'active'})
 
+@login_required(login_url='/login')
 def certificate(request):
     resp = None
     gred = None
@@ -124,59 +146,59 @@ def db_update():
 
     import csv
 
-    # with open(BASE_DIR / 'old_DB/course.csv', mode='r') as course_raw:
-    #     old_course = csv.reader(course_raw)
-    #     old_course = [rows for rows in old_course]
+    with open(BASE_DIR / 'old_DB/course.csv', mode='r') as course_raw:
+        old_course = csv.reader(course_raw)
+        old_course = [rows for rows in old_course]
     
-    # for i in old_course:
-    #     course = Course(
-    #         course_category = i[1].split(' ')[0], course_name = i[2],
-    #         course_full_form = i[3], course_duration = i[4],
-    #         course_detail = i[5], course_package = i[6]
-    #     )
+    for i in old_course:
+        course = Course(
+            course_category = i[1].split(' ')[0], course_name = i[2],
+            course_full_form = i[3], course_duration = i[4],
+            course_detail = i[5], course_package = i[6]
+        )
         
-    #     course.save()
+        course.save()
 
 
-    # with open(BASE_DIR / 'old_DB/student.csv', mode='r') as std_raw:
-    #     old_std = csv.reader(std_raw)
-    #     old_std = [rows for rows in old_std]
+    with open(BASE_DIR / 'old_DB/student.csv', mode='r') as std_raw:
+        old_std = csv.reader(std_raw)
+        old_std = [rows for rows in old_std]
     
-    # for i in old_std:
-    #     course = Course.objects.get(course_name=i[10])
+    for i in old_std:
+        course = Course.objects.get(course_name=i[10])
 
-    #     #Insert the Student SR817534671
-    #     std = Student(
-    #         name=i[1] + ' ' + i[2], gender=i[3], father=i[4], mother=i[5], dob=i[6], address=i[7],
-    #         contact=i[8], category=i[9], course=course, lpc=i[11], passing_year=i[12],
-    #         board=i[13], gread=i[14], photo=i[15], reg_year=i[16], reg_mon=i[19],
-    #         session_year=i[21], session_month=i[20], is_registerd=True
-    #     )
+        #Insert the Student SR817534671
+        std = Student(
+            name=i[1] + ' ' + i[2], gender=i[3], father=i[4], mother=i[5], dob=i[6], address=i[7],
+            contact=i[8], category=i[9], course=course, lpc=i[11], passing_year=i[12],
+            board=i[13], gread=i[14], photo=i[15], reg_year=i[16], reg_mon=i[19],
+            session_year=i[21], session_month=i[20], is_registerd=True
+        )
 
-    #     std.save()
+        std.save()
 
 
-    # with open(BASE_DIR / 'old_DB/exam.csv', mode='r') as std_raw:
-    #     old_std = csv.reader(std_raw)
-    #     old_std = [rows for rows in old_std]
+    with open(BASE_DIR / 'old_DB/exam.csv', mode='r') as std_raw:
+        old_std = csv.reader(std_raw)
+        old_std = [rows for rows in old_std]
     
-    # try:
-    #     for i in old_std:
-    #         # Update the exam marks
-    #         certi_no = gen_certi_no(i[8].split(' to ')[0].split('-')[1].replace(' ', ''))
-    #         std = Student.objects.filter(name=i[1], father=i[2])
+    try:
+        for i in old_std:
+            # Update the exam marks
+            certi_no = gen_certi_no(i[8].split(' to ')[0].split('-')[1].replace(' ', ''))
+            std = Student.objects.filter(name=i[1], father=i[2])
 
-    #         if std[0].course.course_name == 'ADCA':
-    #             std.update(
-    #                 theory_s1=i[9], os=i[16], pretical_s1=i[11], theory_s2=i[14], pretical_s2=i[15], oral_s2=i[10],
-    #                 is_examinee=True, cretificate_no=certi_no
-    #             )
-    #         else:
-    #             std.update(
-    #                 theory_s1=i[9], pretical_s1=i[10], oral_s1=i[11], is_examinee=True, cretificate_no=certi_no
-    #             )
-    # except Exception as e:
-    #     print(e)
+            if std[0].course.course_name == 'ADCA':
+                std.update(
+                    theory_s1=i[9], os=i[16], pretical_s1=i[11], theory_s2=i[14], pretical_s2=i[15], oral_s2=i[10],
+                    is_examinee=True, cretificate_no=certi_no
+                )
+            else:
+                std.update(
+                    theory_s1=i[9], pretical_s1=i[10], oral_s1=i[11], is_examinee=True, cretificate_no=certi_no
+                )
+    except Exception as e:
+        print(e)
 
 def gen_certi_no(year):
     from django.db.models import Q

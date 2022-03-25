@@ -1,0 +1,57 @@
+{% extends 'user/base.html' %} {% block title %}
+<title>Login</title>
+<style>
+    .login_bak {
+        background-image: url({{images}}/8.jpg);
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+{% endblock %} {% block body %}
+
+<!-- Post Wrap Start -->
+<div class="part-wrapper">
+    <!-- Intro Section Start -->
+    <section id="home" class="intro parallax paralbackground login_bak">
+        <div class="cover"></div>
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div id="intro-slider" class="flexslider">
+                            <form action="/login" method="post">
+                                {% csrf_token %}
+                                <label style="float: left;">User ID</label>
+                                <input type="text" name="user" class="form-control" />
+                                <label style="float: left;">Password</label>
+                                <input type="password" name="password" class="form-control" />
+                                <input type="submit" class="btn btn-danger" style="margin-top: 20px;" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- //Intro Section End -->
+</div>
+<!-- //Post Wrap End -->
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function (e) {
+        if ('{{logged_in}}' == 'True') {
+            window.location.href = '/dashboard'
+        } else if ('{{logged_in}}' == 'False') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Please notice !',
+                text: 'User name or password is incorrect !!',
+            })
+        }
+    })
+</script>
+{% endblock %}
