@@ -116,7 +116,6 @@ def get_gred(resp):
 
 def db_update():
     from pathlib import Path
-    import pandas as pd
 
     BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -157,12 +156,36 @@ def db_update():
     #     std.save()
 
 
-    with open(BASE_DIR / 'old_DB/total_fee.csv', mode='r') as std_raw:
-        old_std = csv.reader(std_raw)
-        old_std = [rows for rows in old_std]
+    # with open(BASE_DIR / 'old_DB/exam.csv', mode='r') as std_raw:
+    #     old_std = csv.reader(std_raw)
+    #     old_std = [rows for rows in old_std]
     
-    for i in old_std:
-        # Update the enroll number
-        # std = Student.objects.filter(name=i[1] + ' ' + i[2]).update(enroll_number=)
-        print(i)
-        break
+    # try:
+    #     for i in old_std:
+    #         # Update the exam marks
+    #         certi_no = gen_certi_no(i[8].split(' to ')[0].split('-')[1].replace(' ', ''))
+    #         std = Student.objects.filter(name=i[1], father=i[2])
+
+    #         if std[0].course.course_name == 'ADCA':
+    #             std.update(
+    #                 theory_s1=i[9], os=i[16], pretical_s1=i[11], theory_s2=i[14], pretical_s2=i[15], oral_s2=i[10],
+    #                 is_examinee=True, cretificate_no=certi_no
+    #             )
+    #         else:
+    #             std.update(
+    #                 theory_s1=i[9], pretical_s1=i[10], oral_s1=i[11], is_examinee=True, cretificate_no=certi_no
+    #             )
+    # except Exception as e:
+    #     print(e)
+
+def gen_certi_no(year):
+    from django.db.models import Q
+    from django.db.models import Max
+
+    year_numbering = {'2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
+    get_data = Student.objects.filter(Q(reg_year=year), ~Q(cretificate_no=None)).aggregate(Max('cretificate_no'))
+
+    if get_data['cretificate_no__max']:
+        return f"C{year_numbering[year]}{'%03d' % ((int(get_data['cretificate_no__max'][2:]) + 1),)}"
+    else:
+        return f"C{year_numbering[year]}{'%03d' % (1,)}"
