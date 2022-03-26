@@ -1,8 +1,12 @@
 {% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
 
-<section class="parallax paralbackground"
-  style="background-image: url({{images}}/certificate.png); background-attachment: fixed" data-img-width="600"
-  data-img-height="385" data-diff="100">
+<section
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/certificate.png); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
@@ -35,7 +39,7 @@
         this.exam_form = {
           'select#name': ['Student*'],
           'text#father': ["Father's name#"],
-          'text#course': ["Course#"],
+          'text#course': ['Course#'],
           'text#admission_session': ['Admission session#'],
           'text#registration_number': ['Registration number#'],
           'text#enroll_number': ['Enroll number#'],
@@ -64,7 +68,9 @@
             $('td:eq(4)', nRow).html(`<a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e;'>Certificate</a>`)
 
             $('td:eq(-1)', nRow).html(`
-              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'><input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[6] ? 'checked' : ''} /></span>
+              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'><input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${
+                aData[6] ? 'checked' : ''
+              } /></span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
             `)
@@ -93,6 +99,7 @@
           await this.view_data_modal(`View ${this.id} detail`, data)
         } else if (btn_id == 'edit_certi') {
           this.value = await this.get_post(`${this.url}?id=${row[0]}`)
+          this.value['registration_number'] = '754/2016-17,V-51176'
 
           this.exam_form = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
 
@@ -109,7 +116,9 @@
         let std_list = {}
 
         for (let i of data) {
-          std_list[i['name']] = `${i['id']}*${i['name']}*${i['father']}*${i['course']}*${i['admission_session']}*754/V-51176*${i['enroll_number']}`
+          std_list[
+            i['name']
+          ] = `${i['id']}*${i['name']}*${i['father']}*${i['course']}*${i['admission_session']}*754/2016-17,V-51176*${i['enroll_number']}`
         }
 
         return await this.init_exam_form(std_list)
@@ -119,7 +128,9 @@
       init_exam_form = async all_student => {
         if (this.value) {
           const std = {}
-          std[this.value['name']] = `${this.value['id']}*${this.value['name']}*${this.value['father']}*${this.value['course']}*${this.value['admission_session']}*754/V-51176*${this.value['enroll_number']}`
+          std[
+            this.value['name']
+          ] = `${this.value['id']}*${this.value['name']}*${this.value['father']}*${this.value['course']}*${this.value['admission_session']}*754/2016-17,V-51176*${this.value['enroll_number']}`
           this.value['name'] = std[this.value['name']]
 
           this.exam_form['select#name'].push(std)
@@ -139,11 +150,11 @@
         $('#name_id').on('change', async e => {
           const val = e.target.value.split('*')
           const values = {
-            'father': val[2],
-            'course': val[3],
-            'admission_session': val[4],
-            'registration_number': val[5],
-            'enroll_number': val[6]
+            father: val[2],
+            course: val[3],
+            admission_session: val[4],
+            registration_number: val[5],
+            enroll_number: val[6]
           }
 
           for (const i in this.exam_form) {
@@ -160,38 +171,37 @@
       }
 
       // Function define to extend the form field
-      extend_form = (course) => {
+      extend_form = course => {
         let extend_form = {}
 
         if (course == 'adca') {
           extend_form = {
-            'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
-            'text#os': ["Operating System(S1) / 30*"],
-            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
-            'text#theory_s2': ["Theory(Accounting, C language)(S2) / 100"],
-            'text#pretical_s2': ["Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70"],
-            'text#oral_s2': ["Oral/Project(S2) / 30"],
-            'row': 6
+            'text#theory_s1': ['Theory (Fundamental, Internet) / 100*'],
+            'text#os': ['Operating System(S1) / 30*'],
+            'text#pretical_s1': ['Practical (Ms Office, Windows) / 70*'],
+            'text#theory_s2': ['Theory(Accounting, C language)(S2) / 100'],
+            'text#pretical_s2': ['Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70'],
+            'text#oral_s2': ['Oral/Project(S2) / 30'],
+            row: 6
           }
         } else if (course == 'dfa') {
           extend_form = {
-            'text#theory_s1': ["Theory (Fundamental, Accounting) / 100*"],
-            'text#pretical_s1': ["Practical (Ms Office, Tally) / 70*"],
-            'text#oral_s1': ["Oral/Project / 30*"],
-            'row': 6
+            'text#theory_s1': ['Theory (Fundamental, Accounting) / 100*'],
+            'text#pretical_s1': ['Practical (Ms Office, Tally) / 70*'],
+            'text#oral_s1': ['Oral/Project / 30*'],
+            row: 6
           }
         } else {
           extend_form = {
-            'text#theory_s1': ["Theory (Fundamental, Internet) / 100*"],
-            'text#pretical_s1': ["Practical (Ms Office, Windows) / 70*"],
-            'text#oral_s1': ["Oral/Project / 30*"],
-            'row': 6
+            'text#theory_s1': ['Theory (Fundamental, Internet) / 100*'],
+            'text#pretical_s1': ['Practical (Ms Office, Windows) / 70*'],
+            'text#oral_s1': ['Oral/Project / 30*'],
+            row: 6
           }
         }
 
         return extend_form
       }
-
     }
 
     let std = new exam('api/exam-api', 'exam', 'cims_modal')
@@ -199,7 +209,7 @@
     // Call function for first time
     std.exam_data()
 
-    $('#add_marks_popup_btn').on('click', async (e) => {
+    $('#add_marks_popup_btn').on('click', async e => {
       std.value = false
       await std.add_edit_modal('Add marks')
     })

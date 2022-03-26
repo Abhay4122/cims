@@ -26,12 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', '13.234.19.19', 'cimsedu.com', 'www.cimsedu.com']
-
-if DEBUG:
-    INTERNAL_IPS = [
-        '127.0.0.1'
-    ]
+ALLOWED_HOSTS = ['127.0.0.1', 'cimsedu.com', 'www.cimsedu.com']
 
 
 # Application definition
@@ -45,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'edu',
     'eduapi',
-    'rest_framework',
-    'debug_toolbar'
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -133,3 +127,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Check if debug is True
+if DEBUG:
+    INTERNAL_IPS = [
+        '127.0.0.1'
+    ]
+
+    INSTALLED_APPS.append('debug_toolbar')
