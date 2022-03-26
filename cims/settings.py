@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', '3.109.219.49']
+ALLOWED_HOSTS = ['127.0.0.1', '13.234.19.19', 'cimsedu.com', 'www.cimsedu.com']
 
 if DEBUG:
     INTERNAL_IPS = [

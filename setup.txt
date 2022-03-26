@@ -1,0 +1,57 @@
+git clone https://github.com/abhay4122/cims
+sudo apt-get update
+sudo apt-get install python3-pip apache2 libapache2-mod-wsgi-py3 -y
+sudo pip3 install virtualenv
+mkdir .venv
+virtualenv .venv/cims
+source .venv/cims/bin/activate
+cd cims
+pip install -r requirement.txt
+sudo nano /etc/apache2/sites-available/000-default.conf
+
+
+<VirtualHost *:80>
+
+    ServerAdmin webmaster@localhost
+    DocumentRoot /home/ubuntu/cims
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Alias /static /home/ubuntu/cims/static
+
+    <Directory /home/ubuntu/cims/static>
+        Require all granted
+    </Directory>
+
+    <Directory /home/ubuntu/cims/cims>
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    WSGIDaemonProcess cims python-path=/home/ubuntu/cims python-home=/home/ubuntu/.venv/cims
+    WSGIProcessGroup cims
+    WSGIScriptAlias / /home/ubuntu/cims/cims/wsgi.py
+
+</VirtualHost>
+
+
+sudo a2enmod ssl
+sudo chown :www-data ~/cims
+
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/*.pyc" -delete
+rm -f db.sqlite3
+find . -path "*/__pycache__" -delete
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+
+sudo service apache2 restart
+
+
+
+DEBUG=True
+SECRET_KEY=_ty$5^^vvn&*2fzere+#62ob*%ey%3h+k89_4(w*=nfcv#u7)=
