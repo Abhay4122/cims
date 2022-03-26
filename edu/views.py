@@ -184,6 +184,7 @@ def db_update():
     
     try:
         for i in old_std:
+            break
             # Update the exam marks
             certi_no = gen_certi_no(i[8].split(' to ')[0].split('-')[1].replace(' ', ''))
             std = Student.objects.filter(name=i[1], father=i[2])

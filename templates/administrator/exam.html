@@ -1,12 +1,8 @@
 {% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
 
-<section
-  class="parallax paralbackground"
-  style="background-image: url({{images}}/certificate.png); background-attachment: fixed"
-  data-img-width="600"
-  data-img-height="385"
-  data-diff="100"
->
+<section class="parallax paralbackground"
+  style="background-image: url({{images}}/certificate.png); background-attachment: fixed" data-img-width="600"
+  data-img-height="385" data-diff="100">
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
@@ -68,8 +64,7 @@
             $('td:eq(4)', nRow).html(`<a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e;'>Certificate</a>`)
 
             $('td:eq(-1)', nRow).html(`
-              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'><input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${
-                aData[6] ? 'checked' : ''
+              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'><input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[6] ? 'checked' : ''
               } /></span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
@@ -138,7 +133,7 @@
           this.exam_form['select#name'].push(all_student)
         }
 
-        return await this.create_form(this.exam_form, '{% csrf_token %}')
+        return await this.create_form(this.exam_form)
       }
 
       // Function defin to call modal

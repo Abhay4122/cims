@@ -9,36 +9,36 @@
 GET {{baseUrl}}/course-api
 
 ### GET ourse details using id
-GET {{baseUrl}}/course-api?id=1
+GET {{baseUrl}}/course-api?id=7423570f-40b8-4399-8917-592b1cfddd74
 
 ### Add new Course
 POST {{baseUrl}}/course-api
 content-type: {{contentType}}
 
 {
-    "cors_cat": "Diploma course",
-    "cors_name": "DCA",
-    "cors_full": "Diploma in computer application",
-    "cors_dur": "3",
-    "cors_detail": "This is the DCA couse full form is Diploma in computer application",
-    "cors_pack": "2000"
+    "course_category": "Diploma course",
+    "course_name": "DCA",
+    "course_full_form": "Diploma in computer application",
+    "course_duration": "3",
+    "course_detail": "This is the DCA couse full form is Diploma in computer application",
+    "course_package": "2000"
 }
 
 ### Update Course
-PUT {{baseUrl}}/course-api?id=1
+PUT {{baseUrl}}/course-api?id=7423570f-40b8-4399-8917-592b1cfddd74
 content-type: {{contentType}}
 
 {
-    "cors_cat": "Diploma course",
-    "cors_name": "CCC",
-    "cors_full": "Course on computer concept",
-    "cors_dur": "3",
-    "cors_detail": "This is the CCC couse full form is Course on computer concept",
-    "cors_pack": "3000"
+    "course_category": "Diploma course",
+    "course_name": "CCC",
+    "course_full_form": "Course on computer concept",
+    "course_duration": "3",
+    "course_detail": "This is the CCC couse full form is Course on computer concept",
+    "course_package": "3000"
 }
 
 ### Delete the Course
-DELETE {{baseUrl}}/course-api?id=709699aa-4c4a-43b4-8c04-44e2c9045251
+DELETE {{baseUrl}}/course-api?id=7423570f-40b8-4399-8917-592b1cfddd74
 
 
 

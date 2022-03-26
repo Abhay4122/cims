@@ -68,7 +68,7 @@
 
       // Function defin to call modal
       add_edit_modal = async (header) => {
-        let cors_form = await this.create_form(this.form_field, '{% csrf_token %}')
+        let cors_form = await this.create_form(this.form_field)
         await this.init_modal(header, cors_form)
       }
     }

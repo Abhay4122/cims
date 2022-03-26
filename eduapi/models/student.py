@@ -10,6 +10,7 @@ class Student(models.Model):
     father = models.CharField(max_length=150)
     mother = models.CharField(max_length=150)
     dob = models.DateField()
+    aadhar = models.CharField(max_length=20)
     address = models.CharField(max_length=250)
     contact = models.CharField(max_length=20)
     category = models.CharField(max_length=25)

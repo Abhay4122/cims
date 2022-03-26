@@ -4,17 +4,35 @@ class form_handler {
     this.loa_der_hide = () => $('#loa_der').css('display', 'none')
     this.loader = () => `<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>`
     this.value = false // Update data as value
+    this.csrf = this.getCookie('csrftoken')
+  }
+
+  // Function define to get cooki
+  getCookie = cname => {
+    let name = cname + '='
+    let decodedCookie = decodeURIComponent(document.cookie)
+    let ca = decodedCookie.split(';')
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i]
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1)
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length)
+      }
+    }
+    return ''
   }
 
   // Function for get or post data url
   get_post = async (url = '', body = false, method = false) => {
     const promise = new Promise((resolve, reject) => {
       if (method == 'post' || method == 'POST' || method == 'put' || method == 'PUT') {
-        fetch(url ? url : this.url, { method: method, headers: { Accept: 'application/json' }, body: body }).then(response =>
-          response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.'))
+        fetch(url ? url : this.url, { method: method, headers: { Accept: 'application/json', 'X-CSRFToken': this.csrf }, body: body }).then(
+          response => (response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.')))
         )
       } else if (method == 'delete' || method == 'DELETE') {
-        fetch(url ? url : this.url, { method: method }).then(response =>
+        fetch(url ? url : this.url, { method: method, headers: { 'X-CSRFToken': this.csrf } }).then(response =>
           response.ok ? resolve(response.json()) : reject(new Error('Got some error to get record.'))
         )
       } else {
@@ -105,10 +123,9 @@ class form_handler {
   }
 
   // Function define for create the form
-  create_form = async (data, csrf) => {
+  create_form = async data => {
     let form_html = `
     <form id='${this.id}_form'>
-      ${csrf}
   `
     form_html += await this.field_generator(data)
 

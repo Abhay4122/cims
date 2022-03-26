@@ -2,8 +2,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from django.db.models import Q
 
 from .serializers import *
@@ -14,7 +12,7 @@ from utils import ViewUtil
 
 
 class CourseApi(APIView):
-    # permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     
     def __init__(self):
         self.obj = ViewUtil()

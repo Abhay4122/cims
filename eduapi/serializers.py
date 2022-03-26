@@ -23,9 +23,9 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'gender', 'father', 'mother', 'dob', 'address', 'contact', 'category',
-            'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year', 'reg_mon',
-            'session_year', 'session_month', 'is_registerd'
+            'id', 'name', 'gender', 'father', 'mother', 'aadhar', 'dob', 'address', 'contact',
+            'category', 'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year',
+            'reg_mon', 'session_year', 'session_month', 'is_registerd'
         )
 
 
@@ -35,9 +35,9 @@ class StudentWithoutPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'gender', 'father', 'mother', 'dob', 'address', 'contact', 'category',
-            'course', 'lpc', 'passing_year', 'board', 'gread', 'reg_year', 'reg_mon',
-            'session_year', 'session_month', 'is_registerd'
+            'id', 'name', 'gender', 'father', 'mother', 'aadhar', 'dob', 'address',
+            'contact', 'category', 'course', 'lpc', 'passing_year', 'board', 'gread',
+            'reg_year', 'reg_mon', 'session_year', 'session_month', 'is_registerd'
         )
 
 
@@ -62,9 +62,9 @@ class StudentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'gender', 'father', 'mother', 'dob', 'address', 'contact', 'category',
-            'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year', 'reg_mon',
-            'session_year', 'session_month', 'enroll_number', 'cretificate_no', 'is_registerd'
+            'id', 'name', 'gender', 'father', 'mother', 'aadhar', 'dob', 'address', 'contact',
+            'category', 'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year',
+            'reg_mon', 'session_year', 'session_month', 'enroll_number', 'cretificate_no'
         )
 
 
