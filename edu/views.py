@@ -15,15 +15,15 @@ def signin(request):
         user = authenticate(username=request.POST.get('user'), password=request.POST.get('password'))
         if user:
             login(request, user)
-            return render(request, 'user/login.html', {'logged_in' : True})
+            return redirect('/dashboard')
         else:
-            redirect('dashboard')
+            return render(request, 'user/login.html', {'logged_in' : False})
     else:
         return render(request, 'user/login.html')
 
 def log_out(request):
     logout(request)
-    return render(request, 'user/index.html', {'home': 'active'})
+    return redirect('/index')
 
 def about(request):
     return render(request, 'user/about.html', {'about': 'active'})
