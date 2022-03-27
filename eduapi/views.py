@@ -221,7 +221,7 @@ class ExamApi(APIView):
         if get_data['cretificate_no__max']:
             return f"C{year_numbering[year]}{'%03d' % ((int(get_data['cretificate_no__max'][2:]) + 1),)}"
         else:
-            return f"C{year_numbering[year]}{'%03d' % (1,)}"
+            return f"C{year_numbering[year]}{'%03d' % (501,)}"
 
 
 class EnableDisableCertiApi(APIView):

@@ -227,10 +227,7 @@
         .over_lay_bottom3 {
             width: 100%;
             height: 50px;
-            position: absolute;
-            bottom: -45px;
-            right: -20px;
-            overflow: hidden;
+            position: absolute;English
             z-index: 70;
             background-color: #F6CABE;
             transform: rotate(-3deg);
@@ -312,7 +309,7 @@
             <div class="main_content">
                 In honor of outstanding performance present this certificate to <br>
                 <span style="color: #EB633D; font-weight: 600;"> {{student.name}} </span>
-                <span>{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
+                <span style="font-weight: 600;">{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
                 <span style="color: #EB633D;"> {{student.father}} </span> <br>
                 Enroll. No. {{student.enroll_number}} <br>
                 For the successful completion of the Diploma Course. <br>
