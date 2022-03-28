@@ -309,8 +309,8 @@
             <div class="main_content">
                 In honor of outstanding performance present this certificate to <br>
                 <span style="color: #EB633D; font-weight: 600;"> {{student.name}} </span>
-                <span style="font-weight: 600;">{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
-                <span style="color: #EB633D;"> {{student.father}} </span> <br>
+                <span>{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
+                <span style="color: #EB633D; font-weight: 600;"> {{student.father}} </span> <br>
                 Enroll. No. {{student.enroll_number}} <br>
                 For the successful completion of the Diploma Course. <br>
                 <span style="color: #EB633D;">
@@ -341,21 +341,21 @@
                         </tr>
                         <tr>
                             <td> Theory (Fundamental, Internet) </td>
-                            <td> {{student.theory_s1}} </td>
+                            <td> {{student.theory_s1}} / 100 </td>
                             <td> Theory(Accounting, C language) </td>
-                            <td> {{student.theory_s2}} </td>
+                            <td> {{student.theory_s2}} / 100 </td>
                         </tr>
                         <tr>
                             <td> Practical(MS Office, Windows) </td>
-                            <td> {{student.pretical_s1}} </td>
+                            <td> {{student.pretical_s1}} / 70 </td>
                             <td> Practical(Photoshop, Coral Draw, C Lab, HTML) </td>
-                            <td> {{student.pretical_s2}} </td>
+                            <td> {{student.pretical_s2}} / 70 </td>
                         </tr>
                         <tr>
                             <td> Operating System </td>
-                            <td> {{student.os}} </td>
+                            <td> {{student.os}} / 30 </td>
                             <td> Oral/Project </td>
-                            <td> {{student.oral_s2}} </td>
+                            <td> {{student.oral_s2}} / 30 </td>
                         </tr>
                     </tbody>
                 </table>
@@ -382,7 +382,7 @@
                                 Theory (Fundamental, Internet)
                                 {% endif %}
                             </td>
-                            <td> {{student.theory_s1}} </td>
+                            <td> {{student.theory_s1}} / 100 </td>
                             <td></td>
                         </tr>
                         <tr>
@@ -393,12 +393,12 @@
                                 Practical (Ms Office, Windows)
                                 {% endif %}
                             </td>
-                            <td> {{student.pretical_s1}} </td>
+                            <td> {{student.pretical_s1}} / 70 </td>
                             <td> {{gred}} </td>
                         </tr>
                         <tr>
                             <td> Oral/Project </td>
-                            <td> {{student.oral_s1}} </td>
+                            <td> {{student.oral_s1}} / 30 </td>
                             <td></td>
                         </tr>
                     </tbody>
