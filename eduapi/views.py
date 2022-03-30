@@ -113,10 +113,10 @@ class NonExamineeAPI(APIView):
 
     def get(self, request):
         if bool(dict(request.GET)):
-            examinee = Student.objects.filter(is_examinee=0, id=request.GET.get('id'))
+            examinee = Student.objects.filter(is_examinee=False, is_enrolled=True, id=request.GET.get('id'))
             resp = StudentDetailSerializer(examinee, many=False).data
         else:
-            non_examinee = Student.objects.filter(is_examinee=0)
+            non_examinee = Student.objects.filter(is_examinee=False, is_enrolled=True)
             resp = StudentListSerializer(non_examinee, many=True).data
         
         return Response(resp)
@@ -181,7 +181,7 @@ class ExamApi(APIView):
 
         try:
             if method == 'add':
-                certi_no = self.gen_certi_no(std[4].split('- ')[-1])
+                certi_no = self.gen_certi_no(std[4].split('- ')[1].split(' to')[0])
 
                 if std[3].lower() == 'adca':
                     Student.objects.filter(id=std[0]).update(
