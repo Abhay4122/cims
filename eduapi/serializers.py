@@ -52,7 +52,7 @@ class StudentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-             'id', 'name', 'father', 'course', 'admission_session', 'enroll_number'
+            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number'
         )
 
 
@@ -88,11 +88,36 @@ class EnrollDetailSerializer(serializers.ModelSerializer):
 # Examinee Student serializer for list view
 class StudentExamineeListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)
+    th1 = serializers.SerializerMethodField('get_th1')
+    pr1 = serializers.SerializerMethodField('get_pr1')
+    or1 = serializers.SerializerMethodField('get_or1')
+    th2 = serializers.SerializerMethodField('get_th2')
+    pr2 = serializers.SerializerMethodField('get_pr2')
+    or2 = serializers.SerializerMethodField('get_or2')
+
+    def get_th1(self, obj):
+        return obj.theory_s1
+
+    def get_pr1(self, obj):
+        return obj.pretical_s1
+
+    def get_or1(self, obj):
+        return obj.oral_s1
+
+    def get_th2(self, obj):
+        return obj.theory_s2
+
+    def get_pr2(self, obj):
+        return obj.pretical_s2
+
+    def get_or2(self, obj):
+        return obj.oral_s2
     
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'course', 'enroll_number', 'cretificate_no', 'cretificate_file', 'is_certified'
+            'id', 'name', 'course', 'enroll_number', 'cretificate_no', 'is_certified',
+            'th1', 'pr1', 'or1', 'th2', 'pr2', 'or2', 'os'
         )
 
 
