@@ -1,8 +1,12 @@
 {% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
 
-<section class="parallax paralbackground"
-  style="background-image: url({{images}}/certificate.png); background-attachment: fixed" data-img-width="600"
-  data-img-height="385" data-diff="100">
+<section
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/certificate.png); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
@@ -59,11 +63,11 @@
               searchable: false
             }
           ],
-          order: [[ 4, "asc" ]],
+          order: [[4, 'asc']],
           fnRowCallback: function (nRow, aData, iDisplayIndex) {
             $('td:eq(-1)', nRow).html(`
               <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'>
-                <input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[5] ? 'checked' : '' } />
+                <input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[5] ? 'checked' : ''} />
               </span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
@@ -96,9 +100,9 @@
           this.value = await this.get_post(`${this.url}?id=${row[0]}`)
           this.value['registration_number'] = '754/2016-17,V-51176'
 
-          this.exam_form = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
+          const form_inputs = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
 
-          await this.add_edit_modal(`Update ${this.id} detail`)
+          await this.add_edit_modal(`Update ${this.id} detail`, form_inputs)
         } else if (btn_id == 'is_certi') {
           this.get_post(`api/enable-disable-certi-api?id=${row[0]}&is_certi=${row[5]}`, false)
           // await this.exam_data()
@@ -137,7 +141,7 @@
       }
 
       // Function defin to call modal
-      add_edit_modal = async header => {
+      add_edit_modal = async (header, form_inputs) => {
         let std_form = await this.get_exam_form()
         await this.init_modal(header, std_form)
 
@@ -152,7 +156,7 @@
             enroll_number: val[6]
           }
 
-          for (const i in this.exam_form) {
+          for (const i in form_inputs) {
             const id = i.split('#')[1]
             if (id != 'name') {
               $(`#${id}_id`).val(values[id])
@@ -206,7 +210,7 @@
 
     $('#add_marks_popup_btn').on('click', async e => {
       std.value = false
-      await std.add_edit_modal('Add marks')
+      await std.add_edit_modal('Add marks', std.exam_form)
     })
   })
 </script>
