@@ -44,15 +44,19 @@ class StudentWithoutPhotoSerializer(serializers.ModelSerializer):
 # Student serializer for list view
 class StudentListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)
-    admission_session = serializers.SerializerMethodField()
+    admission_session = serializers.SerializerMethodField('get_admission_session')
+    reg_session = serializers.SerializerMethodField('get_reg_session')
 
     def get_admission_session(self, obj):
         return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
+
+    def get_reg_session(self, obj):
+        return f"{obj.reg_mon} - {obj.reg_year}"
     
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number'
+            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number', 'reg_session'
         )
 
 
@@ -117,7 +121,7 @@ class StudentExamineeListSerializer(serializers.ModelSerializer):
         model = Student
         fields = (
             'id', 'name', 'course', 'enroll_number', 'cretificate_no', 'is_certified',
-            'th1', 'pr1', 'or1', 'th2', 'pr2', 'or2', 'os'
+            'th1', 'pr1', 'or1', 'os', 'th2', 'pr2', 'or2'
         )
 
 

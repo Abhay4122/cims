@@ -31,6 +31,7 @@
                 this.id = id
                 this.modal_id = modal_id
             }
+
             // Function define to create the list of student
             std_data = async () => {
                 let tbl_conf = {
@@ -41,17 +42,38 @@
                             searchable: false
                         }
                     ],
+                    // order: [[ 6, "asc" ]],
                     fnRowCallback: function (nRow, aData, iDisplayIndex) {
                         if (aData[5]) {
                             $('td:eq(4)', nRow).html(`<span>${aData[5]}</span>`)
                         } else {
                             $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
                         }
+                        // $('td:eq(-2)', nRow).text(
+                        //     aData[6].split(' - ')[0] == 'January' ? `A${aData[6].split(' - ')[1]}` : aData[6].split(' - ')[0] == 'April' ? `B${aData[6].split(' - ')[1]}` : aData[6].split(' - ')[0] == 'July' ? `C${aData[6].split(' - ')[1]}` :  aData[6].split(' - ')[0] == 'October' ? `D${aData[6].split(' - ')[1]}` : ''
+                        // )
                     }
                 }
 
                 // create_tbl(url, init element id, table configuration, options)
                 await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+            }
+
+            // Create element for sorting the data
+            sort_element = data => {
+                let response = ''
+
+                if(data[0] == 'January'){
+                    response = `A${data[1]}`
+                } else if(data[0] == 'April'){
+                    response = `B${data[1]}`
+                } else if(data[0] == 'July'){
+                    response = `C${data[1]}`
+                } else if(data[0] == 'October'){
+                    response = `D${data[1]}`
+                }
+
+                return response
             }
 
             // Function define to handle row click other then action
