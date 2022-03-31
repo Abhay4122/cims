@@ -51,7 +51,15 @@ class StudentListSerializer(serializers.ModelSerializer):
         return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
 
     def get_reg_session(self, obj):
-        return f"{obj.reg_mon} - {obj.reg_year}"
+        year_numbering = {'2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
+        if obj.reg_mon == 'January':
+            return f'{year_numbering[obj.reg_year]}A{obj.reg_year}'
+        elif obj.reg_mon == 'April':
+            return f'{year_numbering[obj.reg_year]}B{obj.reg_year}'
+        elif obj.reg_mon == 'July':
+            return f'{year_numbering[obj.reg_year]}C{obj.reg_year}'
+        elif obj.reg_mon == 'October':
+            return f'{year_numbering[obj.reg_year]}D{obj.reg_year}'
     
     class Meta:
         model = Student
