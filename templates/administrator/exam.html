@@ -110,7 +110,7 @@
       }
 
       // Function defin to get all student
-      get_exam_form = async () => {
+      get_exam_form = async form_inputs => {
         let data = await this.get_post('api/non-examinee-api')
         let std_list = {}
 
@@ -120,11 +120,11 @@
           ] = `${i['id']}*${i['name']}*${i['father']}*${i['course']}*${i['admission_session']}*754/2016-17,V-51176*${i['enroll_number']}`
         }
 
-        return await this.init_exam_form(std_list)
+        return await this.init_exam_form(std_list, form_inputs)
       }
 
       // Function define to createthe form and then add form in html
-      init_exam_form = async all_student => {
+      init_exam_form = async (all_student, form_inputs) => {
         if (this.value) {
           const std = {}
           std[
@@ -132,17 +132,18 @@
           ] = `${this.value['id']}*${this.value['name']}*${this.value['father']}*${this.value['course']}*${this.value['admission_session']}*754/2016-17,V-51176*${this.value['enroll_number']}`
           this.value['name'] = std[this.value['name']]
 
-          this.exam_form['select#name'].push(std)
+          form_inputs['select#name'].push(std)
         } else {
-          this.exam_form['select#name'].push(all_student)
+          form_inputs['select#name'].push(all_student)
         }
 
-        return await this.create_form(this.exam_form)
+        return await this.create_form(form_inputs)
       }
 
       // Function defin to call modal
       add_edit_modal = async (header, form_inputs) => {
-        let std_form = await this.get_exam_form()
+        console.log(form_inputs)
+        let std_form = await this.get_exam_form(form_inputs)
         await this.init_modal(header, std_form)
 
         // Onchange name field call the function
