@@ -118,7 +118,12 @@ def result(request):
 
 def get_gred(resp):
     if resp.course.course_name.lower() == 'adca':
-        percent = ((int(resp.theory_s1) + int(resp.os) + int(resp.pretical_s1) + int(resp.theory_s2) + int(resp.pretical_s2) + int(resp.oral_s2)) * 100) / 400
+        theory_s2 = int(resp.theory_s2) if resp.theory_s2 else 0
+        pretical_s2 = int(resp.pretical_s2) if resp.pretical_s2 else 0
+        oral_s2 = int(resp.oral_s2) if resp.oral_s2 else 0
+        total = 400 if resp.theory_s2 and resp.pretical_s2 and resp.oral_s2 else 200
+        
+        percent = ((int(resp.theory_s1) + int(resp.os) + int(resp.pretical_s1) + theory_s2 + pretical_s2 + oral_s2) * 100) / total
     else:
         percent = ((int(resp.theory_s1) + int(resp.pretical_s1) + int(resp.oral_s1)) * 100) / 200
     
