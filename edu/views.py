@@ -129,7 +129,7 @@ def get_gred(resp):
     
     if percent >= 85:
         return 'A+'
-    elif percent >= 74:
+    elif percent >= 75:
         return 'A'
     elif percent >= 65:
         return 'B'
