@@ -210,7 +210,7 @@ def gen_certi_no(year):
     from django.db.models import Q
     from django.db.models import Max
 
-    year_numbering = {'2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
+    year_numbering = {'2017': '', '2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
     get_data = Student.objects.filter(Q(reg_year=year), ~Q(cretificate_no=None)).aggregate(Max('cretificate_no'))
 
     if get_data['cretificate_no__max']:
