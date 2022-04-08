@@ -17,5 +17,6 @@ urlpatterns = [
     path('student-portal', student_portal),
     path('result', result),
     path('certification', certification),
-    path('logout', log_out)
+    path('logout', log_out),
+    # path('test', test)
 ]

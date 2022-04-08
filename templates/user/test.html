@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Current location</title>
+  </head>
+  <body>
+    <div id="d_iv"></div>
+
+    <script>
+      const d_iv = document.getElementById('d_iv')
+
+      const showPosition = pos => {
+        pos = pos.coords
+
+        d_iv.innerHTML += `<p>lat: ${pos.latitude}, lon: ${pos.longitude}, accuracy: ${pos.accuracy}, speed: ${pos.speed}</p>`
+      }
+
+      const options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        }
+
+        const error = err => {
+            console.warn(`ERROR(${err.code}): ${err.message}`)
+        }
+
+      const start = () => {
+        console.log('Hi')
+        navigator.geolocation.watchPosition(showPosition, error, options)
+      }
+
+      start()
+    </script>
+  </body>
+</html>
