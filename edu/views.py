@@ -222,3 +222,9 @@ def gen_certi_no(year):
 
 def test(request):
     return render(request, 'user/test.html')
+
+def custom_404(request):
+    return render(request, "error_404.html")
+
+def custom_500(request):
+    return render(request, "error_500.html")
