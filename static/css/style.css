@@ -1902,7 +1902,7 @@ textarea {
 }
 
 .email_loading {
-  background: url(../uploads/email_loader.html) no-repeat center center;
+  /* background: url(../uploads/email_loader.html) no-repeat center center; */
   height: 32px;
   width: 62px;
   z-index: 0;
@@ -1954,7 +1954,7 @@ textarea {
 }
 
 .footer-widget.contact-widget ul {
-  background: url(../uploads/map.html) no-repeat center center;
+  /* background: url(../uploads/map.html) no-repeat center center; */
   list-style: none;
   padding-left: 0px;
 }
