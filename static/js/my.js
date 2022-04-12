@@ -57,7 +57,6 @@ class form_handler {
     } catch (err) {
       console.log(err)
     }
-    console.log(resp)
     return resp
   }
 

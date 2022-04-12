@@ -2,6 +2,10 @@
 
 <title id="titl"></title>
 
+{% block style %}
+<link href="{{css}}/sweetalert2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% endblock %} {% block body %}
 
 <section id="testimonials" class="parallax paralbackground"
@@ -27,6 +31,8 @@
 {% endblock %}
 
 {% block script %}
+<script src="{{js}}/sweetalert2.min.js"></script>
+
 <script>
     $(document).ready(function (e) {
         class result extends form_handler {
