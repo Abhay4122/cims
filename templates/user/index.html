@@ -308,4 +308,13 @@
 </section>
 <!-- //Portfolio Section End -->
 
+{% endblock %} {% block script %}
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('{{js}}/serviceWorker.js').then(res => console.log(`Register and the scope is ${res.scope}`))
+      console.log('Worker registered')
+    })
+  }
+</script>
 {% endblock %}
