@@ -89,3 +89,12 @@ sudo a2enmod ssl
 sudo systemctl restart apache2
 sudo certbot --apache
 sudo certbot renew --dry-run
+
+
+
+
+-- Docker build the image and install dependencies
+sudo docker build --tag cims .
+
+-- Docker run the image in background
+sudo docker run -d -p 8080:8000 cims
