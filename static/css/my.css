@@ -287,6 +287,11 @@
   place-items: center;
 }
 
+/* btn font size */
+.btn {
+  font-weight: bolder !important;
+}
+
 @media (max-width: 767px) {
   .navbar-nav {
     width: 70%;

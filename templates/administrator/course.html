@@ -1,7 +1,12 @@
 {% extends 'administrator/base.html' %} {% block title %} <title>Course</title> {% endblock %} {% block body %}
 
-<section class="parallax paralbackground" style="background-image: url({{images}}/1.jpg); background-attachment: fixed"
-  data-img-width="600" data-img-height="385" data-diff="100">
+<section
+  class="parallax paralbackground"
+  style="background-image: url({{images}}/1.jpg); background-attachment: fixed"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
@@ -15,7 +20,7 @@
   <div class="container">
     <div class="col-md-12">
       <div class="col-sm-12">
-        <button id="add_cors_popup_btn" class="btn btn-sm btn-danger float-right">Add course</button>
+        <button id="add_cors_popup_btn" class="btn btn-sm btn-danger float-right" name="Add course">Add course</button>
       </div>
       <div id="cors_list"></div>
     </div>
@@ -67,7 +72,7 @@
       }
 
       // Function defin to call modal
-      add_edit_modal = async (header) => {
+      add_edit_modal = async header => {
         let cors_form = await this.create_form(this.form_field)
         await this.init_modal(header, cors_form)
       }
@@ -78,7 +83,7 @@
     // Call function for first time
     cors.std_data()
 
-    $('#add_cors_popup_btn').on('click', async (e) => {
+    $('#add_cors_popup_btn').on('click', async e => {
       cors.value = false
       await cors.add_edit_modal('Register course')
     })

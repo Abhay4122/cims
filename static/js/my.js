@@ -132,7 +132,7 @@ class form_handler {
       <div id='extra_fields'></div>
       <div class='col-md-12'>
         <br />
-        <button class='btn btn-danger'>Submit</button>
+        <button class='btn btn-danger' name='Submit ${this.id} form'>Submit</button>
       </div>
     </form>
   `
@@ -319,7 +319,7 @@ class form_handler {
     html +=
       data['photo'] !== undefined
         ? data['photo']
-          ? `<div class="col-sm-6 text-right" style="margin-bottom: 10px;">Photo : </div> <div class="col-sm-6" style="margin-bottom: 10px;"><img src="${data['photo']}" height="100px" /></div>`
+          ? `<div class="col-sm-6 text-right" style="margin-bottom: 10px;">Photo : </div> <div class="col-sm-6" style="margin-bottom: 10px;"><img src="${data['photo']}" height="100px" alt="Show image" /></div>`
           : `<div class="col-sm-6 text-right" style="margin-bottom: 10px;">Photo : </div> <div class="col-sm-6" style="margin-bottom: 10px;">N/A</div>`
         : ''
 

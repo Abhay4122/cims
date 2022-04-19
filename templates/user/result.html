@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-
-<head runat="server">
-    {% load static %}
-    {% static 'css' as css %} {% static 'js' as js %} {% static 'images' as images %}
+  <head runat="server">
+    {% load static %} {% static 'css' as css %} {% static 'js' as js %} {% static 'images' as images %}
 
     <title>Result</title>
     <link rel="shortcut icon" href="{{images}}/favicon.png" type="image/x-icon" />
@@ -17,208 +15,150 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Fonts -->
     <link
-        href="http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic"
-        rel="stylesheet" type="text/css" />
-</head>
+      href="http://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
 
-<body>
+  <body>
     <div class="row col-lg-offset-2">
-        <div class="col-lg-10" style="padding: 40px;">
-            <div class="row">
-                <div class="col-xs-3">
-                    <img src="{{images}}/logo.jpg" />
-                </div>
-                <div class="col-xs-9 text-right">
-                    <h3 style="font-size: 22px;">Caliber Institute of Management Sciences</h3>
-                    <p>Run By:- PVEW Society</p>
-                    <p style="margin-top: -25px;">Website:- www.cimsedu.com</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="row text-center" style="margin-bottom: 20px;">
-                    <h3 style="font-size: 22px;">Student Result</h3>
-                </div>
-                <div class="row view_txt">
-                    <div class="col-xs-6">
-                        Name: &nbsp; <span class="font-weight-bold">{{data.name}}</span>
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        Enroll Number: &nbsp; {{data.enroll_number}}
-                    </div>
-                </div>
-                <div class="row view_txt">
-                    <div class="col-xs-6">
-                        Father: &nbsp; {{data.father}}
-                    </div>
-                    <div class="col-xs-6 text-right">
-                        Result in Grade: &nbsp; {{gred}}
-                    </div>
-                </div>
-                <div class="row view_txt">
-                    <div class="col-xs-6">
-                        Course: &nbsp; {{data.course.course_name}}
-                    </div>
-                </div>
-
-                {% if data.course.course_name|lower == 'adca' %}
-                <div class="row text-center">
-                    <h4 style="font-size: 16px; margin-bottom: 0;">Semester 1</h4>
-                </div>
-                {% endif %}
-
-                <table class="table table-bordered" style="margin-top: 30px;">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">S.No.</th>
-                            <th style="text-align: center;">Subject</th>
-                            <th style="text-align: center;">Total Marks</th>
-                            <th style="text-align: center;">Obtained Marks</th>
-                        </tr>
-                    </thead>
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                {% if data.course.course_name|lower == 'dfa' %}
-                                Theory (Fundamental, Accounting)
-                                {% else %}
-                                Theory (Fundamental, Internet)
-                                {% endif %}
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                {{data.theory_s1}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                {% if data.course.course_name|lower == 'dfa' %}
-                                Practical (MS Office, Tally)
-                                {% else %}
-                                Practical (Ms Office, Windows)
-                                {% endif %}
-                            </td>
-                            <td>
-                                70
-                            </td>
-                            <td>
-                                {{data.pretical_s1}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>
-                                {% if data.course.course_name|lower == 'adca' %}
-                                Operating System
-                                {% else %}
-                                Oral/Project
-                                {% endif %}
-                            </td>
-                            <td>
-                                30
-                            </td>
-                            <td>
-                                {% if data.course.course_name|lower == 'adca' %}
-                                {{data.os}}
-                                {% else %}
-                                {{data.oral_s1}}
-                                {% endif %}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                {% if data.course.course_name|lower == 'adca' %}
-                <div class="row text-center" style="margin-bottom: 20px;">
-                    <h4 style="font-size: 16px; margin-bottom: 0;">Semester 2</h4>
-                </div>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">S.No.</th>
-                            <th style="text-align: center;">Subject</th>
-                            <th style="text-align: center;">Total Marks</th>
-                            <th style="text-align: center;">Obtained Marks</th>
-                        </tr>
-                    </thead>
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <td>4</td>
-                            <td>
-                                Theory(Accounting, C language)
-                            </td>
-                            <td>
-                                100
-                            </td>
-                            <td>
-                                {{data.theory_s2}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>
-                                Practical(Photoshop, Coral Draw, C Lab, HTML)
-                            </td>
-                            <td>
-                                70
-                            </td>
-                            <td>
-                                {{data.pretical_s2}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>
-                                Oral/Project
-                            </td>
-                            <td>
-                                30
-                            </td>
-                            <td>
-                                {{data.oral_s2}}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                {% endif %}
-
-                <div class="col-xs-12 text-center" style="margin-top: 50px;">
-                    {{data.}}
-                </div>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">A+</th>
-                            <th style="text-align: center;">A</th>
-                            <th style="text-align: center;">B</th>
-                            <th style="text-align: center;">C</th>
-                            <th style="text-align: center;">D</th>
-                            <th style="text-align: center;">F</th>
-                            <th style="text-align: center;">ABS</th>
-                            <th style="text-align: center;">WITHHELD</th>
-                        </tr>
-                    </thead>
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <td>85% Above</td>
-                            <td>75-84%</td>
-                            <td>65-74%</td>
-                            <td>55-64%</td>
-                            <td>40-54%</td>
-                            <td>40% Below (Failed)</td>
-                            <td>Absent</td>
-                            <td> * Technical / Administrative reasons </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="col-lg-10" style="padding: 40px">
+        <div class="row">
+          <div class="col-xs-3">
+            <img src="{{images}}/logo.jpg" alt="Logo" />
+          </div>
+          <div class="col-xs-9 text-right">
+            <h3 style="font-size: 22px">Caliber Institute of Management Sciences</h3>
+            <p>Run By:- PVEW Society</p>
+            <p style="margin-top: -25px">Website:- www.cimsedu.com</p>
+          </div>
         </div>
-    </div>
-</body>
+        <div class="row">
+          <div class="row text-center" style="margin-bottom: 20px">
+            <h3 style="font-size: 22px">Student Result</h3>
+          </div>
+          <div class="row view_txt">
+            <div class="col-xs-6">Name: &nbsp; <span class="font-weight-bold">{{data.name}}</span></div>
+            <div class="col-xs-6 text-right">Enroll Number: &nbsp; {{data.enroll_number}}</div>
+          </div>
+          <div class="row view_txt">
+            <div class="col-xs-6">Father: &nbsp; {{data.father}}</div>
+            <div class="col-xs-6 text-right">Result in Grade: &nbsp; {{gred}}</div>
+          </div>
+          <div class="row view_txt">
+            <div class="col-xs-6">Course: &nbsp; {{data.course.course_name}}</div>
+          </div>
 
+          {% if data.course.course_name|lower == 'adca' %}
+          <div class="row text-center">
+            <h4 style="font-size: 16px; margin-bottom: 0">Semester 1</h4>
+          </div>
+          {% endif %}
+
+          <table class="table table-bordered" style="margin-top: 30px">
+            <thead>
+              <tr>
+                <th style="text-align: center">S.No.</th>
+                <th style="text-align: center">Subject</th>
+                <th style="text-align: center">Total Marks</th>
+                <th style="text-align: center">Obtained Marks</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center">
+              <tr>
+                <td>1</td>
+                <td>
+                  {% if data.course.course_name|lower == 'dfa' %} Theory (Fundamental, Accounting) {% else %} Theory (Fundamental, Internet) {% endif
+                  %}
+                </td>
+                <td>100</td>
+                <td>{{data.theory_s1}}</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>
+                  {% if data.course.course_name|lower == 'dfa' %} Practical (MS Office, Tally) {% else %} Practical (Ms Office, Windows) {% endif %}
+                </td>
+                <td>70</td>
+                <td>{{data.pretical_s1}}</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>{% if data.course.course_name|lower == 'adca' %} Operating System {% else %} Oral/Project {% endif %}</td>
+                <td>30</td>
+                <td>{% if data.course.course_name|lower == 'adca' %} {{data.os}} {% else %} {{data.oral_s1}} {% endif %}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {% if data.course.course_name|lower == 'adca' %}
+          <div class="row text-center" style="margin-bottom: 20px">
+            <h4 style="font-size: 16px; margin-bottom: 0">Semester 2</h4>
+          </div>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center">S.No.</th>
+                <th style="text-align: center">Subject</th>
+                <th style="text-align: center">Total Marks</th>
+                <th style="text-align: center">Obtained Marks</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center">
+              <tr>
+                <td>4</td>
+                <td>Theory(Accounting, C language)</td>
+                <td>100</td>
+                <td>{{data.theory_s2}}</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Practical(Photoshop, Coral Draw, C Lab, HTML)</td>
+                <td>70</td>
+                <td>{{data.pretical_s2}}</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Oral/Project</td>
+                <td>30</td>
+                <td>{{data.oral_s2}}</td>
+              </tr>
+            </tbody>
+          </table>
+          {% endif %}
+
+          <div class="col-xs-12 text-center" style="margin-top: 50px">{{data.}}</div>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center">A+</th>
+                <th style="text-align: center">A</th>
+                <th style="text-align: center">B</th>
+                <th style="text-align: center">C</th>
+                <th style="text-align: center">D</th>
+                <th style="text-align: center">F</th>
+                <th style="text-align: center">ABS</th>
+                <th style="text-align: center">WITHHELD</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center">
+              <tr>
+                <td>85% Above</td>
+                <td>75-84%</td>
+                <td>65-74%</td>
+                <td>55-64%</td>
+                <td>40-54%</td>
+                <td>40% Below (Failed)</td>
+                <td>Absent</td>
+                <td>* Technical / Administrative reasons</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

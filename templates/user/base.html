@@ -1,12 +1,16 @@
+
 <!DOCTYPE html>
 
-<html>
-  <head runat="server">
+<html lang="en">
+  <head>
     {% load static %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="We Caliber Institute of Management Science (CIMS) is a premier education institute.
+    CIMS is a pioneer in providing career-orientated courses to aspiring professionals since 2015.
+    The institute has trained upto 2000 students through a wide network of education centres located
+    in Basani Babutpur Road Varanasi." />
     <meta name="author" content="mixturethemes" />
     <meta name="keywords" content="" />
 
@@ -37,7 +41,7 @@
 
   <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
     <div>
-      <div class="preloader"><img src="{{images}}/body-preloader.gif" alt="" /></div>
+      <div class="preloader"><img src="{{images}}/body-preloader.gif" alt="Pre-loader" /></div>
 
       <!-- Header Start -->
       <header>
@@ -46,12 +50,12 @@
           <div class="container">
             <!-- Navbar Header -->
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse" name="Navigation">
                 <i class="fa fa-bars"></i>
               </button>
               <div class="page-scroll">
                 <a class="navbar-brand" href="/">
-                  <img src="{{images}}/logo.jpg" />
+                  <img src="{{images}}/logo.jpg" alt="Logo" />
                 </a>
               </div>
             </div>
@@ -65,7 +69,7 @@
                   <a href="/about">About</a>
                 </li>
                 <li class="page-scroll dropdown {{courses}}">
-                  <a href="">Courses</a>
+                  <a href="#">Courses</a>
                   <ul class="dropdown-menu" style="min-width: 210px">
                     <li>
                       <a href="/courses?type=Diploma" class="inverse">Diploma Courses</a>
