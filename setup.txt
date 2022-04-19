@@ -94,10 +94,10 @@ sudo certbot renew --dry-run
 
 
 -- Docker build the image and install dependencies
-sudo docker build --tag cims .
+sudo docker build --tag abahy4122/cims .
 
 -- Docker run the image in background
-sudo docker run -d -p 8080:8000 cims
+sudo docker run -d -p 8080:8000 abahy4122/cims
                 OR
 -- Docker auto restart the image when system reboot
-sudo docker run -d -p 8080:8000 --restart unless-stopped cims
+sudo docker run -d -p 8080:8000 --restart unless-stopped abahy4122/cims

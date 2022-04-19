@@ -281,6 +281,12 @@
   color: #f00 !important;
 }
 
+/* Style for super center */
+.super_center {
+  display: grid;
+  place-items: center;
+}
+
 @media (max-width: 767px) {
   .navbar-nav {
     width: 70%;
