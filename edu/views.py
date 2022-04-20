@@ -217,11 +217,7 @@ def gen_certi_no(year):
         return f"C{year_numbering[year]}{'%03d' % ((int(get_data['cretificate_no__max'][2:]) + 1),)}"
     else:
         return f"C{year_numbering[year]}{'%03d' % (501,)}"
-
-
-
-def test(request):
-    return render(request, 'user/test.html')
+        
 
 def custom_404(request, exception):
     return render(request, "error_404.html")

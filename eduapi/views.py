@@ -1,3 +1,4 @@
+import json
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -17,16 +18,16 @@ class CourseApi(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         return self.obj.get(request, Course, CourseListSerializer, CourseSerializer, 'Course')
     
-    def post(self, request):
+    def post(self, request: dict) -> dict:
         return self.obj.post(request, CourseSerializer, 'Course created', '/course')
     
-    def put(self, request):
+    def put(self, request: dict) -> dict:
         return self.obj.put(request, Course, CourseSerializer, 'Course updated', '/course')
     
-    def delete(self, request):
+    def delete(self, request: dict) -> dict:
         return self.obj.delete(request, Course, 'Course', '/course')
 
 
@@ -36,10 +37,10 @@ class StudentApi(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         return self.obj.get(request, Student, StudentListSerializer, StudentDetailSerializer, 'Student')
     
-    def post(self, request):
+    def post(self, request: dict) -> dict:
         try:
             request.data._mutable = True
         except Exception as e:
@@ -48,7 +49,7 @@ class StudentApi(APIView):
         request.data.update({'is_registerd': True})
         return self.obj.post(request, StudentSerializer, 'Student registerd', '/student')
     
-    def put(self, request):
+    def put(self, request: dict) -> dict:
         if request.FILES:
             try:
                 request.data._mutable = True
@@ -66,7 +67,7 @@ class StudentApi(APIView):
             request.data.update({'is_registerd': True})
             return self.obj.put(request, Student, StudentWithoutPhotoSerializer, 'Student updated', '/student')
     
-    def delete(self, request):
+    def delete(self, request: dict) -> dict:
         return self.obj.delete(request, Student, 'Student', '/student')
 
 
@@ -76,7 +77,7 @@ class EnrollApi(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         get_data = Student.objects.filter(id=request.GET.get('id'), enroll_number=None).values('name', 'reg_year')
         if get_data.exists():
             return_str = get_data[0]['name']
@@ -111,7 +112,7 @@ class NonExamineeAPI(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         if bool(dict(request.GET)):
             examinee = Student.objects.filter(is_examinee=False, is_enrolled=True, id=request.GET.get('id'))
             resp = StudentDetailSerializer(examinee, many=False).data
@@ -128,7 +129,7 @@ class ExamApi(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         if bool(dict(request.GET)):
             examinee = Student.objects.filter(is_examinee=1, id=request.GET.get('id'))
             if examinee[0].course.course_name.lower() == 'adca':
@@ -141,7 +142,7 @@ class ExamApi(APIView):
         
         return Response(resp)
     
-    def post(self, request):
+    def post(self, request: dict) -> dict:
         resp = self.request_filter(request, 'add')
         if resp:
             msg = f'Exam marks has been added successfully.'
@@ -158,7 +159,7 @@ class ExamApi(APIView):
         
         return Response(resp)
     
-    def put(self, request):
+    def put(self, request: dict) -> dict:
         resp = self.request_filter(request, 'update')
         if resp:
             msg = f'Exam marks has been updated successfully.'
@@ -175,7 +176,7 @@ class ExamApi(APIView):
         
         return Response(resp)
     
-    def request_filter(self, request, method):
+    def request_filter(self, request: dict, method: str) -> bool:
         req = request.POST
         std = req.get('name').split('*')
 
@@ -214,7 +215,7 @@ class ExamApi(APIView):
             self.obj.prin(e)
             return False
     
-    def gen_certi_no(self, year):
+    def gen_certi_no(self, year: str) -> str:
         year_numbering = {'2017': '', '2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
         get_data = Student.objects.filter(Q(reg_year=year), ~Q(cretificate_no=None)).aggregate(Max('cretificate_no'))
 
@@ -230,7 +231,7 @@ class EnableDisableCertiApi(APIView):
     def __init__(self):
         self.obj = ViewUtil()
 
-    def get(self, request):
+    def get(self, request: dict) -> dict:
         toggle = True if request.GET.get('is_certi') == 'false' else False
         Student.objects.filter(id=request.GET.get('id')).update(is_certified=toggle)
         
