@@ -296,7 +296,11 @@
         <span> - (Governed by PVEW Society, since 2017 ) </span>
       </div>
 
-      <h3>
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+        <h3>
+        {% else %}
+          <h3 style="margin-top: 50px;">
+      {% endif %}
         <span class="certi_ficate_txt">Certificate</span>
         <span style="float: right; margin-right: 80px; font-family: consolas"> Certificate. No.:
           {{student.cretificate_no}} </span>
@@ -307,13 +311,17 @@
       A+: 85%-Above
     </div>
     <div class="main_content_dv">
-      <div class="main_content">
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+        <div class="main_content">
+        {% else %}
+        <div class="main_content" style="margin-top: 100px;">
+      {% endif %}
         In honor of outstanding performance present this certificate to <br />
         <span style="color: #eb633d; font-weight: 600"> {{student.name}} </span>
         <span>{% if student.gender == 'Male' %} S/O Mr. {% else %} D/O Mr. {% endif %}</span>
         <span style="color: #eb633d; font-weight: 600"> {{student.father}} </span> <br />
         Enroll. No. {{student.enroll_number}} <br />
-        For the successful completion of the Diploma Course. <br />
+        For the successful completion of the Course. <br />
         <span style="color: #eb633d"> {{student.course.course_full_form}} </span> <br />
         Duration: {{student.course.course_duration}} <br />
         Session: {{student.reg_mon}}-{{student.reg_year}} to {{student.session_month}}-{{student.session_year}}
@@ -321,84 +329,86 @@
         {{student.exam_month}} {{student.exam_year}})
       </div>
 
-      <p class="text-center" style="margin-bottom: 5px; font-size: 14px">Statement of msrks</p>
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+        <p class="text-center" style="margin-bottom: 5px; font-size: 14px">Statement of marks</p>
 
-      {% if student.course.course_name|lower == 'adca' %}
-      <div class="main_tbl2">
-        <table class="tbl_structure">
-          <thead>
-            <tr>
-              <th colspan="2">Semester 1</th>
-              <th colspan="2">Semester 2</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Subject</td>
-              <td>Marks</td>
-              <td>Subject</td>
-              <td>Marks</td>
-            </tr>
-            <tr>
-              <td>Theory (Fundamental, Internet)</td>
-              <td>{{student.theory_s1}} / 100</td>
-              <td>Theory(Accounting, C language)</td>
-              <td>{{student.theory_s2}} / 100</td>
-            </tr>
-            <tr>
-              <td>Practical(MS Office, Windows)</td>
-              <td>{{student.pretical_s1}} / 70</td>
-              <td>Practical(Photoshop, Coral Draw, C Lab, HTML)</td>
-              <td>{{student.pretical_s2}} / 70</td>
-            </tr>
-            <tr>
-              <td>Operating System</td>
-              <td>{{student.os}} / 30</td>
-              <td>Oral/Project</td>
-              <td>{{student.oral_s2}} / 30</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="font-size: 17px">Grade Awarded : &nbsp; <span style="font-weight: bold">{{gred}}</span></p>
-      </div>
-      {% else %}
-      <div class="main_tbl">
-        <table class="tbl_structure">
-          <thead>
-            <tr>
-              <th>Subject</th>
-              <th>Obtain Marks</th>
-              <th>Grade Awarded</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                {% if student.course.course_name|lower == 'dfa' %}
-                Theory (Fundamental, Accounting)
-                {% else %}
-                Theory (Fundamental, Internet)
-                {% endif %}
-              </td>
-              <td>{{student.theory_s1}} / 100</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                {% if student.course.course_name|lower == 'dfa' %} Practical (MS Office, Tally) {% else %} Practical (Ms
-                Office, Windows) {% endif %}
-              </td>
-              <td>{{student.pretical_s1}} / 70</td>
-              <td>{{gred}}</td>
-            </tr>
-            <tr>
-              <td>Oral/Project</td>
-              <td>{{student.oral_s1}} / 30</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        {% if student.course.course_name|lower == 'adca' %}
+        <div class="main_tbl2">
+          <table class="tbl_structure">
+            <thead>
+              <tr>
+                <th colspan="2">Semester 1</th>
+                <th colspan="2">Semester 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Subject</td>
+                <td>Marks</td>
+                <td>Subject</td>
+                <td>Marks</td>
+              </tr>
+              <tr>
+                <td>Theory (Fundamental, Internet)</td>
+                <td>{{student.theory_s1}} / 100</td>
+                <td>Theory(Accounting, C language)</td>
+                <td>{{student.theory_s2}} / 100</td>
+              </tr>
+              <tr>
+                <td>Practical(MS Office, Windows)</td>
+                <td>{{student.pretical_s1}} / 70</td>
+                <td>Practical(Photoshop, Coral Draw, C Lab, HTML)</td>
+                <td>{{student.pretical_s2}} / 70</td>
+              </tr>
+              <tr>
+                <td>Operating System</td>
+                <td>{{student.os}} / 30</td>
+                <td>Oral/Project</td>
+                <td>{{student.oral_s2}} / 30</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="font-size: 17px">Grade Awarded : &nbsp; <span style="font-weight: bold">{{gred}}</span></p>
+        </div>
+        {% else %}
+        <div class="main_tbl">
+          <table class="tbl_structure">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Obtain Marks</th>
+                <th>Grade Awarded</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {% if student.course.course_name|lower == 'dfa' %}
+                  Theory (Fundamental, Accounting)
+                  {% else %}
+                  Theory (Fundamental, Internet)
+                  {% endif %}
+                </td>
+                <td>{{student.theory_s1}} / 100</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>
+                  {% if student.course.course_name|lower == 'dfa' %} Practical (MS Office, Tally) {% else %} Practical (Ms
+                  Office, Windows) {% endif %}
+                </td>
+                <td>{{student.pretical_s1}} / 70</td>
+                <td>{{gred}}</td>
+              </tr>
+              <tr>
+                <td>Oral/Project</td>
+                <td>{{student.oral_s1}} / 30</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
       {% endif %}
     </div>
     <div class="txt_sign">
