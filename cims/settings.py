@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework'
 ]
 
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -138,3 +139,5 @@ if DEBUG:
 
     INSTALLED_APPS.append('debug_toolbar')
     INSTALLED_APPS.append('django_extensions')
+
+    SESSION_COOKIE_AGE = 1600

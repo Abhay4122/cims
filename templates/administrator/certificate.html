@@ -306,10 +306,12 @@
           {{student.cretificate_no}} </span>
       </h3>
     </div>
+    {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
     <div class="legend_gred_dv">
       Legend of Grades: &nbsp; F: Below 40% &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp;
       A+: 85%-Above
     </div>
+    {% endif %}
     <div class="main_content_dv">
       {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
         <div class="main_content">
