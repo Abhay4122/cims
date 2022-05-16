@@ -1,3 +1,5 @@
+************* Project setup ************
+
 git clone https://github.com/abhay4122/cims
 sudo apt-get update
 sudo apt-get install python3-pip apache2 libapache2-mod-wsgi-py3 -y
@@ -7,8 +9,13 @@ virtualenv .venv/cims
 source .venv/cims/bin/activate
 cd cims
 pip install -r requirement.txt
-sudo nano /etc/apache2/sites-available/000-default.conf
 
+
+************ Server setup ***********
+
+Edit the configuration File
+
+sudo nano /etc/apache2/sites-available/000-default.conf
 
 <VirtualHost *:80>
 
@@ -39,25 +46,15 @@ CustomLog ${APACHE_LOG_DIR}/access.log combined
 
 sudo chown :www-data ~/cims
 
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/*.pyc" -delete
-rm -f db.sqlite3
-find . -path "*/__pycache__" -delete
 
-python manage.py makemigrations
-python manage.py migrate
-python manage.py createsuperuser
-
-sudo service apache2 restart
-
-
+********** Env setting **********
 
 DEBUG=True
 SECRET_KEY=_ty$5^^vvn&*2fzere+#62ob*%ey%3h+k89_4(w*=nfcv#u7)=
 
 
 
-Apply ssl in website
+********** Apply ssl in website ***********
 
 - append the billow line in /etc/apache2/sites-available/000-default.conf
 
@@ -91,7 +88,21 @@ sudo certbot --apache
 sudo certbot renew --dry-run
 
 
+************ Remove DB tables ***********
 
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+find . -path "*/*.pyc" -delete
+rm -f db.sqlite3
+find . -path "*/__pycache__" -delete
+
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+
+sudo service apache2 restart
+
+
+************ Docker setup ************
 
 -- Docker build the image and install dependencies
 sudo docker build --tag abahy4122/cims .
@@ -101,3 +112,19 @@ sudo docker run -d -p 8080:8000 abahy4122/cims
                 OR
 -- Docker auto restart the image when system reboot
 sudo docker run -d -p 8080:8000 --restart unless-stopped abahy4122/cims
+
+
+
+************** Convert sass/scss in css ***************
+
+for this we can use many sass/scss compiler but here we gona use Vscode live sass compiler
+step 1: Download the live sass compiler extension in vscode
+step 2: pest the script billow in settings.json
+
+"liveSassCompile.settings.formats": [
+    {
+    "format": "expanded",
+    "extensionName": ".css",
+    "savePath": "~/../css"
+    }
+]

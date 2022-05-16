@@ -19,15 +19,47 @@ class CourseApi(APIView):
         self.obj = ViewUtil()
 
     def get(self, request: dict) -> dict:
+        """This function is define to get the course details
+
+        Args:
+            request (dict): Request is used to get all cache, session and cookie detail
+
+        Returns:
+            dict: Return individual or group course record.
+        """
         return self.obj.get(request, Course, CourseListSerializer, CourseSerializer, 'Course')
     
     def post(self, request: dict) -> dict:
+        """Course post request is used to create a new course
+
+        Args:
+            request (dict): Request is used to get all cache, session and cookie detail
+
+        Returns:
+            dict: Returns success or failuer message
+        """
         return self.obj.post(request, CourseSerializer, 'Course created', '/course')
     
     def put(self, request: dict) -> dict:
+        """This function is used to update the data in course model
+
+        Args:
+            request (dict): Request is used to get all cache, session and cookie detail
+
+        Returns:
+            dict: Returns the response in success or failure.
+        """
         return self.obj.put(request, Course, CourseSerializer, 'Course updated', '/course')
     
     def delete(self, request: dict) -> dict:
+        """Use to delete the course detail
+
+        Args:
+            request (dict): Request is used to get all cache, session and cookie detail
+
+        Returns:
+            dict: Returns the response in success or failure.
+        """
         return self.obj.delete(request, Course, 'Course', '/course')
 
 
