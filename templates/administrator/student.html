@@ -39,21 +39,35 @@
 
       // Function define to create the list of student
       std_data = async () => {
+        // let tbl_conf = {
+        //   columnDefs: [
+        //     {
+        //       targets: [0, 6],
+        //       visible: false,
+        //       searchable: false
+        //     }
+        //   ],
+        //   order: [[6, 'asc']],
+        //   fnRowCallback: function (nRow, aData, iDisplayIndex) {
+        //     if (aData[5]) {
+        //       $('td:eq(4)', nRow).html(`<span>${aData[5]}</span>`)
+        //     } else {
+        //       $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
+        //     }
+        //   }
+        // }
+
         let tbl_conf = {
           columnDefs: [
             {
-              targets: [0, 6],
+              targets: [0, 5],
               visible: false,
               searchable: false
             }
           ],
-          order: [[6, 'asc']],
+          order: [[5, 'asc']],
           fnRowCallback: function (nRow, aData, iDisplayIndex) {
-            if (aData[5]) {
-              $('td:eq(4)', nRow).html(`<span>${aData[5]}</span>`)
-            } else {
-              $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
-            }
+            $('td:eq(5)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
           }
         }
 
@@ -129,7 +143,7 @@
       }
     }
 
-    let std = new student('api/student-api', 'student', 'cims_modal')
+    let std = new student('api/student-api?is_enrolled=0', 'student', 'cims_modal')
 
     // Call function for first time
     std.std_data()

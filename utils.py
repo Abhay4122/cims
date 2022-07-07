@@ -56,17 +56,23 @@ class ViewUtil(MainUtils):
 		if bool(dict(request.GET)):
 			# Raw query data
 			# get_value = model.objects.raw(f'''select * from eduapi_student where id = {request.GET.get('id')}''')
-			get_value = self.get_model_data(model, request.GET.get('id'))
-			if get_value.exists():
-				resp = detailSerializer(get_value[0], many=False).data
-			else:
-				msg = f'{msg_prifix} data not found.'
-				resp = {
-					**{'status': status.HTTP_404_NOT_FOUND},
-					**self.resp_fun(msg, load_link, 'error')
-				}
+			if request.GET.get('id'):
+				get_value = model.objects.filter(id=request.GET.get('id'))
+
+				if get_value.exists():
+					resp = detailSerializer(get_value[0], many=False).data
+				else:
+					msg = f'{msg_prifix} data not found.'
+					resp = {
+						**{'status': status.HTTP_404_NOT_FOUND},
+						**self.resp_fun(msg, load_link, 'error')
+					}
+
+			elif request.GET.get('is_enrolled'):
+				resp = listSerializer(model.objects.filter(is_enrolled=request.GET.get('is_enrolled')), many=True).data
+
 		else:
-			resp = listSerializer(extra_query if extra_query != '-' else self.get_model_data(model), many=True).data
+			resp = listSerializer(extra_query if extra_query != '-' else model.objects.all(), many=True).data
 		
 		return Response(resp)
 	
@@ -99,7 +105,7 @@ class ViewUtil(MainUtils):
 			Argument will be request, model, serializer, message prefix
 		'''
 		if bool(dict(request.GET)):
-			get_data = self.get_model_data(model, request.GET.get('id'))
+			get_data = model.objects.filter(id=request.GET.get('id'))
 			if get_data.exists():
 				serialize = serializer(get_data[0], request.data)
 				if serialize.is_valid():
@@ -129,7 +135,7 @@ class ViewUtil(MainUtils):
 	
 	def delete(self, request, model, msg_prifix, load_link=''):
 		if bool(dict(request.GET)):
-			get_data = self.get_model_data(model, request.GET.get('id'))
+			get_data = model.objects.filter(id=request.GET.get('id'))
 			if get_data.exists():
 				return_str = get_data[0].__str__()
 				get_data.delete()

@@ -1,8 +1,9 @@
-{% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
+{% extends 'administrator/base.html' %} {% block title %} <title>Student list</title> {% endblock %} {% block body %}
 
 <section
+  id="testimonials"
   class="parallax paralbackground"
-  style="background-image: url({{images}}/certificate.png); background-attachment: fixed"
+  style="background-image:url({{images}}/13.jpg); background-attachment:fixed;"
   data-img-width="600"
   data-img-height="385"
   data-diff="100"
@@ -10,213 +11,126 @@
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
-      <h4>Marks Detail</h4>
+      <h4>Student details</h4>
       <hr />
     </div>
   </div>
 </section>
 
 <section>
-  <div class="container-fluid">
-    <div class="col-md-12">
-      <div class="col-sm-12">
-        <button id="add_marks_popup_btn" class="btn btn-sm btn-danger float-right" name="Add marks">Add marks</button>
-      </div>
-      <div id="marks_list"></div>
-    </div>
+  <div class="container">
+    <div class="col-md-12" id="std_list"></div>
   </div>
 </section>
 
 {% endblock %} {% block script %}
 <script>
-  $(document).ready(function (e) {
-    class exam extends form_handler {
+  $(document).ready(function async(e) {
+    class student extends form_handler {
       constructor(url, id, modal_id) {
         super()
         this.url = url
         this.id = id
         this.modal_id = modal_id
-        this.exam_form = {
-          'select#name': ['Student*'],
-          'text#father': ["Father's name#"],
-          'text#course': ['Course#'],
-          'text#admission_session': ['Admission session#'],
-          'text#registration_number': ['Registration number#'],
-          'text#enroll_number': ['Enroll number#'],
-          'select#exam_year': [
-            'Exam year*',
-            { 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }
-          ],
-          'select#exam_month': ['Exam month*', { March: 'March', June: 'June', September: 'September', December: 'December' }],
-          row: 6
-        }
       }
-      // Function define to create the list of exam
-      exam_data = async () => {
+
+      // Function define to create the list of student
+      std_data = async () => {
         let tbl_conf = {
           columnDefs: [
             {
               targets: [0, 5],
               visible: false,
               searchable: false
-            },
-            {
-              targets: [-1],
-              width: 100,
-              searchable: false
             }
           ],
-          order: [[4, 'asc']],
+          order: [[5, 'desc']],
           fnRowCallback: function (nRow, aData, iDisplayIndex) {
-            $('td:eq(-1)', nRow).html(`
-              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'>
-                <input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[5] ? 'checked' : ''} />
-              </span>
-              <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
-              <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
-              <a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e; margin-left: 7px;'><i class="fa fa-file-text-o"></i></a>
-            `)
+            $('td:eq(5)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
           }
         }
 
         // create_tbl(url, init element id, table configuration, options)
-        await this.create_tbl(this.url, 'marks_list', tbl_conf)
+        await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
       }
 
       // Function define to handle row click other then action
       row_click = async (btn_id, row) => {
-        if (btn_id == 'gen_certi') {
+        if (btn_id == 'gen_enroll') {
           Swal.fire({
             icon: 'warning',
             title: 'Are you sure ?',
-            text: `to generate the certificate for student ${row[1]} !!`,
+            text: `to generate the enroll for student ${row[1]} !!`,
             showCancelButton: true,
             allowOutsideClick: false,
             allowEscapeKey: false
           }).then(result => {
-            result.isConfirmed ? this.get_post(`${this.url}?id=${row[0]}`, false) : ''
+            result.isConfirmed ? this.get_post(`api/enroll-api?id=${row[0]}`, false) : ''
           })
-        } else if (btn_id == 'View') {
-          const data = await this.get_post(`${this.url}?id=${row[0]}`)
-          await this.view_data_modal(`View ${this.id} detail`, data)
-        } else if (btn_id == 'edit_certi') {
-          this.value = await this.get_post(`${this.url}?id=${row[0]}`)
-          this.value['registration_number'] = '754/2016-17,V-51176'
-
-          const form_inputs = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
-
-          await this.add_edit_modal(`Update ${this.id} detail`, form_inputs)
-        } else if (btn_id == 'is_certi') {
-          this.get_post(`api/enable-disable-certi-api?id=${row[0]}&is_certi=${row[5]}`, false)
-          // await this.exam_data()
         }
       }
 
-      // Function defin to get all student
-      get_exam_form = async form_inputs => {
-        let data = await this.get_post('api/non-examinee-api')
-        let std_list = {}
+      // Function defin to get Course data
+      get_sutdent_form = async () => {
+        let data = await this.get_post('api/course-api')
+        let course_list = {}
 
         for (let i of data) {
-          std_list[
-            i['name']
-          ] = `${i['id']}*${i['name']}*${i['father']}*${i['course']}*${i['admission_session']}*754/2016-17,V-51176*${i['enroll_number']}`
+          course_list[i['course_name']] = i['id']
         }
 
-        return await this.init_exam_form(std_list, form_inputs)
+        return await this.init_sutdent_form(course_list)
       }
 
       // Function define to createthe form and then add form in html
-      init_exam_form = async (all_student, form_inputs) => {
-        if (this.value) {
-          const std = {}
-          std[
-            this.value['name']
-          ] = `${this.value['id']}*${this.value['name']}*${this.value['father']}*${this.value['course']}*${this.value['admission_session']}*754/2016-17,V-51176*${this.value['enroll_number']}`
-          this.value['name'] = std[this.value['name']]
-
-          form_inputs['select#name'].push(std)
-        } else {
-          form_inputs['select#name'].push(all_student)
+      init_sutdent_form = async all_course => {
+        let student_form = {
+          'select#reg_year': [
+            'Registration year*',
+            { 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }
+          ],
+          'select#reg_mon': ['Registration month*', { January: 'January', April: 'April', July: 'July', October: 'October' }],
+          'select#session_year': [
+            'Session year*',
+            { 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }
+          ],
+          'select#session_month': ['Session month*', { March: 'March', June: 'June', September: 'September', December: 'December' }],
+          'text#name': ['Name*'],
+          'text#father': ["Father's name*"],
+          'text#mother': ["Mother's name*"],
+          'text#aadhar': ['Aadhar number*'],
+          'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
+          'date#dob': ['Date of birth*'],
+          'text#address': ['Address*'],
+          'tel#contact': ['Contact number*'],
+          'select#category': ['Category*', { Gen: 'Gen', OBC: 'OBC', SC: 'SC', ST: 'ST', Other: 'Other' }],
+          'select#course': ['Course*', all_course],
+          'text#lpc': ['Last passed class*'],
+          'text#passing_year': ['Passing year*'],
+          'text#board': ['Board*'],
+          'text#gread': ['Gread / Precentage / Division*'],
+          'file#photo': ['Upload photo', { attr: 'accept="image/png, image/jpeg"' }],
+          row: 6
         }
-
-        return await this.create_form(form_inputs)
+        return await this.create_form(student_form)
       }
 
       // Function defin to call modal
-      add_edit_modal = async (header, form_inputs) => {
-        console.log(form_inputs)
-        let std_form = await this.get_exam_form(form_inputs)
+      add_edit_modal = async header => {
+        let std_form = await this.get_sutdent_form()
         await this.init_modal(header, std_form)
-
-        // Onchange name field call the function
-        $('#name_id').on('change', async e => {
-          const val = e.target.value.split('*')
-          const values = {
-            father: val[2],
-            course: val[3],
-            admission_session: val[4],
-            registration_number: val[5],
-            enroll_number: val[6]
-          }
-
-          for (const i in form_inputs) {
-            const id = i.split('#')[1]
-            if (id != 'name') {
-              $(`#${id}_id`).val(values[id])
-            }
-          }
-
-          const extended_fields = await this.field_generator(this.extend_form(val[3].toLowerCase()))
-
-          $('#extra_fields').html(extended_fields)
-        })
-      }
-
-      // Function define to extend the form field
-      extend_form = course => {
-        let extend_form = {}
-
-        if (course == 'adca') {
-          extend_form = {
-            'text#theory_s1': ['Theory (Fundamental, Internet) / 100*'],
-            'text#os': ['Operating System(S1) / 30*'],
-            'text#pretical_s1': ['Practical (Ms Office, Windows) / 70*'],
-            'text#theory_s2': ['Theory(Accounting, C language)(S2) / 100'],
-            'text#pretical_s2': ['Practical(Photoshop, Coral Draw, C Lab, HTML)(S2) / 70'],
-            'text#oral_s2': ['Oral/Project(S2) / 30'],
-            row: 6
-          }
-        } else if (course == 'dfa') {
-          extend_form = {
-            'text#theory_s1': ['Theory (Fundamental, Accounting) / 100*'],
-            'text#pretical_s1': ['Practical (Ms Office, Tally) / 70*'],
-            'text#oral_s1': ['Oral/Project / 30*'],
-            row: 6
-          }
-        } else {
-          extend_form = {
-            'text#theory_s1': ['Theory (Fundamental, Internet) / 100*'],
-            'text#pretical_s1': ['Practical (Ms Office, Windows) / 70*'],
-            'text#oral_s1': ['Oral/Project / 30*'],
-            row: 6
-          }
-        }
-
-        return extend_form
       }
     }
 
-    let std = new exam('api/exam-api', 'exam', 'cims_modal')
+    let std = new student('api/student-api?is_enrolled=1', 'student', 'cims_modal')
 
     // Call function for first time
-    std.exam_data()
+    std.std_data()
 
-    $('#add_marks_popup_btn').on('click', async e => {
+    $('#reg_std_popup_btn').on('click', async e => {
       std.value = false
-      await std.add_edit_modal('Add marks', std.exam_form)
+      await std.add_edit_modal('Register student')
     })
   })
 </script>
-
 {% endblock %}

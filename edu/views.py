@@ -55,6 +55,10 @@ def exam(request):
     return render(request, 'administrator/exam.html', {'exam': 'active'})
 
 @login_required(login_url='/login')
+def certificate_list(request):
+    return render(request, 'administrator/certi_ficate.html', {'certificate': 'active'})
+
+@login_required(login_url='/login')
 def certificate(request):
     resp = None
     gred = None

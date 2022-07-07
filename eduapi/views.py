@@ -38,7 +38,7 @@ class StudentApi(APIView):
         self.obj = ViewUtil()
 
     def get(self, request: dict) -> dict:
-        return self.obj.get(request, Student, StudentListSerializer, StudentDetailSerializer, 'Student')
+        return self.obj.get(request, Student, RegStudentListSerializer, StudentDetailSerializer, 'Student')
     
     def post(self, request: dict) -> dict:
         try:

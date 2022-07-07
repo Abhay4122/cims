@@ -41,6 +41,67 @@ class StudentWithoutPhotoSerializer(serializers.ModelSerializer):
         )
 
 
+# Registerd student serializer for list view
+class RegStudentListSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    admission_session = serializers.SerializerMethodField('get_admission_session')
+    reg_session = serializers.SerializerMethodField('get_reg_session')
+    generate_enroll = serializers.SerializerMethodField('get_generate_enroll')
+
+    def get_admission_session(self, obj):
+        return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
+
+    def get_generate_enroll(self, obj):
+        return obj.is_enrolled
+
+    def get_reg_session(self, obj):
+        year_numbering = {'2017': '', '2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
+        if obj.reg_mon == 'January':
+            return f'{year_numbering[obj.reg_year]}A{obj.reg_year}'
+        elif obj.reg_mon == 'April':
+            return f'{year_numbering[obj.reg_year]}B{obj.reg_year}'
+        elif obj.reg_mon == 'July':
+            return f'{year_numbering[obj.reg_year]}C{obj.reg_year}'
+        elif obj.reg_mon == 'October':
+            return f'{year_numbering[obj.reg_year]}D{obj.reg_year}'
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'father', 'course', 'admission_session', 'reg_session', 'contact', 'generate_enroll'
+        )
+
+# Enrolled student serializer for list view
+class EnrolledStudentListSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    admission_session = serializers.SerializerMethodField('get_admission_session')
+    reg_session = serializers.SerializerMethodField('get_reg_session')
+    marking = serializers.SerializerMethodField('get_marking')
+
+    def get_admission_session(self, obj):
+        return f"{obj.reg_mon} - {obj.reg_year} to {obj.session_month} - {obj.session_year}"
+
+    def get_marking(self, obj):
+        return obj.is_enrolled
+
+    def get_reg_session(self, obj):
+        year_numbering = {'2017': '', '2018': 'A', '2019': 'B', '2020': 'C', '2021': 'D', '2022': 'E', '2023': 'F', '2024': 'G', '2025': 'H'}
+        if obj.reg_mon == 'January':
+            return f'{year_numbering[obj.reg_year]}A{obj.reg_year}'
+        elif obj.reg_mon == 'April':
+            return f'{year_numbering[obj.reg_year]}B{obj.reg_year}'
+        elif obj.reg_mon == 'July':
+            return f'{year_numbering[obj.reg_year]}C{obj.reg_year}'
+        elif obj.reg_mon == 'October':
+            return f'{year_numbering[obj.reg_year]}D{obj.reg_year}'
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'father', 'course', 'admission_session', 'reg_session', 'contact', 'marking'
+        )
+
+
 # Student serializer for list view
 class StudentListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)

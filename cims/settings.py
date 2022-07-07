@@ -140,4 +140,4 @@ if DEBUG:
     INSTALLED_APPS.append('debug_toolbar')
     INSTALLED_APPS.append('django_extensions')
 
-    SESSION_COOKIE_AGE = 1600
+    # SESSION_COOKIE_AGE = 1600
