@@ -122,7 +122,7 @@ class ViewUtil(MainUtils):
 				msg = f'{msg_prifix} data not found'
 				resp = {
 					**{'status': status.HTTP_404_NOT_FOUND},
-					**self.resp_fun(msg, load_link, 'error')
+					**self.resp_fun(msg, '', 'error')
 				}
 		else:
 			msg = f'{msg_prifix} data not found'

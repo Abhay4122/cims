@@ -14,5 +14,6 @@ urlpatterns = [
     path('enroll-api', EnrollApi.as_view()),
     path('exam-api', ExamApi.as_view()),
     path('non-examinee-api', NonExamineeAPI.as_view()),
+    path('certificate-api', CertificateAPI.as_view()),
     path('enable-disable-certi-api', EnableDisableCertiApi.as_view())
 ]

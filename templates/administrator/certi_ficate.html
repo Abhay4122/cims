@@ -1,4 +1,4 @@
-{% extends 'administrator/base.html' %} {% block title %} <title>Exam</title> {% endblock %} {% block body %}
+{% extends 'administrator/base.html' %} {% block title %} <title>Certificate</title> {% endblock %} {% block body %}
 
 <section
   class="parallax paralbackground"
@@ -10,7 +10,7 @@
   <div class="cover"></div>
   <div class="container">
     <div class="section-title hed">
-      <h4>Marks Detail</h4>
+      <h4>Certificate Detail</h4>
       <hr />
     </div>
   </div>
@@ -19,8 +19,15 @@
 <section>
   <div class="container-fluid">
     <div class="col-md-12">
-      <div class="col-sm-12">
+      <!-- <div class="col-sm-12">
         <button id="add_marks_popup_btn" class="btn btn-sm btn-danger float-right" name="Add marks">Add marks</button>
+      </div> -->
+      <div class="col-md-3 col-sm-12 float-right">
+        <select class="form-control" id="student_year">
+          {% for i in years %}
+            <option>{{i.reg_year}}</option>
+          {% endfor %}
+        </select>
       </div>
       <div id="marks_list"></div>
     </div>
@@ -69,12 +76,12 @@
           order: [[4, 'asc']],
           fnRowCallback: function (nRow, aData, iDisplayIndex) {
             $('td:eq(-1)', nRow).html(`
-              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' id='is_certi'>
+              <span style='margin-left: 7px; margin-right: 7px; position: relative; z-index: 0; padding-right: 12px;' title='Show marks on student portal' id='is_certi'>
                 <input type='checkbox' style='width: 12px; position: absolute; z-index: -1;' ${aData[5] ? 'checked' : ''} />
               </span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
-              <a href='/certificate?id=${aData[0]}' target='_blank' style='color: #e74e3e; margin-left: 7px;'><i class="fa fa-file-text-o"></i></a>
+              <a href='/certificate?id=${aData[0]}' title='Show the certificate' target='_blank' style='color: #e74e3e; margin-left: 7px;'><i class="fa fa-file-text-o"></i></a>
             `)
           }
         }
@@ -97,10 +104,10 @@
             result.isConfirmed ? this.get_post(`${this.url}?id=${row[0]}`, false) : ''
           })
         } else if (btn_id == 'View') {
-          const data = await this.get_post(`${this.url}?id=${row[0]}`)
+          const data = await this.get_post(`api/certificate-api?id=${row[0]}`)
           await this.view_data_modal(`View ${this.id} detail`, data)
         } else if (btn_id == 'edit_certi') {
-          this.value = await this.get_post(`${this.url}?id=${row[0]}`)
+          this.value = await this.get_post(`api/certificate-api?id=${row[0]}`)
           this.value['registration_number'] = '754/2016-17,V-51176'
 
           const form_inputs = { ...this.exam_form, ...this.extend_form(this.value['course'].toLowerCase()) }
@@ -145,7 +152,6 @@
 
       // Function defin to call modal
       add_edit_modal = async (header, form_inputs) => {
-        console.log(form_inputs)
         let std_form = await this.get_exam_form(form_inputs)
         await this.init_modal(header, std_form)
 
@@ -207,10 +213,15 @@
       }
     }
 
-    let std = new exam('api/exam-api', 'exam', 'cims_modal')
+    let std = new exam('api/certificate-api', 'exam', 'cims_modal')
 
     // Call function for first time
     std.exam_data()
+
+    $('#student_year').on('change', async e => {
+      let std = new exam(`api/certificate-api?year=${e.target.value}`, 'exam', 'cims_modal')
+      std.exam_data()
+    })
 
     $('#add_marks_popup_btn').on('click', async e => {
       std.value = false

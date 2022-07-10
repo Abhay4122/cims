@@ -273,7 +273,7 @@ class form_handler {
   }
 
   // Function defin to init content in modal
-  init_modal = async (header, body) => {
+  init_modal = async (header, body, is_method=false) => {
     $(`#${this.modal_id} #modal_header`).text(header)
     $(`#${this.modal_id} #modal_body`).html(body)
 
@@ -283,8 +283,10 @@ class form_handler {
       e.preventDefault()
 
       const form_data = new FormData(document.getElementById(`${this.id}_form`))
-      const url = this.value ? `${this.url}?id=${this.value['id']}` : this.url
-      const method = this.value ? 'put' : 'post'
+      const method = is_method ? is_method : this.value ? 'put' : 'post'
+
+      let url = this.url.split('?')[0]
+      url = this.value ? `${url}?id=${this.value['id']}` : url
 
       await this.get_post(url, form_data, method)
     })

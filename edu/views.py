@@ -44,7 +44,8 @@ def dashboard(request):
 
 @login_required(login_url='/login')
 def student(request):
-    return render(request, 'administrator/student.html', {'student': 'active'})
+    years = Student.objects.order_by('-reg_year').values('reg_year').distinct()
+    return render(request, 'administrator/student.html', {'student': 'active', 'years': years})
 
 @login_required(login_url='/login')
 def course(request):
@@ -52,11 +53,13 @@ def course(request):
 
 @login_required(login_url='/login')
 def exam(request):
-    return render(request, 'administrator/exam.html', {'exam': 'active'})
+    years = Student.objects.order_by('-reg_year').values('reg_year').distinct()
+    return render(request, 'administrator/exam.html', {'exam': 'active', 'years': years})
 
 @login_required(login_url='/login')
 def certificate_list(request):
-    return render(request, 'administrator/certi_ficate.html', {'certificate': 'active'})
+    years = Student.objects.order_by('-reg_year').values('reg_year').distinct()
+    return render(request, 'administrator/certi_ficate.html', {'certificate': 'active', 'years': years})
 
 @login_required(login_url='/login')
 def certificate(request):

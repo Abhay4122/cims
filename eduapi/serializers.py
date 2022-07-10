@@ -159,7 +159,7 @@ class EnrollDetailSerializer(serializers.ModelSerializer):
 
 
 # Examinee Student serializer for list view
-class StudentExamineeListSerializer(serializers.ModelSerializer):
+class StudentCertifiedListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)
     th1 = serializers.SerializerMethodField('get_th1')
     pr1 = serializers.SerializerMethodField('get_pr1')
@@ -194,6 +194,17 @@ class StudentExamineeListSerializer(serializers.ModelSerializer):
         )
 
 
+# Examinee Student serializer for list view
+class StudentExamineeListSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'course', 'enroll_number'
+        )
+
+
 # Examinee Student detail serializer for list view
 class StudentADCAExamineeDetailSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)
@@ -205,8 +216,11 @@ class StudentADCAExamineeDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number', 'cretificate_no',
-            'theory_s1', 'os', 'pretical_s1', 'theory_s2', 'pretical_s2', 'oral_s2', 'exam_year', 'exam_month'
+            'id', 'name', 'father', 'mother', 'gender', 'course', 'admission_session',
+            'enroll_number', 'cretificate_no', 'aadhar', 'dob', 'address', 'contact',
+            'category', 'course', 'lpc', 'passing_year', 'board', 'gread', 'photo', 'reg_year',
+            'reg_mon', 'session_year', 'session_month', 'theory_s1', 'os', 'pretical_s1',
+            'theory_s2', 'pretical_s2', 'oral_s2', 'exam_year', 'exam_month',
         )
 
 
@@ -221,6 +235,9 @@ class StudentDCAExamineeDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'father', 'course', 'admission_session', 'enroll_number', 'cretificate_no',
+            'id', 'name', 'father', 'mother', 'gender', 'course', 'admission_session',
+            'enroll_number', 'cretificate_no', 'aadhar', 'dob', 'address', 'contact',
+            'category', 'course', 'lpc', 'passing_year', 'board', 'gread', 'photo',
+            'reg_year', 'reg_mon', 'session_year', 'session_month'
             'theory_s1', 'pretical_s1', 'oral_s1', 'exam_year', 'exam_month'
         )

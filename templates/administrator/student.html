@@ -19,8 +19,15 @@
 
 <section>
   <div class="container">
-    <div class="col-sm-12">
-      <button id="reg_std_popup_btn" class="btn btn-sm btn-danger float-right" name="Register student">Register student</button>
+    <div class="col-md-3 col-sm-12 float-right">
+      <button id="reg_std_popup_btn" class="btn btn-sm btn-danger" name="Register student">Register student</button>
+    </div>
+    <div class="col-md-3 col-sm-12 float-right">
+      <select class="form-control" id="student_year">
+        {% for i in years %}
+          <option>{{i.reg_year}}</option>
+        {% endfor %}
+      </select>
     </div>
     <div class="col-md-12" id="std_list"></div>
   </div>
@@ -72,7 +79,7 @@
         }
 
         // create_tbl(url, init element id, table configuration, options)
-        await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, this.url], View: [-2, this.url], Delete: [-1, this.url] })
+        await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, 'api/student-api'], View: [-2, 'api/student-api'], Delete: [-1, 'api/student-api'] })
       }
 
       // Function define to handle row click other then action
@@ -143,10 +150,15 @@
       }
     }
 
-    let std = new student('api/student-api?is_enrolled=0', 'student', 'cims_modal')
+    let std = new student('api/student-api', 'student', 'cims_modal')
 
     // Call function for first time
     std.std_data()
+
+    $('#student_year').on('change', async e => {
+      let std = new student(`api/student-api?year=${e.target.value}`, 'student', 'cims_modal')
+      std.std_data()
+    })
 
     $('#reg_std_popup_btn').on('click', async e => {
       std.value = false

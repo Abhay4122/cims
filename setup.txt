@@ -101,3 +101,12 @@ sudo docker run -d -p 8080:8000 abahy4122/cims
                 OR
 -- Docker auto restart the image when system reboot
 sudo docker run -d -p 8080:8000 --restart unless-stopped abahy4122/cims
+
+
+
+- CIMS data query
+- reset the student record
+Student.objects.filter(is_registerd=True).update(is_enrolled = False, is_examinee = False, is_certified = False, enroll_number = None, cretificate_no = None, cretificate_file = None, theory_s1=None, os=None, pretical_s1=None, oral_s1=None, theory_s2=None, pretical_s2=None, oral_s2=None)
+
+- Get distinct orm
+Student.objects.order_by('reg_year').values('reg_year').distinct()
