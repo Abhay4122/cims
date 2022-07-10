@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from eduapi.models import Student, Course
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -72,6 +73,8 @@ def certificate(request):
 
     return render(request, 'administrator/certificate.html', {'student': resp, 'gred': gred})
 
+
+@csrf_exempt
 def student_portal(request):
     if request.POST:
         if request.POST.get('purpose') == 'result':

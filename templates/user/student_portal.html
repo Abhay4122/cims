@@ -34,7 +34,6 @@
 <script src="{{js}}/sweetalert2.min.js"></script>
 
 <script>
-    $(document).ready(function (e) {
         class result extends form_handler {
             constructor(url, id) {
                 super()
@@ -87,6 +86,5 @@
         $('#titl').text(document.URL.split('=')[1])
 
         $('#std_portal_hed').text(`View ${document.URL.split('=')[1]}`)
-    })
 </script>
 {% endblock %}
