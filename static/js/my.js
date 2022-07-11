@@ -273,7 +273,7 @@ class form_handler {
   }
 
   // Function defin to init content in modal
-  init_modal = async (header, body, is_method=false) => {
+  init_modal = async (header, body, is_method = false) => {
     $(`#${this.modal_id} #modal_header`).text(header)
     $(`#${this.modal_id} #modal_body`).html(body)
 

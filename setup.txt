@@ -110,3 +110,6 @@ Student.objects.filter(is_registerd=True).update(is_enrolled = False, is_examine
 
 - Get distinct orm
 Student.objects.order_by('reg_year').values('reg_year').distinct()
+
+- Reset the exam and certification
+Student.objects.filter(~Q(reg_year='2021')).update(is_examinee=False, is_certified=False, cretificate_no = None, cretificate_file = None, theory_s1=None, os=None, pretical_s1=None, oral_s1=None, theory_s2=None, pretical_s2=None, oral_s2=None)

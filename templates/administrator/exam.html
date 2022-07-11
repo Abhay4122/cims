@@ -21,7 +21,7 @@
     <div class="col-md-3 col-sm-12 float-right">
       <select class="form-control" id="student_year">
         {% for i in years %}
-          <option>{{i.reg_year}}</option>
+        <option>{{i.reg_year}}</option>
         {% endfor %}
       </select>
     </div>
@@ -70,8 +70,9 @@
               searchable: false
             }
           ],
-          order: [[3, 'asc']],
+          order: [[4, 'asc']],
           fnRowCallback: function (nRow, aData, iDisplayIndex) {
+            //$('td:first', nRow).html(iDisplayIndex + 1)
             $('td:eq(-1)', nRow).html(`
               <span class='fa fa-plus hover' title='Add marks' style='margin-left: 7px; margin-right: 7px;' id='add_marks'></span>
             `)

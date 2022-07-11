@@ -292,6 +292,11 @@
   font-weight: bolder !important;
 }
 
+/* style for table search */
+.dataTables_filter {
+  margin-right: 20px !important;
+}
+
 @media (max-width: 767px) {
   .navbar-nav {
     width: 70%;

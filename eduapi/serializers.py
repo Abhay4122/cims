@@ -201,7 +201,7 @@ class StudentExamineeListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = (
-            'id', 'name', 'course', 'enroll_number'
+            'id', 'name', 'father', 'course', 'enroll_number'
         )
 
 
@@ -238,6 +238,6 @@ class StudentDCAExamineeDetailSerializer(serializers.ModelSerializer):
             'id', 'name', 'father', 'mother', 'gender', 'course', 'admission_session',
             'enroll_number', 'cretificate_no', 'aadhar', 'dob', 'address', 'contact',
             'category', 'course', 'lpc', 'passing_year', 'board', 'gread', 'photo',
-            'reg_year', 'reg_mon', 'session_year', 'session_month'
+            'reg_year', 'reg_mon', 'session_year', 'session_month',
             'theory_s1', 'pretical_s1', 'oral_s1', 'exam_year', 'exam_month'
         )

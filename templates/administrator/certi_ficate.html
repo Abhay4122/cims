@@ -22,10 +22,10 @@
       <!-- <div class="col-sm-12">
         <button id="add_marks_popup_btn" class="btn btn-sm btn-danger float-right" name="Add marks">Add marks</button>
       </div> -->
-      <div class="col-md-3 col-sm-12 float-right">
+      <div class="col-md-3 col-sm-12 float-right" style="padding-right: 0">
         <select class="form-control" id="student_year">
           {% for i in years %}
-            <option>{{i.reg_year}}</option>
+          <option>{{i.reg_year}}</option>
           {% endfor %}
         </select>
       </div>
@@ -81,7 +81,9 @@
               </span>
               <span class='fa fa-pencil hover' style='margin-left: 7px; margin-right: 7px;' id='edit_certi'></span>
               <span class='fa fa-eye hover' style='margin-left: 7px; margin-right: 7px;' id='View'></span>
-              <a href='/certificate?id=${aData[0]}' title='Show the certificate' target='_blank' style='color: #e74e3e; margin-left: 7px;'><i class="fa fa-file-text-o"></i></a>
+              <a href='/certificate?id=${
+                aData[0]
+              }' title='Show the certificate' target='_blank' style='color: #e74e3e; margin-left: 7px;'><i class="fa fa-file-text-o"></i></a>
             `)
           }
         }

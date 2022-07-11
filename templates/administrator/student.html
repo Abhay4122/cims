@@ -19,13 +19,13 @@
 
 <section>
   <div class="container">
-    <div class="col-md-3 col-sm-12 float-right">
-      <button id="reg_std_popup_btn" class="btn btn-sm btn-danger" name="Register student">Register student</button>
+    <div class="col-md-2 col-sm-12 float-right">
+      <button id="reg_std_popup_btn" class="btn btn-sm btn-danger btn-block" name="Register student">Register student</button>
     </div>
     <div class="col-md-3 col-sm-12 float-right">
       <select class="form-control" id="student_year">
         {% for i in years %}
-          <option>{{i.reg_year}}</option>
+        <option>{{i.reg_year}}</option>
         {% endfor %}
       </select>
     </div>
@@ -79,7 +79,11 @@
         }
 
         // create_tbl(url, init element id, table configuration, options)
-        await this.create_tbl(this.url, 'std_list', tbl_conf, { Edit: [-3, 'api/student-api'], View: [-2, 'api/student-api'], Delete: [-1, 'api/student-api'] })
+        await this.create_tbl(this.url, 'std_list', tbl_conf, {
+          Edit: [-3, 'api/student-api'],
+          View: [-2, 'api/student-api'],
+          Delete: [-1, 'api/student-api']
+        })
       }
 
       // Function define to handle row click other then action
