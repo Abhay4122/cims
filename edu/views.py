@@ -117,6 +117,11 @@ def certification(request):
     else:
         return render(request, 'user/student_portal.html', {'student': 'active'})
 
+@login_required(login_url='/login')
+def correction(request):
+    years = Student.objects.order_by('-reg_year').values('reg_year').distinct()
+    return render(request, 'administrator/correction.html', {'correction': 'active', 'years': years})
+
 def result(request):
     student = Student.objects.filter(id=request.GET.get('id'))
     

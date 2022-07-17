@@ -71,6 +71,16 @@ class RegStudentListSerializer(serializers.ModelSerializer):
             'id', 'name', 'father', 'course', 'admission_session', 'reg_session', 'contact', 'generate_enroll'
         )
 
+# Registerd student serializer for list view
+class AllStudentListSerializer(serializers.ModelSerializer):
+    course = serializers.StringRelatedField(read_only=True, many=False)
+    
+    class Meta:
+        model = Student
+        fields = (
+            'id', 'name', 'father', 'course', 'contact'
+        )
+
 # Enrolled student serializer for list view
 class EnrolledStudentListSerializer(serializers.ModelSerializer):
     course = serializers.StringRelatedField(read_only=True, many=False)

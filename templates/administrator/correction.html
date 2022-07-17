@@ -1,0 +1,173 @@
+{% extends 'administrator/base.html' %} {% block title %} <title>Student list</title> {% endblock %} {% block body %}
+
+<section
+  id="testimonials"
+  class="parallax paralbackground"
+  style="background-image:url({{images}}/12.jpg); background-attachment:fixed;"
+  data-img-width="600"
+  data-img-height="385"
+  data-diff="100"
+>
+  <div class="cover"></div>
+  <div class="container">
+    <div class="section-title hed">
+      <h4>Student details</h4>
+      <hr />
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <!-- <div class="col-md-2 col-sm-12 float-right">
+      <button id="reg_std_popup_btn" class="btn btn-sm btn-danger btn-block" name="Register student">Register student</button>
+    </div> -->
+    <div class="col-md-3 col-sm-12 float-right">
+      <select class="form-control" id="student_year">
+        {% for i in years %}
+        <option>{{i.reg_year}}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-12" id="std_list"></div>
+  </div>
+</section>
+
+{% endblock %} {% block script %}
+<script>
+  $(document).ready(function async(e) {
+    class student extends form_handler {
+      constructor(url, id, modal_id) {
+        super()
+        this.url = url
+        this.id = id
+        this.modal_id = modal_id
+      }
+
+      // Function define to create the list of student
+      std_data = async () => {
+        // let tbl_conf = {
+        //   columnDefs: [
+        //     {
+        //       targets: [0, 6],
+        //       visible: false,
+        //       searchable: false
+        //     }
+        //   ],
+        //   order: [[6, 'asc']],
+        //   fnRowCallback: function (nRow, aData, iDisplayIndex) {
+        //     if (aData[5]) {
+        //       $('td:eq(4)', nRow).html(`<span>${aData[5]}</span>`)
+        //     } else {
+        //       $('td:eq(4)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
+        //     }
+        //   }
+        // }
+
+        let tbl_conf = {
+          columnDefs: [
+            {
+              targets: [0],
+              visible: false,
+              searchable: false
+            }
+          ],
+          order: [[1, 'asc']],
+          fnRowCallback: function (nRow, aData, iDisplayIndex) {
+            $('td:eq(5)', nRow).html(`<span style='cursor: pointer; color: #e74e3e;' id='gen_enroll'>Generate enroll</span>`)
+          }
+        }
+
+        // create_tbl(url, init element id, table configuration, options)
+        await this.create_tbl(this.url, 'std_list', tbl_conf, {
+          Edit: [-3, 'api/student-api'],
+          View: [-2, 'api/student-api'],
+        //   Delete: [-1, 'api/student-api']
+        })
+      }
+
+      // Function define to handle row click other then action
+      row_click = async (btn_id, row) => {
+        if (btn_id == 'gen_enroll') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Are you sure ?',
+            text: `to generate the enroll for student ${row[1]} !!`,
+            showCancelButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(result => {
+            result.isConfirmed ? this.get_post(`api/enroll-api?id=${row[0]}`, false) : ''
+          })
+        }
+      }
+
+      // Function defin to get Course data
+      get_sutdent_form = async () => {
+        let data = await this.get_post('api/course-api')
+        let course_list = {}
+
+        for (let i of data) {
+          course_list[i['course_name']] = i['id']
+        }
+
+        return await this.init_sutdent_form(course_list)
+      }
+
+      // Function define to createthe form and then add form in html
+      init_sutdent_form = async all_course => {
+        let student_form = {
+          'select#reg_year': [
+            'Registration year*',
+            { 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }
+          ],
+          'select#reg_mon': ['Registration month*', { January: 'January', April: 'April', July: 'July', October: 'October' }],
+          'select#session_year': [
+            'Session year*',
+            { 2017: 2017, 2018: 2018, 2019: 2019, 2020: 2020, 2021: 2021, 2022: 2022, 2023: 2023, 2024: 2024, 2025: 2025 }
+          ],
+          'select#session_month': ['Session month*', { March: 'March', June: 'June', September: 'September', December: 'December' }],
+          'text#name': ['Name*'],
+          'text#father': ["Father's name*"],
+          'text#mother': ["Mother's name*"],
+          'text#aadhar': ['Aadhar number*'],
+          'select#gender': ['Gender*', { Male: 'Male', Female: 'Female', Other: 'Other' }],
+          'date#dob': ['Date of birth*'],
+          'text#address': ['Address*'],
+          'tel#contact': ['Contact number*'],
+          'select#category': ['Category*', { Gen: 'Gen', OBC: 'OBC', SC: 'SC', ST: 'ST', Other: 'Other' }],
+          'select#course': ['Course*', all_course],
+          'text#lpc': ['Last passed class*'],
+          'text#passing_year': ['Passing year*'],
+          'text#board': ['Board*'],
+          'text#gread': ['Gread / Precentage / Division*'],
+          'file#photo': ['Upload photo', { attr: 'accept="image/png, image/jpeg"' }],
+          row: 6
+        }
+        return await this.create_form(student_form)
+      }
+
+      // Function defin to call modal
+      add_edit_modal = async header => {
+        let std_form = await this.get_sutdent_form()
+        await this.init_modal(header, std_form)
+      }
+    }
+
+    let std = new student('api/student-api?all=true', 'student', 'cims_modal')
+
+    // Call function for first time
+    std.std_data()
+
+    $('#student_year').on('change', async e => {
+      let std = new student(`api/student-api?all=true&year=${e.target.value}`, 'student', 'cims_modal')
+      std.std_data()
+    })
+
+    $('#reg_std_popup_btn').on('click', async e => {
+      std.value = false
+      await std.add_edit_modal('Register student')
+    })
+  })
+</script>
+{% endblock %}

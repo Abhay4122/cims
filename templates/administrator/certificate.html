@@ -296,7 +296,7 @@
         <span> - (Governed by PVEW Society, since 2017 ) </span>
       </div>
 
-      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'ms office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
         <h3>
         {% else %}
           <h3 style="margin-top: 50px;">
@@ -306,14 +306,14 @@
           {{student.cretificate_no}} </span>
       </h3>
     </div>
-    {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+    {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'ms office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
     <div class="legend_gred_dv">
       Legend of Grades: &nbsp; F: Below 40% &nbsp; D: 40-54% &nbsp; C: 55-64% &nbsp; B: 65-74% &nbsp; A: 75-84% &nbsp;
       A+: 85%-Above
     </div>
     {% endif %}
     <div class="main_content_dv">
-      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'ms office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
         <div class="main_content">
         {% else %}
         <div class="main_content" style="margin-top: 100px;">
@@ -331,7 +331,7 @@
         {{student.exam_month}} {{student.exam_year}})
       </div>
 
-      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
+      {% if student.course.course_name|lower != 'tally' and student.course.course_name|lower != 'ms office' and student.course.course_name|lower != 'tally with excel' and student.course.course_name|lower != 'typing' and student.course.course_name|lower != 'english speaking' %}
         <p class="text-center" style="margin-bottom: 5px; font-size: 14px">Statement of marks</p>
 
         {% if student.course.course_name|lower == 'adca' %}

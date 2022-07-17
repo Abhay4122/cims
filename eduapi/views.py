@@ -50,11 +50,23 @@ class StudentApi(APIView):
                         **{'status': status.HTTP_404_NOT_FOUND},
                         **self.resp_fun(msg, '', 'error')
                     }
+            elif request.GET.get('all'):
+                if request.GET.get('year'):
+                    year = request.GET.get('year')
+                else:
+                    year = Student.objects.aggregate(Max('reg_year'))
+                    year = year['reg_year__max']
+
+                resp = AllStudentListSerializer(Student.objects.filter(reg_year=year), many=True).data
             elif request.GET.get('year'):
                 resp = RegStudentListSerializer(Student.objects.filter(reg_year=request.GET.get('year'), is_registerd=True, is_enrolled=False, is_examinee=False, is_certified=False), many=True).data
         else:
             year = Student.objects.aggregate(Max('reg_year'))
-            resp = RegStudentListSerializer(Student.objects.filter(reg_year=year['reg_year__max'], is_registerd=True, is_enrolled=False, is_examinee=False, is_certified=False), many=True).data
+
+            if request.GET.get('all'):
+                resp = AllStudentListSerializer(Student.objects.filter(reg_year=year['reg_year__max']), many=True).data
+            else:
+                resp = RegStudentListSerializer(Student.objects.filter(reg_year=year['reg_year__max'], is_registerd=True, is_enrolled=False, is_examinee=False, is_certified=False), many=True).data
         
         return Response(resp)
         # return self.obj.get(request, Student, RegStudentListSerializer, StudentDetailSerializer, 'Student')
@@ -64,6 +76,12 @@ class StudentApi(APIView):
             request.data._mutable = True
         except Exception as e:
             self.obj.prin(e)
+        
+        # Check if the student already registerd
+        flag = self.check_already_registerd(request)
+        
+        if flag:
+            return Response(flag)
 
         request.data.update({'is_registerd': True})
         return self.obj.post(request, StudentSerializer, 'Student registerd', '/student')
@@ -88,6 +106,20 @@ class StudentApi(APIView):
     
     def delete(self, request: dict) -> dict:
         return self.obj.delete(request, Student, 'Student', '/student')
+    
+
+    def check_already_registerd(self, request: dict):
+        check_exist = Student.objects.filter(Q(name=request.POST.get('name')), Q(father=request.POST.get('father')))
+
+        if check_exist:
+            msg = f'Student {request.POST.get("name")} already registerd !!'
+            resp = {
+                **{'status': status.HTTP_409_CONFLICT},
+                **self.obj.resp_fun(msg, '', 'warning')
+            }
+            return resp
+        else:
+            return False
 
 
 class EnrollApi(APIView):
