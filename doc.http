@@ -5,7 +5,7 @@
 @contentType = application/json
 
 
-### GET all ourse details
+### GET all ourse details 
 GET {{baseUrl}}/course-api
 
 ### GET ourse details using id
