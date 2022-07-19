@@ -13,8 +13,8 @@ log:
 
 accesslog:
   format: common # common, json, logfmt
-  bufferingSize: 50
-  filePath: /var/log/traefik/access.log
+  # bufferingSize: 50
+  # filePath: /var/log/traefik/access.log
 
 ################################################################
 # Entrypoint

@@ -27,10 +27,12 @@ services:
       - 'traefik.enable=true'
       - 'traefik.docker.network=web_net'
       # - "traefik.http.routers.mdas.rule=Host(`${MDAS_HOST_URL:-mdas.avdhaan.grampower.com}`)"
-      - 'traefik.http.routers.cims.rule=Host(`cimsedu.com`)'
       - 'traefik.http.routers.cims.entrypoints=https'
+      - 'traefik.http.routers.cims.rule=Host(`cimsedu.com`)'
       - 'traefik.http.routers.cims.middlewares=csrf@file, error-pages-middleware'
+      # - 'traefik.http.routers.cims.middlewares=csrf@file'
       - 'traefik.http.routers.cims.tls=true'
+      # - 'traefik.http.routers.cims.tls.certresolver=letsencrypt'
       - 'traefik.http.services.cims.loadbalancer.server.port=8000'
 
   traefik:
@@ -63,6 +65,7 @@ services:
       - 'traefik.http.routers.traefik-secure.entrypoints=https'
       - 'traefik.http.routers.traefik-secure.rule=Host(`traefik.cimsedu.com`)'
       - 'traefik.http.routers.traefik-secure.middlewares=simpleAuth@file, error-pages-middleware'
+      # - 'traefik.http.routers.traefik-secure.middlewares=simpleAuth@file'
       - 'traefik.http.routers.traefik-secure.service=api@internal'
 
   error-pages:
@@ -70,7 +73,7 @@ services:
     environment:
       # ghost l7-light l7-dark shuffle noise hacker-terminal cats lost-in-space app-down connection matrix
       # https://tarampampam.github.io/error-pages/
-      TEMPLATE_NAME: connection # set the error pages template
+      TEMPLATE_NAME: lost-in-space # set the error pages template
     container_name: error-pages
     networks:
       - web_net
