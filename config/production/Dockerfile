@@ -15,7 +15,7 @@ RUN pip3 install -r /app/requirements.txt
 COPY ./src /app
 
 # Give the ownership from root to cims user
-RUN chown cims:cims /app
+RUN chown -R cims:cims /app
 
 USER cims
 

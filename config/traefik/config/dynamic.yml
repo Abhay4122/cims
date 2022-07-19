@@ -1,35 +1,35 @@
 # Dynamic configuration
 http:
-  routers:
-    #   # api:
-    #   #   # rule: "Host(`dev.grampower.com`)"
-    #   #   entrypoints:
-    #   #     - web-secure
-    #   #   middlewares:
-    #   #     - simpleAuth
-    #   #   service: "api@internal"
-    #   #   tls:
-    #   #     certResolver: "letsencrypt"
-    #   api:
-    #     # rule: "Host(`dev.grampower.com`)"
-    #     entrypoints:
-    #       - web-secure
-    #     middlewares:
-    #       - simpleAuth
-    #     service: "api@internal"
-    #     tls:
-    #       certResolver: "letsencrypt"
-    # cims-internal:
-    #   rule: 'Host(`cimsedu.com`)'
-    #   entryPoints:
-    #     - https
-    #   middlewares:
-    #     - csrf
-    #     # - error-pages-middleware@docker
-    #   service: cims
-    #   tls:
-    #     # https://docs.traefik.io/master/routing/routers/#certresolver
-    #     certResolver: letsencrypt
+  # routers:
+  #   # api:
+  #   #   # rule: "Host(`dev.grampower.com`)"
+  #   #   entrypoints:
+  #   #     - web-secure
+  #   #   middlewares:
+  #   #     - simpleAuth
+  #   #   service: "api@internal"
+  #   #   tls:
+  #   #     certResolver: "letsencrypt"
+  #   api:
+  #     # rule: "Host(`dev.grampower.com`)"
+  #     entrypoints:
+  #       - web-secure
+  #     middlewares:
+  #       - simpleAuth
+  #     service: "api@internal"
+  #     tls:
+  #       certResolver: "letsencrypt"
+  # cims-internal:
+  #   rule: 'Host(`cimsedu.com`)'
+  #   entryPoints:
+  #     - https
+  #   middlewares:
+  #     - csrf
+  #     # - error-pages-middleware@docker
+  #   service: cims
+  #   tls:
+  #     # https://docs.traefik.io/master/routing/routers/#certresolver
+  #     certResolver: letsencrypt
 
   #   flower-secure-router:
   #     rule: "Host(`dev.grampower.com/mdas`)"

@@ -6,6 +6,9 @@ networks:
   # db-net:
   #   external: true
 
+volumes:
+  production_traefik: {}
+
 services:
   cims-production:
     build:
@@ -31,8 +34,11 @@ services:
       - 'traefik.http.services.cims.loadbalancer.server.port=8000'
 
   traefik:
+    build:
+      context: .
+      dockerfile: ./config/traefik/Dockerfile
     # The official v2 Traefik docker image
-    image: traefik:v2.8
+    image: production_traefik
     # # Enables the web UI and tells Traefik to listen to docker
     # command: --api.insecure=true --providers.docker
     ports:
@@ -44,9 +50,9 @@ services:
       - web_net
     volumes:
       # Copy the traefik files from host to container
-      - ./config/traefik:/etc/traefik
+      - ./config/traefik/config:/etc/traefik
       - production_traefik:/etc/traefik/acme:z
-      - ./logs-data:/var/log/traefik
+      # - ./logs-data:/var/log/traefik
       # - ./logs:/var/log
       - /etc/localtime:/etc/localtime:ro
       # So that Traefik can listen to the Docker events / API

@@ -104,6 +104,9 @@ sudo docker run -d -p 8080:8000 abahy4122/cims
 -- Docker auto restart the image when system reboot
 sudo docker run -d -p 8080:8000 --restart unless-stopped abahy4122/cims
 
+-- Create docker network on server
+docker network create "name_of_network"
+
 
 
 - CIMS data query
