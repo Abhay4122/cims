@@ -1,0 +1,118 @@
+# Dynamic configuration
+http:
+  routers:
+    #   # api:
+    #   #   # rule: "Host(`dev.grampower.com`)"
+    #   #   entrypoints:
+    #   #     - web-secure
+    #   #   middlewares:
+    #   #     - simpleAuth
+    #   #   service: "api@internal"
+    #   #   tls:
+    #   #     certResolver: "letsencrypt"
+    #   api:
+    #     # rule: "Host(`dev.grampower.com`)"
+    #     entrypoints:
+    #       - web-secure
+    #     middlewares:
+    #       - simpleAuth
+    #     service: "api@internal"
+    #     tls:
+    #       certResolver: "letsencrypt"
+    # cims-internal:
+    #   rule: 'Host(`cimsedu.com`)'
+    #   entryPoints:
+    #     - https
+    #   middlewares:
+    #     - csrf
+    #     # - error-pages-middleware@docker
+    #   service: cims
+    #   tls:
+    #     # https://docs.traefik.io/master/routing/routers/#certresolver
+    #     certResolver: letsencrypt
+
+  #   flower-secure-router:
+  #     rule: "Host(`dev.grampower.com/mdas`)"
+  #     entryPoints:
+  #       - flower
+  #     service: flower
+  #     tls:
+  #       # https://docs.traefik.io/master/routing/routers/#certresolver
+  #       certResolver: letsencrypt
+
+  #   csrf:
+  #     # https://docs.traefik.io/master/middlewares/headers/#hostsproxyheaders
+  #     # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+  #     headers:
+  #       hostsProxyHeaders: ["X-CSRFToken"]
+
+  # services:
+  #   cims:
+  #     loadBalancer:
+  #       servers:
+  #         - url: http://172.31.46.64:8000
+
+  #   flower:
+  #     loadBalancer:
+  #       servers:
+  #         - url: http://flower:5555
+
+  middlewares:
+    csrf:
+      # https://docs.traefik.io/master/middlewares/headers/#hostsproxyheaders
+      # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+      headers:
+        hostsProxyHeaders: ['X-CSRFToken']
+
+    secureHeaders:
+      headers:
+        sslRedirect: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+
+    simpleAuth:
+      basicAuth:
+        users:
+          - 'admin:$apr1$x9xECBrK$cmxx7DtdWTtepCCy2dbcP.'
+
+    securityHeaders:
+      headers:
+        customResponseHeaders:
+          X-Robots-Tag: 'none,noarchive,nosnippet,notranslate,noimageindex'
+          server: ''
+          X-Forwarded-Proto: 'https'
+        sslProxyHeaders:
+          X-Forwarded-Proto: https
+        referrerPolicy: 'strict-origin-when-cross-origin'
+        hostsProxyHeaders:
+          - 'X-Forwarded-Host'
+        customRequestHeaders:
+          X-Forwarded-Proto: 'https'
+        contentTypeNosniff: true
+        browserXssFilter: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsSeconds: 63072000
+        stsPreload: true
+
+    gzip:
+      compress: {}
+
+    # crowdsec-bouncer:
+    #   forwardauth:
+    #     address: http://bouncer-traefik:8080/api/v1/forwardAuth
+    #     trustForwardHeader: true
+
+tls:
+  options:
+    default:
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+      minVersion: VersionTLS12

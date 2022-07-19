@@ -1,0 +1,161 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false # true by default
+
+################################################################
+# Traefik Logging -  DEBUG, PANIC, FATAL, ERROR, WARN, and INFO (DEFAULT is ERROR)
+################################################################
+log:
+  level: INFO
+  format: common # common, json, logfmt
+  # bufferingSize: 50
+  # filePath: /var/log/traefik/traefik.log
+
+accesslog:
+  format: common # common, json, logfmt
+  bufferingSize: 50
+  filePath: /var/log/traefik/access.log
+
+################################################################
+# Entrypoint
+################################################################
+entryPoints:
+  ping:
+    address: ':8082'
+  http:
+    # http
+    address: ':80'
+    http:
+      # https://docs.traefik.io/routing/entrypoints/#entrypoint
+      redirections:
+        entryPoint:
+          to: https
+
+  https:
+    # https
+    address: ':443'
+    # forwardedHeaders:
+    #   trustedIPs: *trustedIps
+    http:
+      middlewares:
+        - securityHeaders@file
+        # - crowdsec-bouncer@file
+      tls:
+        certResolver: letsencrypt
+
+################################################################
+# Challenege DNS
+################################################################
+certificatesResolvers:
+  letsencrypt:
+    # https://docs.traefik.io/master/https/acme/#lets-encrypt
+    acme:
+      email: 'abhay4122@gmail.com'
+      storage: /etc/traefik/acme/acme.json
+      # https://docs.traefik.io/master/https/acme/#httpchallenge
+      httpChallenge:
+        entryPoint: http
+
+################################################################
+# API and dashboard configuration
+################################################################
+api:
+  dashboard: true # true by default
+  insecure: false # Don't do this in production!
+
+################################################################
+# Docker configuration backend
+################################################################
+providers:
+  docker:
+    network: web_net
+    endpoint: 'unix:///var/run/docker.sock'
+    exposedByDefault: false
+  # https://docs.traefik.io/master/providers/file/
+  file:
+    filename: /etc/traefik/dynamic.yml
+    # directory: /etc/traefik
+    watch: true
+################################################################
+# Enable traefik Pilot
+################################################################
+# pilot:
+#   token: '17f55265-97cb-4dc2-b58e-2f82e0938b4f'
+################################################################
+# Enable Healthcheck
+################################################################
+ping:
+  entryPoint: 'ping'
+# http:
+#   routers:
+#     api:
+#       # rule: "Host(`dev.grampower.com`)"
+#       entrypoints:
+#         - https
+#       middlewares:
+#         - simpleAuth
+#       service: "api@internal"
+#       tls:
+#         certResolver: "letsencrypt"
+#     # https-router:
+#     #   rule: "Host(`dev.grampower.com/mdas`)"
+#     #   entryPoints:
+#     #     - https
+#     #   middlewares:
+#     #     - csrf
+#     #   # service: django
+#     #   tls:
+#     #     # https://docs.traefik.io/master/routing/routers/#certresolver
+#     #     certResolver: letsencrypt
+
+#     # flower-secure-router:
+#     #   rule: "Host(`dev.grampower.com/mdas`)"
+#     #   entryPoints:
+#     #     - flower
+#     #   service: flower
+#     #   tls:
+#     #     # https://docs.traefik.io/master/routing/routers/#certresolver
+#     #     certResolver: letsencrypt
+
+#     # csrf:
+#     #   # https://docs.traefik.io/master/middlewares/headers/#hostsweb_netheaders
+#     #   # https://docs.djangoproject.com/en/dev/ref/csrf/#ajax
+#     #   headers:
+#     #     hostsweb_netHeaders: ["X-CSRFToken"]
+
+#   # services:
+#   #   django:
+#   #     loadBalancer:
+#   #       servers:
+#   #         - url: http://django:5000
+
+#   #   flower:
+#   #     loadBalancer:
+#   #       servers:
+#   #         - url: http://flower:5555
+
+#   middlewares:
+#     secureHeaders:
+#       headers:
+#         sslRedirect: true
+#         forceSTSHeader: true
+#         stsIncludeSubdomains: true
+#         stsPreload: true
+#         stsSeconds: 31536000
+
+#     simpleAuth:
+#       basicAuth:
+#         users:
+#           - "admin:$apr1$CQx.cKRN$rxxYlP/xFJRCutqq8Xksr."
+
+# tls:
+#   options:
+#     default:
+#       cipherSuites:
+#         - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+#         - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+#         - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+#         - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+#         - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+#         - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+#       minVersion: VersionTLS12

@@ -1,5 +1,11 @@
 version: '3'
 
+networks:
+  web_net:
+    external: true
+  # db-net:
+  #   external: true
+
 services:
   cims-production:
     build:
@@ -10,7 +16,73 @@ services:
     volumes:
       # host_path : container_path
       - ./src:/app
+    networks:
+      - web_net
     env_file:
       - ./src/.env
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web_net'
+      # - "traefik.http.routers.mdas.rule=Host(`${MDAS_HOST_URL:-mdas.avdhaan.grampower.com}`)"
+      - 'traefik.http.routers.cims.rule=Host(`cimsedu.com`)'
+      - 'traefik.http.routers.cims.entrypoints=https'
+      - 'traefik.http.routers.cims.middlewares=csrf@file, error-pages-middleware'
+      - 'traefik.http.routers.cims.tls=true'
+      - 'traefik.http.services.cims.loadbalancer.server.port=8000'
+
+  traefik:
+    # The official v2 Traefik docker image
+    image: traefik:v2.8
+    # # Enables the web UI and tells Traefik to listen to docker
+    # command: --api.insecure=true --providers.docker
     ports:
-      - '8080:8000'
+      # The HTTP port
+      - '80:80'
+      # The HTTPS port
+      - '443:443'
+    networks:
+      - web_net
+    volumes:
+      # Copy the traefik files from host to container
+      - ./config/traefik:/etc/traefik
+      - production_traefik:/etc/traefik/acme:z
+      - ./logs-data:/var/log/traefik
+      # - ./logs:/var/log
+      - /etc/localtime:/etc/localtime:ro
+      # So that Traefik can listen to the Docker events / API
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web_net'
+      - 'traefik.http.routers.traefik-secure.entrypoints=https'
+      - 'traefik.http.routers.traefik-secure.rule=Host(`traefik.cimsedu.com`)'
+      - 'traefik.http.routers.traefik-secure.middlewares=simpleAuth@file, error-pages-middleware'
+      - 'traefik.http.routers.traefik-secure.service=api@internal'
+
+  error-pages:
+    image: tarampampam/error-pages:latest # Using the latest tag is highly discouraged. Please, use tags in X.Y.Z format
+    environment:
+      # ghost l7-light l7-dark shuffle noise hacker-terminal cats lost-in-space app-down connection matrix
+      # https://tarampampam.github.io/error-pages/
+      TEMPLATE_NAME: connection # set the error pages template
+    container_name: error-pages
+    networks:
+      - web_net
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web_net
+      # use as "fallback" for any NON-registered services (with priority below normal)
+      - traefik.http.routers.error-pages-router.rule=HostRegexp(`{host:.+}`)
+      - traefik.http.routers.error-pages-router.priority=10
+      # should say that all of your services work on https
+      - traefik.http.routers.error-pages-router.entrypoints=https
+      - traefik.http.routers.error-pages-router.tls=true
+      - traefik.http.routers.error-pages-router.middlewares=error-pages-middleware
+      # "errors" middleware settings
+      - traefik.http.middlewares.error-pages-middleware.errors.status=400-599
+      - traefik.http.middlewares.error-pages-middleware.errors.service=error-pages-service
+      - traefik.http.middlewares.error-pages-middleware.errors.query=/{status}.html
+      # define service properties
+      - traefik.http.services.error-pages-service.loadbalancer.server.port=8080
+    depends_on:
+      - traefik
