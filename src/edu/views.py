@@ -105,12 +105,9 @@ def student_portal(request):
         return render(request, 'user/student_portal.html', {'student': 'active'})
 
 def certification(request):
-    student = Student.objects.filter(id=request.GET.get('id'), is_certified=1)
-    if student.exists():
-        resp = None
-        gred = None
-        resp = student[0]
-
+    student = Student.objects.filter(id=request.GET.get('id'), is_certified=1).first()
+    if student:
+        resp = student
         gred = get_gred(resp)
 
         return render(request, 'administrator/certificate.html', {'student': resp, 'gred': gred})
