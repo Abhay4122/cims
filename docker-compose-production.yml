@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  cims-production:
+    build:
+      context: .
+      dockerfile: ./config/production/Dockerfile
+    image: abhay4122/cims:dev
+    container_name: cims-django
+    volumes:
+      # host_path : container_path
+      - ./src:/app
+    env_file:
+      - ./src/.env
+    ports:
+      - '8080:8000'
