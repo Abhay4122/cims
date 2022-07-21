@@ -161,3 +161,5 @@ else:
             'PORT': config('POSTGRES_PORT'),
         }
     }
+
+    WSGI_APPLICATION = 'cims.wsgi_production.application'
