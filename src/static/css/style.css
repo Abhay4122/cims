@@ -1002,7 +1002,6 @@ section {
 .portfolio-meta {
   margin: 10px 0;
   padding: 10px 0;
-  background: url(../images/icons/entry-info.html) no-repeat 0 3px;
 }
 .portfolio-meta p {
   padding: 0 0 5px;
@@ -1038,7 +1037,6 @@ section {
   color: #474747;
 }
 .pp_inline .entry-content p.details {
-  background: url(../images/icons/quote-icon-2.html) no-repeat left 0;
   margin-bottom: 0;
   padding-left: 20px;
   color: #616161;
@@ -1902,7 +1900,6 @@ textarea {
 }
 
 .email_loading {
-  /* background: url(../uploads/email_loader.html) no-repeat center center; */
   height: 32px;
   width: 62px;
   z-index: 0;
@@ -1954,7 +1951,6 @@ textarea {
 }
 
 .footer-widget.contact-widget ul {
-  /* background: url(../uploads/map.html) no-repeat center center; */
   list-style: none;
   padding-left: 0px;
 }

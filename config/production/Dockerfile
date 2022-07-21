@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8-slim
 
 WORKDIR /app
 
@@ -19,4 +19,7 @@ RUN chown -R cims:cims /app
 
 USER cims
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+# RUN python manage.py collectstatic --noinput
+# RUN python manage.py compress
+
+# CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
