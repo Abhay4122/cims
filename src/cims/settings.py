@@ -116,7 +116,7 @@ SESSION_COOKIE_AGE = 10 * 60
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'statics'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -140,6 +140,10 @@ if DEBUG:
         }
     }
 else:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    MIDDLEWARE.append('whitenoise.middleware.WhiteNoiseMiddleware')
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',

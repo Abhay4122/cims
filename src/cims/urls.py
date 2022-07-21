@@ -30,5 +30,5 @@ urlpatterns = [
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = 'edu.views.custom_404'
-handler500 = 'edu.views.custom_500'
+# handler404 = 'edu.views.custom_404'
+# handler500 = 'edu.views.custom_500'
