@@ -4,7 +4,7 @@
  *
  * Copyright 2012 WooThemes
  * Free to use under the GPLv2 license.
- * http://www.gnu.org/licenses/gpl-2.0.html
+
  *
  * Contributing author: Tyler Smith (@mbmufffin)
  */
@@ -73,8 +73,6 @@ display:block;
 /* Direction Nav */
 .flex-direction-nav {*height: 0;}
 .flex-direction-nav a {width: 16px; height: 27px; margin: -20px 0 0; display: block; background: #ff0000; position: absolute; top: 135px; z-index: 10; cursor: pointer; text-indent: -9999px; -webkit-transition: all .3s ease;}
-.flex-direction-nav .flex-next {background:url(../images/next.html); right: 30%; opacity: 0.5;}
-.flex-direction-nav .flex-prev {background:url(../images/prev.html);left: 30%; opacity: 0.5;}
 
 .flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover {opacity: 1;}
 .flex-direction-nav .flex-disabled {opacity: .3!important; filter:alpha(opacity=30); cursor: default;}

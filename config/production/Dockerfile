@@ -11,6 +11,10 @@ COPY ./requirements.txt /app/requirements.txt
 # Run the requirements.txt into container
 RUN pip3 install -r /app/requirements.txt
 
+COPY --chown=cims:cims ./config/production/run.sh /start
+# RUN sed -i 's/\r$//g' /run
+RUN chmod +x /start
+
 # Copy the code from host to container
 COPY ./src /app
 

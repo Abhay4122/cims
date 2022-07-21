@@ -17,7 +17,8 @@ services:
       dockerfile: ./config/production/Dockerfile
     image: abhay4122/cims:dev
     container_name: cims-django
-    command: 'python manage.py collectstatic --noinput; python manage.py compress; python manage.py runserver 0.0.0.0:8000'
+    command: '/start'
+    # command: 'python manage.py collectstatic --noinput && python manage.py compress && python manage.py runserver 0.0.0.0:8000'
     # volumes:
     #   # host_path : container_path
     #   - ./src:/app
