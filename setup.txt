@@ -52,11 +52,6 @@ sudo service apache2 restart
 
 
 
-DEBUG=True
-SECRET_KEY=_ty$5^^vvn&*2fzere+#62ob*%ey%3h+k89_4(w*=nfcv#u7)=
-
-
-
 Apply ssl in website
 
 - append the billow line in /etc/apache2/sites-available/000-default.conf
